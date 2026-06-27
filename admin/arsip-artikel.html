@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Arsip Artikel — Admin Gunpla Elite (Wireframe)</title>
+<link rel="stylesheet" href="admin.css"/>
+<link rel="stylesheet" href="arsip-artikel.css"/>
+</head>
+<body>
+<div id="admin-layout"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  function currentPage() {
+    var p = window.location.pathname.toLowerCase();
+    if (p.indexOf('arsip-artikel') !== -1) return 'arsip-artikel';
+    if (p.indexOf('kelola-artikel') !== -1) return 'kelola-artikel';
+    if (p.indexOf('kelola-produk') !== -1) return 'kelola-produk';
+    if (p.indexOf('kelola-pengguna') !== -1) return 'kelola-pengguna';
+    if (p.indexOf('kelola-transaksi') !== -1) return 'kelola-transaksi';
+    return 'dashboard';
+  }
+  function getCurrentAdmin() {
+    try {
+      var raw = localStorage.getItem('gunpla_user');
+      if (!raw) return null;
+      var u = JSON.parse(raw);
+      if (u.email === 'admin@gunpla.id' && (!u.role || u.role === 'Customer')) {
+        u.role = 'Super Admin';
+        u.name = u.name || 'Admin Gunpla';
+        try { localStorage.setItem('gunpla_user', JSON.stringify(u)); } catch (e) {}
+      }
+      return {
+        nama: u.name || u.nama || (u.email ? u.email.split('@')[0] : 'Admin'),
+        email: u.email || '',
+        role: u.role || 'Admin',
+        initials: (u.name || u.nama || 'AD').split(' ').map(function(s){return s[0];}).join('').slice(0,2).toUpperCase()
+      };
+    } catch (e) { return null; }
+  }
+  function renderLayout(options) {
+    var cp = options.page || currentPage();
+    var pageTitle = options.title || 'Dashboard';
+    var pageSubtitle = options.subtitle || '';
+    var content = options.content || '';
+    var me = getCurrentAdmin() || { nama: 'Admin Gunpla', email: '', role: 'Super Admin', initials: 'AD' };
+    var navItems = [
+      { key: 'dashboard', label: 'Dashboard', href: 'dashboard.html' },
+      { key: 'kelola-produk', label: 'Kelola Produk', href: 'kelola-produk.html' },
+      { key: 'kelola-transaksi', label: 'Kelola Transaksi', href: 'kelola-transaksi.html' },
+      { key: 'kelola-artikel', label: 'Kelola Artikel', href: 'kelola-artikel.html' },
+      { key: 'arsip-artikel', label: 'Arsip Artikel', href: 'arsip-artikel.html' },
+      { key: 'kelola-pengguna', label: 'Kelola Pengguna', href: 'kelola-pengguna.html' }
+    ];
+    var navIcons = {
+      'dashboard': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>',
+      'kelola-produk': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+      'kelola-transaksi': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+      'kelola-artikel': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>',
+      'arsip-artikel': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>',
+      'kelola-pengguna': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'
+    };
+    var navHTML = '';
+    for (var i = 0; i < navItems.length; i++) {
+      var item = navItems[i];
+      var activeClass = cp === item.key ? ' active' : '';
+      navHTML += '<a href="' + item.href + '" class="admin-nav-link' + activeClass + '">'
+        + '<span class="icon">' + (navIcons[item.key] || '') + '</span>'
+        + '<span>' + item.label + '</span>'
+        + '</a>';
+    }
+    return ''
+      + '<div class="admin-wrapper">'
+      + '<aside class="admin-sidebar" id="admin-sidebar">'
+      +   '<div class="admin-sidebar-brand">'
+      +     '<div class="admin-sidebar-brand-icon">GE</div>'
+      +     '<div class="admin-sidebar-brand-text"><strong>Gunpla Elite</strong><small>Admin Panel</small></div>'
+      +   '</div>'
+      +   '<div class="admin-sidebar-section">Menu Utama</div>'
+      +   '<nav class="admin-sidebar-nav">' + navHTML + '</nav>'
+      +   '<div class="admin-sidebar-footer">'
+      +     '<a href="../home.html" class="admin-user-card" title="' + me.email + '">'
+      +       '<div class="admin-user-avatar">' + me.initials + '</div>'
+      +       '<div class="admin-user-info"><strong>' + me.nama + '</strong><small>' + me.role + '</small></div>'
+      +     '</a>'
+      +     '<button class="admin-logout-btn" id="adminLogoutBtn" title="Keluar" style="display:flex;align-items:center;gap:8px;padding:8px 10px;margin-top:6px;width:100%;background:transparent;border:1px solid #e5e7eb;border-radius:6px;cursor:pointer;color:#6b7280;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;transition:background 120ms ease, color 120ms ease;" onmouseover="this.style.background=\'#f9fafb\';this.style.color=\'#1e293b\';this.style.borderColor=\'#c0c0c0\'" onmouseout="this.style.background=\'transparent\';this.style.color=\'#6b7280\';this.style.borderColor=\'#e5e7eb\'">'
+      +       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>'
+      +       'Keluar'
+      +     '</button>'
+      +   '</div>'
+      + '</aside>'
+      + '<main class="admin-main">'
+      +   '<header class="admin-topbar">'
+      +     '<div style="display:flex;align-items:center;gap:12px;">'
+      +       '<button class="admin-menu-toggle" id="adminMenuToggle" aria-label="Menu">&#9776;</button>'
+      +       '<div class="admin-topbar-title">'
+      +         '<h1>' + pageTitle + '</h1>'
+      +         (pageSubtitle ? '<p>' + pageSubtitle + '</p>' : '')
+      +       '</div>'
+      +     '</div>'
+      +     '<div class="admin-topbar-actions">'
+      +     '<div class="admin-topbar-search">'
+      +       '<span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>'
+      +       '<input type="text" placeholder="Cari data..."/>'
+      +     '</div>'
+      +     '<a href="#" class="admin-icon-btn" title="Notifikasi">'
+      +       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>'
+      +       '<span class="dot"></span>'
+      +     '</a>'
+      +     '<a href="../home.html" class="admin-icon-btn" title="Ke Website">'
+      +       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>'
+      +     '</a>'
+      +     '<a href="#" class="admin-icon-btn" id="adminLogoutTopbar" title="Keluar" style="color:#6b7280;">'
+      +       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>'
+      +     '</a>'
+      +     '</div>'
+      +   '</header>'
+      +   '<section class="admin-content">' + content + '</section>'
+      + '</main>'
+      + '</div>';
+  }
+
+  var KEYS = { produk:'gunpla_produk', transaksi:'gunpla_transaksi', artikel:'gunpla_artikel', pengguna:'gunpla_pengguna', activity:'gunpla_activity' };
+  function read(k){try{var r=localStorage.getItem(KEYS[k]||k);return r?JSON.parse(r):[];}catch(e){return[];}}
+  function write(k,d){localStorage.setItem(KEYS[k]||k,JSON.stringify(d));}
+  function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+  function logActivity(m){var l=read('activity');l.unshift({time:new Date().toISOString(),message:m});if(l.length>50)l=l.slice(0,50);write('activity',l);}
+  function seedIfEmpty(){
+    var existing = read('artikel');
+    var hasArsip = existing.some(function(x){return x.status==='Arsip';});
+    if (existing.length === 0) {
+      write('artikel', [
+        { id: uid(), judul: 'Review Eksklusif: MGSD Freedom Gundam', kategori: 'Review', penulis: 'Admin', tanggal: '2023-10-05', status: 'Published' },
+        { id: uid(), judul: 'Master Grade: Evolusi Inner Frame 2024', kategori: 'Review', penulis: 'Admin', tanggal: '2023-10-15', status: 'Published' },
+        { id: uid(), judul: 'Tips Airbrushing Untuk Pemula', kategori: 'Tutorial', penulis: 'Admin', tanggal: '2023-10-12', status: 'Published' },
+        { id: uid(), judul: 'Panduan Panel Lining Presisi', kategori: 'Tutorial', penulis: 'Admin', tanggal: '2023-09-28', status: 'Published' },
+        { id: uid(), judul: 'Review Deep Dive: Inner Frame MGEX', kategori: 'Review', penulis: 'Admin', tanggal: '2023-10-20', status: 'Draft' }
+      ]);
+      existing = read('artikel');
+    }
+    if (!hasArsip && existing.every(function(x){return x.status!=='Arsip';})) {
+      var arsipItems = [
+        { judul: 'Build Log: PG Exia Lights', kategori: 'Build Log', tanggal: '2023-09-15' },
+        { judul: 'Sejarah Gunpla: Era SD', kategori: 'Sejarah', tanggal: '2023-08-20' },
+        { judul: 'Panduan Cat Akrilik Tamiya', kategori: 'Tutorial', tanggal: '2023-08-05' },
+        { judul: 'Top 10 MG Terbaik 2022', kategori: 'Top List', tanggal: '2023-07-12' },
+        { judul: 'Review HG Barbatos Lupus', kategori: 'Review', tanggal: '2023-06-28' },
+        { judul: 'Tips Decal & Sticker', kategori: 'Tutorial', tanggal: '2023-06-15' },
+        { judul: 'Event Gunpla Expo 2023', kategori: 'Event', tanggal: '2023-05-30' },
+        { judul: 'Panduan Top Coating', kategori: 'Tutorial', tanggal: '2023-05-12' },
+        { judul: 'Review RG Sazabi', kategori: 'Review', tanggal: '2023-04-25' },
+        { judul: 'WIP: MGEX Strike Freedom', kategori: 'Build Log', tanggal: '2023-04-08' },
+        { judul: 'Karir Builder Profesional', kategori: 'Artikel', tanggal: '2023-03-18' },
+        { judul: 'Panduan LED untuk Gunpla', kategori: 'Tutorial', tanggal: '2023-02-22' }
+      ];
+      arsipItems.forEach(function(item){
+        existing.push({ id: uid(), judul: item.judul, kategori: item.kategori, penulis: 'Admin', tanggal: item.tanggal, status: 'Arsip' });
+      });
+      write('artikel', existing);
+    }
+  }
+  var gunplaStore = {
+    list: function(k){return read(k);},
+    get: function(k,id){var a=read(k);for(var i=0;i<a.length;i++)if(a[i].id===id)return a[i];return null;},
+    create: function(k,it){var a=read(k);it.id=uid();a.push(it);write(k,a);logActivity('Tambah data '+k);return it;},
+    update: function(k,id,p){var a=read(k);for(var i=0;i<a.length;i++){if(a[i].id===id){Object.keys(p).forEach(function(key){a[i][key]=p[key];});write(k,a);logActivity('Ubah data '+k);return a[i];}}return null;},
+    remove: function(k,id){var a=read(k).filter(function(x){return x.id!==id;});write(k,a);logActivity('Hapus data '+k);},
+    removeByField: function(k,f,v){var a=read(k).filter(function(x){return x[f]!==v;});write(k,a);logActivity('Hapus data '+k);},
+    seed: seedIfEmpty,
+    log: logActivity,
+    activity: function(){return read('activity');},
+    formatRp: function(n){return 'Rp '+Number(n).toLocaleString('id-ID');}
+  };
+
+  function ensureOverlay(){var e=document.getElementById('wf-modal-root');if(e)return e;e=document.createElement('div');e.id='wf-modal-root';e.className='wf-modal-overlay';document.body.appendChild(e);return e;}
+  function ensureToast(){var e=document.getElementById('wf-toast');if(e)return e;e=document.createElement('div');e.id='wf-toast';e.className='wf-toast';document.body.appendChild(e);return e;}
+  var gunplaUI = {
+    openModal: function(t,b,on){var r=ensureOverlay();r.innerHTML='<div class="wf-modal"><div class="wf-modal-header"><div class="wf-modal-title">'+t+'</div><button class="wf-modal-close" id="wfModalClose">&times;</button></div><form id="wfModalForm"><div class="wf-modal-body">'+b+'</div><div class="wf-modal-footer"><button type="button" class="btn-admin btn-admin-secondary" id="wfModalCancel">Batal</button><button type="submit" class="btn-admin btn-admin-primary">Simpan</button></div></form></div>';r.classList.add('open');function c(){r.classList.remove('open');r.innerHTML='';}document.getElementById('wfModalClose').onclick=c;document.getElementById('wfModalCancel').onclick=c;r.onclick=function(e){if(e.target===r)c();};document.getElementById('wfModalForm').onsubmit=function(e){e.preventDefault();var d={};var es=r.querySelectorAll('input,select,textarea');es.forEach(function(el){d[el.name]=el.value;});var rs=on(d);if(rs!==false)c();};},
+    confirm: function(m,on){var r=ensureOverlay();r.innerHTML='<div class="wf-modal" style="max-width:420px;"><div class="wf-modal-header"><div class="wf-modal-title">Konfirmasi</div><button class="wf-modal-close" id="wfModalClose">&times;</button></div><div class="wf-modal-body"><p style="margin:0;color:#6b7280;">'+m+'</p></div><div class="wf-modal-footer"><button type="button" class="btn-admin btn-admin-secondary" id="wfNo">Batal</button><button type="button" class="btn-admin btn-admin-primary" id="wfYes">Ya</button></div></div>';r.classList.add('open');function c(){r.classList.remove('open');r.innerHTML='';}document.getElementById('wfModalClose').onclick=c;document.getElementById('wfNo').onclick=c;document.getElementById('wfYes').onclick=function(){c();on();};r.onclick=function(e){if(e.target===r)c();};},
+    toast: function(m){var t=ensureToast();t.textContent=m;t.classList.add('show');clearTimeout(t._timer);t._timer=setTimeout(function(){t.classList.remove('show');},2200);}
+  };
+
+  function doLogout(e){if(e)e.preventDefault();try{localStorage.removeItem('gunpla_user');}catch(err){}window.location.href='../login/login.html';}
+  function initMenuToggle(){var b=document.getElementById('adminMenuToggle');var s=document.getElementById('admin-sidebar');if(!b||!s)return;b.addEventListener('click',function(e){e.stopPropagation();s.classList.toggle('open');});document.addEventListener('click',function(e){if(!e.target.closest('.admin-sidebar')&&!e.target.closest('#adminMenuToggle'))s.classList.remove('open');});}
+  function initLogout(){var s=document.getElementById('adminLogoutBtn');var t=document.getElementById('adminLogoutTopbar');if(s)s.addEventListener('click',doLogout);if(t)t.addEventListener('click',doLogout);}
+
+  initMenuToggle();
+  gunplaStore.seed();
+
+  var me = (function(){try{return JSON.parse(localStorage.getItem('gunpla_user')||'null')||{};}catch(e){return{};}})();
+  var meRole = me.role || 'Super Admin';
+  if (me.email === 'admin@gunpla.id') meRole = 'Super Admin';
+  if (!me.email) meRole = 'Super Admin';
+  var canEdit = meRole === 'Super Admin' || meRole === 'Admin';
+
+  function renderTable() {
+    var allArticles = gunplaStore.list('artikel');
+    var articles = allArticles.filter(function(x){return x.status==='Arsip';});
+
+    var rows = '';
+    for (var i = 0; i < articles.length; i++) {
+      var a = articles[i];
+      var actionCell = canEdit
+        ? '<td><div class="admin-action-cell">'
+          + '<button class="admin-action-btn" title="Restore" onclick="restoreArticle(\'' + a.id + '\')" style="font-size:11px;">&#8634;</button>'
+          + '<button class="admin-action-btn" title="Hapus Permanen" onclick="deleteArticle(\'' + a.id + '\')" style="font-size:10px;">&#10005;</button>'
+          + '</div></td>'
+        : '<td><span style="font-size:11px;color:#6b7280;">Lihat</span></td>';
+      rows += '<tr>'
+        + '<td><strong class="archive-title">' + a.judul + '</strong>'
+        + '<div class="archive-category">' + a.kategori + ' &middot; ' + a.penulis + '</div></td>'
+        + '<td>' + a.tanggal + '</td>'
+        + '<td><span class="tag-arsip">Arsip</span></td>'
+        + actionCell
+        + '</tr>';
+    }
+    if (!rows) rows = '<tr><td colspan="4" class="empty">Tidak ada artikel yang diarsipkan</td></tr>';
+
+    var subtitle = canEdit
+      ? 'Artikel yang diarsipkan tidak tampil di blog. Restore untuk mempublikasikan ulang atau hapus permanen.'
+      : 'Artikel yang telah diarsipkan dari blog';
+
+    var content = ''
+      + '<div class="admin-page-header">'
+      +   '<div class="admin-page-header-text">'
+      +     '<div class="admin-page-eyebrow">Konten &middot; ' + meRole + '</div>'
+      +     '<h2>Arsip Artikel</h2>'
+      +     '<p>' + subtitle + '</p>'
+      +   '</div>'
+      +   '<a href="kelola-artikel.html" class="btn-admin btn-admin-secondary">Kelola Artikel</a>'
+      + '</div>'
+
+      + '<div class="admin-panel">'
+      +   '<div class="admin-panel-header">'
+      +     '<h3>Daftar Arsip</h3>'
+      +     '<div class="filter-bar">'
+      +       '<input class="form-input" placeholder="Cari judul..." id="archiveSearch" onkeyup="filterSearch()" style="min-width:200px;" />'
+      +     '</div>'
+      +   '</div>'
+      +   '<div class="admin-panel-body no-padding">'
+      +     '<table class="admin-table">'
+      +       '<thead><tr><th>Judul</th><th>Tanggal Arsip</th><th>Status</th><th>Aksi</th></tr></thead>'
+      +       '<tbody id="archiveTbody">' + rows + '</tbody>'
+      +     '</table>'
+      +   '</div>'
+      + '</div>';
+
+    document.getElementById('admin-layout').innerHTML = renderLayout({
+      title: 'Arsip Artikel',
+      subtitle: 'Artikel yang tidak lagi dipublikasikan',
+      page: 'arsip-artikel',
+      content: content
+    });
+    initMenuToggle();
+    initLogout();
+  }
+
+  function restoreArticle(id) {
+    gunplaUI.confirm('Pulihkan artikel ini ke status Draft?',function(){
+      gunplaStore.update('artikel',id,{status:'Draft'});
+      renderTable();
+      gunplaUI.toast('Artikel dipulihkan ke Draft!');
+    });
+  }
+
+  function deleteArticle(id) {
+    gunplaUI.confirm('Hapus permanen artikel ini? Tindakan ini tidak dapat dibatalkan.',function(){
+      gunplaStore.remove('artikel',id);
+      renderTable();
+      gunplaUI.toast('Artikel dihapus permanen!');
+    });
+  }
+
+  function filterSearch() {
+    var q = document.getElementById('archiveSearch').value.toLowerCase();
+    var rows = document.querySelectorAll('#archiveTbody tr');
+    for (var i = 0; i < rows.length; i++) {
+      rows[i].style.display = rows[i].textContent.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
+    }
+  }
+
+  renderTable();
+  window.restoreArticle = restoreArticle;
+  window.deleteArticle = deleteArticle;
+  window.filterSearch = filterSearch;
+})();
+</script>
+</body>
+</html>

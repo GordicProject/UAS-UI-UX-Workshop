@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Katalog - Gunpla Elite</title>
+<link rel="stylesheet" href="katalog.css"/>
+<link rel="stylesheet" href="../home.css"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;500;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, .font-oswald { font-family: 'Oswald', sans-serif; }
+    .bg-primary-blue { background-color: #2b3a67; }
+    .bg-primary-red { background-color: #d32f2f; }
+    .text-primary-red { color: #d32f2f; }
+    .border-primary-red { border-color: #d32f2f; }
+    .bg-dark-blue { background-color: #1e293b; }
+  </style>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+<!-- BEGIN: MainHeader -->
+<div id="navbar-container"></div>
+<script src="../components/navbar.js"></script>
+<!-- END: MainHeader -->
+
+
+<!-- Filter Bar -->
+<section class="bg-gray-50 border-b border-gray-200 py-6">
+<div class="container mx-auto px-4 flex flex-wrap items-center gap-4">
+<span class="text-sm font-bold text-gray-600 uppercase">Filter:</span>
+<button class="bg-primary-red text-white px-5 py-2 rounded-full text-sm font-bold w-20 text-center" data-grade-filter="SEMUA">SEMUA</button>
+<button class="bg-white text-gray-600 border border-gray-300 px-5 py-2 rounded-full text-sm font-bold w-20 text-center hover:border-primary-red hover:text-primary-red transition-colors" data-grade-filter="HG">HG</button>
+<button class="bg-white text-gray-600 border border-gray-300 px-5 py-2 rounded-full text-sm font-bold w-20 text-center hover:border-primary-red hover:text-primary-red transition-colors" data-grade-filter="RG">RG</button>
+<button class="bg-white text-gray-600 border border-gray-300 px-5 py-2 rounded-full text-sm font-bold w-20 text-center hover:border-primary-red hover:text-primary-red transition-colors" data-grade-filter="MG">MG</button>
+<button class="bg-white text-gray-600 border border-gray-300 px-5 py-2 rounded-full text-sm font-bold w-20 text-center hover:border-primary-red hover:text-primary-red transition-colors" data-grade-filter="PG">PG</button>
+<div class="ml-auto flex items-center gap-2">
+<div class="relative">
+<input class="border border-gray-300 rounded-full pl-4 pr-10 py-2 text-sm focus:outline-none focus:border-primary-red w-64" id="searchInput" placeholder="Cari kit..." type="text"/>
+<button class="absolute right-3 top-0 h-full flex items-center justify-center text-gray-400"><i class="fas fa-search leading-none"></i></button>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Product Grid -->
+<section class="py-16">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+<a class="border border-gray-200 rounded overflow-hidden group hover:shadow-lg transition-shadow" href="katalog-rx-78.html" data-grade="HG">
+<div class="relative bg-gray-100 p-6 flex items-center justify-center">
+<img alt="RX-78-2" class="max-w-full max-h-48 object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="../images/gundam-rx78.png"/>
+<span class="absolute top-3 left-3 bg-primary-red text-white text-[10px] font-bold px-2 py-0.5 rounded">BEST SELLER</span>
+</div>
+<div class="p-4">
+<p class="text-xs text-gray-400 font-bold uppercase mb-1">HIGH GRADE</p>
+<h3 class="font-bold text-sm mb-2 group-hover:text-primary-red transition-colors">RX-78-2 GUNDAM</h3>
+<div class="flex items-center gap-2 mb-3">
+<span class="text-primary-red font-bold text-lg">Rp 350.000</span>
+</div>
+<button class="bg-primary-red text-white text-xs font-bold py-2 px-3 rounded w-full hover:bg-red-700 transition-colors">
+              BELI SEKARANG
+            </button>
+</div>
+</a>
+
+<a class="border border-gray-200 rounded overflow-hidden group hover:shadow-lg transition-shadow" href="katalog-wing.html" data-grade="MG">
+<div class="relative bg-gray-100 p-6 flex items-center justify-center">
+<img alt="Wing Gundam" class="max-w-full max-h-48 object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="../images/gundam-wing.png"/>
+<span class="absolute top-3 left-3 bg-yellow-500 text-white text-[10px] font-bold px-2 py-0.5 rounded">NEW</span>
+</div>
+<div class="p-4">
+<p class="text-xs text-gray-400 font-bold uppercase mb-1">MASTER GRADE</p>
+<h3 class="font-bold text-sm mb-2 group-hover:text-primary-red transition-colors">WING GUNDAM ZERO EW</h3>
+<div class="flex items-center gap-2 mb-3">
+<span class="text-primary-red font-bold text-lg">Rp 580.000</span>
+</div>
+<button class="bg-primary-red text-white text-xs font-bold py-2 px-3 rounded w-full hover:bg-red-700 transition-colors">
+              BELI SEKARANG
+            </button>
+</div>
+</a>
+
+<a class="border border-gray-200 rounded overflow-hidden group hover:shadow-lg transition-shadow" href="katalog-freedom.html" data-grade="MG">
+<div class="relative bg-gray-100 p-6 flex items-center justify-center">
+<img alt="Freedom Gundam" class="max-w-full max-h-48 object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="../images/gundam-freedom.png"/>
+</div>
+<div class="p-4">
+<p class="text-xs text-gray-400 font-bold uppercase mb-1">MASTER GRADE</p>
+<h3 class="font-bold text-sm mb-2 group-hover:text-primary-red transition-colors">ZGMF-X10A FREEDOM</h3>
+<div class="flex items-center gap-2 mb-3">
+<span class="text-primary-red font-bold text-lg">Rp 720.000</span>
+</div>
+<button class="bg-primary-red text-white text-xs font-bold py-2 px-3 rounded w-full hover:bg-red-700 transition-colors">
+              BELI SEKARANG
+            </button>
+</div>
+</a>
+
+<a class="border border-gray-200 rounded overflow-hidden group hover:shadow-lg transition-shadow" href="katalog-unicorn.html" data-grade="RG">
+<div class="relative bg-gray-100 p-6 flex items-center justify-center">
+<img alt="Unicorn Gundam" class="max-w-full max-h-48 object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="../images/gundam-unicorn.png"/>
+<span class="absolute top-3 left-3 bg-primary-red text-white text-[10px] font-bold px-2 py-0.5 rounded">HOT</span>
+</div>
+<div class="p-4">
+<p class="text-xs text-gray-400 font-bold uppercase mb-1">REAL GRADE</p>
+<h3 class="font-bold text-sm mb-2 group-hover:text-primary-red transition-colors">RX-0 UNICORN HOOPE</h3>
+<div class="flex items-center gap-2 mb-3">
+<span class="text-primary-red font-bold text-lg">Rp 450.000</span>
+</div>
+<button class="bg-primary-red text-white text-xs font-bold py-2 px-3 rounded w-full hover:bg-red-700 transition-colors">
+              BELI SEKARANG
+            </button>
+</div>
+</a>
+
+<!-- Product Card 5 - Barbatos -->
+<a class="border border-gray-200 rounded overflow-hidden group hover:shadow-lg transition-shadow" href="katalog-barbatos.html" data-grade="MG">
+<div class="relative bg-gray-100 p-6 flex items-center justify-center">
+<img alt="Barbatos" class="max-w-full max-h-48 object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="../images/gundam-barbatos.png"/>
+<span class="absolute top-3 left-3 bg-primary-red text-white text-[10px] font-bold px-2 py-0.5 rounded">FLASH SALE</span>
+</div>
+<div class="p-4">
+<p class="text-xs text-gray-400 font-bold uppercase mb-1">MASTER GRADE</p>
+<h3 class="font-bold text-sm mb-2 group-hover:text-primary-red transition-colors">ASW-G-80 BARBATOS</h3>
+<div class="flex items-center gap-2 mb-3">
+<span class="text-primary-red font-bold text-lg">Rp 650.000</span>
+<span class="text-gray-400 text-sm line-through">Rp 750.000</span>
+</div>
+<button class="bg-primary-red text-white text-xs font-bold py-2 px-3 rounded w-full hover:bg-red-700 transition-colors">
+              BELI SEKARANG
+            </button>
+</div>
+</a>
+
+<!-- Product Card 6 - Exia -->
+<a class="border border-gray-200 rounded overflow-hidden group hover:shadow-lg transition-shadow" href="katalog-exia.html" data-grade="RG">
+<div class="relative bg-gray-100 p-6 flex items-center justify-center">
+<img alt="Exia" class="max-w-full max-h-48 object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="../images/gundam-exia.png"/>
+<span class="absolute top-3 left-3 bg-primary-red text-white text-[10px] font-bold px-2 py-0.5 rounded">FLASH SALE</span>
+</div>
+<div class="p-4">
+<p class="text-xs text-gray-400 font-bold uppercase mb-1">REAL GRADE</p>
+<h3 class="font-bold text-sm mb-2 group-hover:text-primary-red transition-colors">GN-000 EXIA</h3>
+<div class="flex items-center gap-2 mb-3">
+<span class="text-primary-red font-bold text-lg">Rp 480.000</span>
+<span class="text-gray-400 text-sm line-through">Rp 550.000</span>
+</div>
+<button class="bg-primary-red text-white text-xs font-bold py-2 px-3 rounded w-full hover:bg-red-700 transition-colors">
+              BELI SEKARANG
+            </button>
+</div>
+</a>
+
+<!-- Product Card 7 - Sazabi -->
+<a class="border border-gray-200 rounded overflow-hidden group hover:shadow-lg transition-shadow" href="katalog-sazabi.html" data-grade="HG">
+<div class="relative bg-gray-100 p-6 flex items-center justify-center">
+<img alt="Sazabi" class="max-w-full max-h-48 object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="../images/sazabi.png"/>
+<span class="absolute top-3 left-3 bg-primary-red text-white text-[10px] font-bold px-2 py-0.5 rounded">PREMIUM</span>
+</div>
+<div class="p-4">
+<p class="text-xs text-gray-400 font-bold uppercase mb-1">MASTER GRADE</p>
+<h3 class="font-bold text-sm mb-2 group-hover:text-primary-red transition-colors">MSN-04 SAZABI</h3>
+<div class="flex items-center gap-2 mb-3">
+<span class="text-primary-red font-bold text-lg">Rp 890.000</span>
+</div>
+<button class="bg-primary-red text-white text-xs font-bold py-2 px-3 rounded w-full hover:bg-red-700 transition-colors">
+              BELI SEKARANG
+            </button>
+</div>
+</a>
+
+<!-- Product Card 8 - Hi-Nu -->
+<a class="border border-gray-200 rounded overflow-hidden group hover:shadow-lg transition-shadow" href="katalog-hi-nu.html" data-grade="MB">
+<div class="relative bg-gray-100 p-6 flex items-center justify-center">
+<img alt="Hi-Nu" class="max-w-full max-h-48 object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="../images/HI-NU .png"/>
+<span class="absolute top-3 left-3 bg-yellow-500 text-white text-[10px] font-bold px-2 py-0.5 rounded">NEW</span>
+</div>
+<div class="p-4">
+<p class="text-xs text-gray-400 font-bold uppercase mb-1">METAL BUILD</p>
+<h3 class="font-bold text-sm mb-2 group-hover:text-primary-red transition-colors">Hi-Nu GUNDAM</h3>
+<div class="flex items-center gap-2 mb-3">
+<span class="text-primary-red font-bold text-lg">Rp 1.850.000</span>
+</div>
+<button class="bg-primary-red text-white text-xs font-bold py-2 px-3 rounded w-full hover:bg-red-700 transition-colors">
+              BELI SEKARANG
+            </button>
+</div>
+</a>
+
+<!-- Product Card 9 - Epyon -->
+<a class="border border-gray-200 rounded overflow-hidden group hover:shadow-lg transition-shadow" href="katalog-epyon.html" data-grade="RG">
+<div class="relative bg-gray-100 p-6 flex items-center justify-center">
+<img alt="Epyon" class="max-w-full max-h-48 object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="../images/epyon.png"/>
+</div>
+<div class="p-4">
+<p class="text-xs text-gray-400 font-bold uppercase mb-1">REAL GRADE</p>
+<h3 class="font-bold text-sm mb-2 group-hover:text-primary-red transition-colors">13 RX-0 EPYON</h3>
+<div class="flex items-center gap-2 mb-3">
+<span class="text-primary-red font-bold text-lg">Rp 520.000</span>
+</div>
+<button class="bg-primary-red text-white text-xs font-bold py-2 px-3 rounded w-full hover:bg-red-700 transition-colors">
+              BELI SEKARANG
+            </button>
+</div>
+</a>
+
+<!-- Product Card 10 - Justice Gundam -->
+<a class="border border-gray-200 rounded overflow-hidden group hover:shadow-lg transition-shadow" href="katalog-justice.html" data-grade="HG">
+<div class="relative bg-gray-100 p-6 flex items-center justify-center">
+<img alt="Justice" class="max-w-full max-h-48 object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="../images/justice.png"/>
+</div>
+<div class="p-4">
+<p class="text-xs text-gray-400 font-bold uppercase mb-1">HIGH GRADE</p>
+<h3 class="font-bold text-sm mb-2 group-hover:text-primary-red transition-colors">ZGMF-1000 JUSTICE</h3>
+<div class="flex items-center gap-2 mb-3">
+<span class="text-primary-red font-bold text-lg">Rp 380.000</span>
+</div>
+<button class="bg-primary-red text-white text-xs font-bold py-2 px-3 rounded w-full hover:bg-red-700 transition-colors">
+              BELI SEKARANG
+            </button>
+</div>
+</a>
+
+<!-- Product Card 11 - God Gundam -->
+<a class="border border-gray-200 rounded overflow-hidden group hover:shadow-lg transition-shadow" href="katalog-god.html" data-grade="PG">
+<div class="relative bg-gray-100 p-6 flex items-center justify-center">
+<img alt="God Gundam" class="max-w-full max-h-48 object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="../images/god .png"/>
+<span class="absolute top-3 left-3 bg-primary-red text-white text-[10px] font-bold px-2 py-0.5 rounded">EXCLUSIVE</span>
+</div>
+<div class="p-4">
+<p class="text-xs text-gray-400 font-bold uppercase mb-1">PERFECT GRADE</p>
+<h3 class="font-bold text-sm mb-2 group-hover:text-primary-red transition-colors">God Gundam</h3>
+<div class="flex items-center gap-2 mb-3">
+<span class="text-primary-red font-bold text-lg">Rp 2.450.000</span>
+</div>
+<button class="bg-primary-red text-white text-xs font-bold py-2 px-3 rounded w-full hover:bg-red-700 transition-colors">
+              BELI SEKARANG
+            </button>
+</div>
+</a>
+
+<!-- Product Card 12 - X1 Gundam -->
+<a class="border border-gray-200 rounded overflow-hidden group hover:shadow-lg transition-shadow" href="katalog-x1.html" data-grade="MB">
+<div class="relative bg-gray-100 p-6 flex items-center justify-center">
+<img alt="X1 Gundam" class="max-w-full max-h-48 object-contain mix-blend-multiply group-hover:scale-105 transition-transform" src="../images/X.png"/>
+</div>
+<div class="p-4">
+<p class="text-xs text-gray-400 font-bold uppercase mb-1">METAL BUILD</p>
+<h3 class="font-bold text-sm mb-2 group-hover:text-primary-red transition-colors">X1 GUNDAM ZERO</h3>
+<div class="flex items-center gap-2 mb-3">
+<span class="text-primary-red font-bold text-lg">Rp 1.650.000</span>
+</div>
+<button class="bg-primary-red text-white text-xs font-bold py-2 px-3 rounded w-full hover:bg-red-700 transition-colors">
+              BELI SEKARANG
+            </button>
+</div>
+</a>
+
+</div>
+</div>
+</section>
+
+<!-- BEGIN: MainFooter -->
+<div id="footer"></div>
+<script src="../components/footer.js"></script>
+<!-- END: MainFooter -->
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('button[data-grade-filter]');
+    const allCards = document.querySelectorAll('.grid > [data-grade]');
+    const searchInput = document.getElementById('searchInput');
+    let currentGrade = 'SEMUA';
+    let currentQuery = '';
+
+    function applyFilters() {
+      allCards.forEach(card => {
+        const cardGrade = card.getAttribute('data-grade');
+        const cardName = (card.querySelector('h3') ? card.querySelector('h3').textContent : '').toLowerCase();
+        const matchesGrade = currentGrade === 'SEMUA' || cardGrade === currentGrade;
+        const matchesQuery = !currentQuery || cardName.includes(currentQuery);
+        if (matchesGrade && matchesQuery) {
+          card.style.display = '';
+          card.style.visibility = 'visible';
+        } else {
+          card.style.display = 'none';
+          card.style.visibility = 'hidden';
+        }
+      });
+    }
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', function() {
+        currentGrade = this.getAttribute('data-grade-filter');
+
+        // Reset active state
+        document.querySelectorAll('button[data-grade-filter]').forEach(b => {
+          b.classList.remove('bg-primary-red', 'text-white');
+          b.classList.add('bg-white', 'text-gray-600', 'border', 'border-gray-300');
+        });
+
+        // Set active state
+        this.classList.remove('bg-white', 'text-gray-600', 'border', 'border-gray-300');
+        this.classList.add('bg-primary-red', 'text-white');
+
+        applyFilters();
+      });
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener('input', function() {
+        currentQuery = this.value.trim().toLowerCase();
+        applyFilters();
+      });
+    }
+  });
+</script>
+
+</body>
+</html>
+<!-- END: Footer -->
+</body></html>
+

@@ -1,0 +1,27 @@
+/* Arsip Artikel — Gunpla Elite Admin Wireframe */
+
+/* Archived tag */
+.tag-arsip {
+  display: inline-block;
+  padding: 3px 8px;
+  background: #6b7280;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 3px;
+}
+
+/* Archive article title */
+.archive-title {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #1e293b;
+}
+.archive-category {
+  font-size: 11px;
+  color: #6b7280;
+  margin-top: 2px;
+}

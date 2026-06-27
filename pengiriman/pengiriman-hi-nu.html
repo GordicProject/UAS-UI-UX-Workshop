@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pengiriman - Hi-Nu Gundam - Gunpla Elite</title>
+<link rel="stylesheet" href="pengiriman-hi-nu.css"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="../home.css"/>
+
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+<div id="navbar-container"></div>
+<script src="../components/navbar.js"></script>
+
+<div class="bg-gray-50 border-b border-gray-200 py-3"><div class="container mx-auto px-4 text-xs text-gray-500"><a class="hover:text-primary-red transition-colors" href="../home.html">HOME</a><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><a class="hover:text-primary-red transition-colors" href="../katalog/katalog.html">KATALOG</a><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><a class="hover:text-primary-red transition-colors" href="../katalog/katalog-hi-nu.html">HI-NU GUNDAM</a><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><span class="text-gray-900 font-bold">PENGIRIMAN</span></div></div>
+
+<section class="py-12"><div class="container mx-auto px-4"><div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+
+<div class="lg:col-span-2">
+<h1 class="text-3xl font-oswald font-bold uppercase mb-8">Pengiriman</h1>
+<div class="mb-10">
+<h2 class="text-lg font-bold uppercase mb-4 flex items-center gap-2 font-oswald"><span class="w-8 h-8 bg-primary-red text-white rounded-full flex items-center justify-center text-sm">1</span>Nama Penerima</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="block text-base font-bold text-gray-500 uppercase mb-1">Nama Lengkap</label><input class="w-full border border-gray-300 rounded px-4 py-4 text-base focus:border-primary-red focus:outline-none" placeholder="Masukkan nama lengkap"/></div><div><label class="block text-base font-bold text-gray-500 uppercase mb-1">Nomor Telepon</label><input class="w-full border border-gray-300 rounded px-4 py-4 text-base focus:border-primary-red focus:outline-none" placeholder="08xxxxxxxxxx"/></div><div><label class="block text-base font-bold text-gray-500 uppercase mb-1">Email</label><input class="w-full border border-gray-300 rounded px-4 py-4 text-base focus:border-primary-red focus:outline-none" placeholder="email@example.com" type="email"/></div></div>
+</div>
+<div class="mb-10">
+<h2 class="text-lg font-bold uppercase mb-4 flex items-center gap-2 font-oswald"><span class="w-8 h-8 bg-primary-red text-white rounded-full flex items-center justify-center text-sm">2</span>Alamat Pengiriman</h2>
+<div class="space-y-4"><div><label class="block text-base font-bold text-gray-500 uppercase mb-1">Kota / Kabupaten</label><select class="w-full border border-gray-300 rounded px-4 py-4 text-base focus:border-primary-red focus:outline-none"><option>Pilih Kota</option><option>Surabaya</option><option>Sidoarjo</option><option>Gresik</option><option>Malang</option><option>Kediri</option><option>Jember</option></select></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="block text-base font-bold text-gray-500 uppercase mb-1">Kecamatan</label><input class="w-full border border-gray-300 rounded px-4 py-4 text-base focus:border-primary-red focus:outline-none" placeholder="Nama kecamatan"/></div><div><label class="block text-base font-bold text-gray-500 uppercase mb-1">Kode Pos</label><input class="w-full border border-gray-300 rounded px-4 py-4 text-base focus:border-primary-red focus:outline-none" placeholder="XXXXX"/></div></div><div><label class="block text-base font-bold text-gray-500 uppercase mb-1">Alamat Lengkap</label><textarea class="w-full border border-gray-300 rounded px-4 py-4 text-base focus:border-primary-red focus:outline-none" placeholder="Jalan, nomor rumah, RT/RW, kelurahan..." rows="3"></textarea></div></div>
+</div>
+<div class="mb-10">
+<h2 class="text-lg font-bold uppercase mb-4 flex items-center gap-2 font-oswald"><span class="w-8 h-8 bg-primary-red text-white rounded-full flex items-center justify-center text-sm">3</span>Metode Pengiriman</h2>
+<div class="space-y-3"><label class="flex items-center gap-4 border border-gray-200 rounded p-4 cursor-pointer hover:border-primary-red transition-colors"><input  class="w-4 h-4 accent-primary-red" name="shipping-hinu" type="radio" checked/><div class="flex-1"><p class="font-bold text-sm">Reguler (2-3 hari kerja)</p><p class="text-xs text-gray-500">Surabaya &amp; sekitarnya</p></div><p class="font-bold text-primary-red">Rp 15.000</p></label></div>
+</div>
+<div class="mb-10">
+<h2 class="text-lg font-bold uppercase mb-4 flex items-center gap-2 font-oswald"><span class="w-8 h-8 bg-primary-red text-white rounded-full flex items-center justify-center text-sm">4</span>Metode Pembayaran</h2>
+<div class="space-y-3"><label class="flex items-center gap-4 border border-gray-200 rounded p-4 cursor-pointer hover:border-primary-red transition-colors"><input  class="w-4 h-4 accent-primary-red" name="payment-hinu" type="radio" checked/><div class="flex-1"><p class="font-bold text-sm">QRIS</p><p class="text-xs text-gray-500">Scan QR Code</p></div></label></div>
+</div>
+<div class="flex gap-4">
+<a href="../katalog/katalog-hi-nu.html" class="border border-gray-300 text-gray-700 font-bold py-3 px-6 rounded hover:bg-gray-50 transition-colors flex-1 text-center"><i class="fas fa-arrow-left mr-2"></i> KEMBALI</a>
+<a href="../pembayaran/pembayaran-hi-nu.html" class="bg-primary-red text-white font-bold py-3 px-8 rounded hover:bg-red-700 transition-colors flex-1 flex items-center justify-center gap-2">KONFIRMASI PESANAN</a>
+</div>
+</div>
+
+<div class="lg:col-span-1">
+<div class="sticky top-24 bg-gray-50 border border-gray-200 rounded-lg p-6">
+<h3 class="text-lg font-oswald font-bold uppercase mb-6">Ringkasan Pesanan</h3>
+<div class="space-y-4 mb-6 pb-6 border-b border-gray-200" id="cartItemsSummary"></div>
+
+<div class="space-y-3 text-sm" id="summaryTotals">
+<div class="flex justify-between">
+<span class="text-gray-600">Subtotal</span>
+<span id="summarySubtotal">Rp 0</span>
+</div>
+<div class="flex justify-between">
+<span class="text-gray-600">Pengiriman</span>
+<span id="summaryShipping">Rp 15.000</span>
+</div>
+<div class="flex justify-between">
+<span class="text-gray-600">Pajak (PPN 11%)</span>
+<span id="summaryTax">Rp 0</span>
+</div>
+<div class="border-t border-gray-300 pt-3 mt-3 flex justify-between items-center">
+<span class="font-oswald text-base uppercase">Total</span>
+<span class="font-oswald text-xl font-bold text-primary-red" id="summaryTotal">Rp 0</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- BEGIN: MainFooter -->
+<div id="footer"></div>
+<script src="../components/footer.js"></script>
+<!-- END: MainFooter -->
+
+<script>
+function formatIDR(n) {
+  return 'Rp ' + n.toLocaleString('id-ID');
+}
+
+const item = {
+  name: 'Hi-Nu GUNDAM',
+  grade: 'METAL BUILD',
+  price: 1850000,
+  qty: 1,
+  image: '../images/gundam-hi-nu.png'
+};
+
+document.getElementById('cartItemsSummary').innerHTML = '<div class="flex gap-4 p-4 bg-white rounded border border-gray-200">' +
+  '<div class="w-20 h-20 flex-shrink-0 bg-gray-100 rounded flex items-center justify-center">' +
+  '<img alt="' + item.name + '" class="max-w-full max-h-full object-contain mix-blend-multiply" src="' + item.image + '">' +
+  '</div>' +
+  '<div class="flex-grow min-w-0">' +
+  '<h4 class="font-bold text-sm mb-1 line-clamp-1">' + item.name + '</h4>' +
+  '<p class="text-xs text-gray-500 uppercase mb-2">' + item.grade + '</p>' +
+  '<p class="text-primary-red font-bold text-sm">' + formatIDR(item.price * item.qty) + '</p>' +
+  '</div>' +
+  '<div class="text-right flex-shrink-0">' +
+  '<p class="text-xs text-gray-500 uppercase mb-1">Qty: ' + item.qty + '</p>' +
+  '</div></div>';
+
+const subtotal = item.price;
+const shippingCost = 15000;
+const tax = Math.round(subtotal * 0.11);
+const total = subtotal + shippingCost + tax;
+
+document.getElementById('summarySubtotal').textContent = formatIDR(subtotal);
+document.getElementById('summaryShipping').textContent = formatIDR(shippingCost);
+document.getElementById('summaryTax').textContent = formatIDR(tax);
+document.getElementById('summaryTotal').textContent = formatIDR(total);
+</script>
+
+</body></html>

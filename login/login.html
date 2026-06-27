@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login - Gunpla Elite</title>
+<link rel="stylesheet" href="../home.css"/>
+<link rel="stylesheet" href="login.css"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;500;600;700&display=swap');
+  body { font-family: 'Inter', sans-serif; }
+  h1, h2, h3, h4, .font-oswald { font-family: 'Oswald', sans-serif; }
+  .bg-primary-red { background-color: #d32f2f; }
+  .text-primary-red { color: #d32f2f; }
+  .border-primary-red { border-color: #d32f2f; }
+  .bg-primary-blue { background-color: #1e3a8a; }
+</style>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+<!-- BEGIN: MainHeader -->
+<div id="navbar-container"></div>
+<script src="../components/navbar.js"></script>
+<!-- END: MainHeader -->
+
+<!-- Breadcrumb -->
+<div class="bg-gray-50 border-b border-gray-200 py-3">
+<div class="container mx-auto px-4 text-xs text-gray-500">
+<a class="hover:text-primary-red transition-colors" href="../home.html">HOME</a>
+<span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span>
+<span class="text-gray-900 font-bold">LOGIN</span>
+</div>
+</div>
+
+<!-- Login Section -->
+<section class="login-section py-16">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center max-w-6xl mx-auto">
+
+<!-- Left: Form -->
+<div class="login-form-wrap">
+<div class="inline-block bg-primary-red text-white text-[10px] font-bold px-3 py-1 rounded-sm uppercase tracking-wider mb-4">Selamat Datang Kembali</div>
+<h1 class="font-oswald text-4xl md:text-5xl font-bold uppercase mb-3 leading-tight">Masuk ke <span class="text-primary-red">Akun</span> Anda</h1>
+<p class="text-gray-500 mb-8">Lanjutkan petualangan membangun koleksi Gunpla Anda. Login untuk mengakses pesanan, wishlist, dan penawaran eksklusif.</p>
+
+<form id="loginForm" class="space-y-5">
+
+<div class="form-group">
+<label class="form-label" for="loginEmail">Email</label>
+<div class="input-icon-wrap">
+<i class="fas fa-envelope input-icon"></i>
+<input class="form-input" id="loginEmail" type="email" placeholder="nama@email.com" required/>
+</div>
+</div>
+
+<div class="form-group">
+<label class="form-label" for="loginPassword">Password</label>
+<div class="input-icon-wrap">
+<i class="fas fa-lock input-icon"></i>
+<input class="form-input" id="loginPassword" type="password" placeholder="Masukkan password" required/>
+<button type="button" class="toggle-password" id="togglePassword" tabindex="-1">
+<i class="fas fa-eye"></i>
+</button>
+</div>
+</div>
+
+<div class="flex items-center justify-between text-sm">
+<label class="flex items-center gap-2 text-gray-600 cursor-pointer">
+<input type="checkbox" class="accent-primary-red" id="rememberMe"/>
+<span>Ingat saya</span>
+</label>
+<a href="#" class="text-primary-red font-semibold hover:underline">Lupa password?</a>
+</div>
+
+<button type="submit" class="btn-primary w-full">
+MASUK <i class="fas fa-arrow-right ml-2"></i>
+</button>
+
+<div class="text-center mt-3">
+<a href="../admin/dashboard.html" class="inline-flex items-center justify-center gap-2 w-full py-3 border border-gray-800 text-gray-800 font-semibold text-sm uppercase tracking-wider hover:bg-gray-800 hover:text-white transition-colors rounded-sm">
+<i class="fas fa-shield-halved"></i> Masuk sebagai Admin
+</a>
+</div>
+
+<div class="relative my-6">
+<div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-200"></div></div>
+<div class="relative flex justify-center text-xs"><span class="bg-white px-3 text-gray-500 uppercase tracking-wider">Atau masuk dengan</span></div>
+</div>
+
+<div class="grid grid-cols-2 gap-3">
+<button type="button" class="btn-social">
+<i class="fab fa-google text-red-500"></i> Google
+</button>
+<button type="button" class="btn-social">
+<i class="fab fa-facebook text-blue-600"></i> Facebook
+</button>
+</div>
+
+<p class="text-center text-sm text-gray-600 mt-6">
+Belum punya akun?
+<a href="register.html" class="text-primary-red font-bold hover:underline">Daftar sekarang</a>
+</p>
+
+</form>
+</div>
+
+<!-- Right: Visual -->
+<div class="login-visual-wrap hidden lg:block">
+<div class="login-visual-card">
+<img alt="Gundam Login Visual" src="../images/gundam-freedom.png" class="login-visual-img"/>
+<div class="login-visual-overlay">
+<h3 class="font-oswald text-2xl font-bold uppercase mb-2">GUNPLA <span class="text-primary-red">ELITE</span></h3>
+<p class="text-sm text-gray-200">"Bangun legenda. Rakit mimpi. Satu kit pada satu waktu."</p>
+</div>
+</div>
+<div class="login-feature-list mt-6 space-y-3">
+<div class="login-feature-item">
+<i class="fas fa-truck-fast text-primary-red"></i>
+<span>Gratis ongkir untuk member</span>
+</div>
+<div class="login-feature-item">
+<i class="fas fa-heart text-primary-red"></i>
+<span>Wishlist &amp; notifikasi restock</span>
+</div>
+<div class="login-feature-item">
+<i class="fas fa-ticket text-primary-red"></i>
+<span>Promo eksklusif member</span>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- Success Toast -->
+<div id="toastSuccess" class="toast-success">
+<i class="fas fa-check-circle"></i>
+<span id="toastMessage">Login berhasil!</span>
+</div>
+
+<script>
+function formatIDR(n) { return 'Rp ' + n.toLocaleString('id-ID'); }
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Toggle password visibility
+  var toggleBtn = document.getElementById('togglePassword');
+  var pwdInput = document.getElementById('loginPassword');
+  toggleBtn.addEventListener('click', function() {
+    if (pwdInput.type === 'password') {
+      pwdInput.type = 'text';
+      toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+    } else {
+      pwdInput.type = 'password';
+      toggleBtn.innerHTML = '<i class="fas fa-eye"></i>';
+    }
+  });
+
+  // Form submit (demo)
+  var form = document.getElementById('loginForm');
+  var toast = document.getElementById('toastSuccess');
+  var toastMsg = document.getElementById('toastMessage');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var email = document.getElementById('loginEmail').value.trim();
+    var pwd = document.getElementById('loginPassword').value;
+    if (!email || !pwd) return;
+
+    var role = 'Customer';
+    var name = email.split('@')[0];
+    if (email === 'admin@gunpla.id' && pwd === 'admin123') {
+      role = 'Super Admin';
+      name = 'Admin Gunpla';
+    }
+
+    try {
+      localStorage.setItem('gunpla_user', JSON.stringify({
+        email: email,
+        name: name,
+        role: role,
+        loggedInAt: new Date().toISOString()
+      }));
+    } catch (err) {}
+
+    toastMsg.textContent = 'Login berhasil! Mengarahkan ke beranda...';
+    toast.classList.add('show');
+    setTimeout(function() {
+      window.location.href = '../home.html';
+    }, 1200);
+  });
+});
+</script>
+
+<!-- BEGIN: MainFooter -->
+<div id="footer"></div>
+<script src="../components/footer.js"></script>
+<!-- END: MainFooter -->
+
+</body>
+</html>

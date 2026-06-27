@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Gunpla Elite — Wireframe</title>
+<style>
+/* ===================== Reset & Base ===================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #ffffff; color: #424242; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.4; }
+a { text-decoration: none; color: inherit; }
+img, svg { display: block; max-width: 100%; }
+
+/* ===================== Layout ===================== */
+.container { max-width: 1280px; margin: 0 auto; padding: 0 16px; width: 100%; }
+.container-narrow { max-width: 896px; margin: 0 auto; padding: 0 16px; width: 100%; }
+.wireframe-section { padding: 64px 0; border-bottom: 1px solid #f0f0f0; }
+.wireframe-section.tight { padding: 48px 0; }
+.wireframe-section.alt-bg { background: #f5f5f5; }
+.wireframe-section.dark-bg { background: #424242; color: #e0e0e0; }
+.wireframe-section.dark-bg .wf-section-label,
+.wireframe-section.dark-bg .wf-section-title { color: #bdbdbd; }
+
+.wf-section-label { font-size: 10px; font-weight: 700; color: #9e9e9e; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; }
+.wf-section-eyebrow { font-size: 11px; font-weight: 700; color: #757575; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
+.wf-section-title { font-size: 24px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.wf-section-title.lg { font-size: 30px; }
+.wf-section-sub { font-size: 13px; color: #757575; margin-bottom: 24px; max-width: 600px; }
+.wf-head-with-side { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid #bdbdbd; padding-bottom: 16px; margin-bottom: 32px; gap: 16px; }
+.wf-head-with-side .wf-section-sub { margin-bottom: 0; }
+
+/* ===================== Wireframe Utilities ===================== */
+.wf-img {
+  background: #e0e0e0;
+  border: 1px solid #bdbdbd;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  overflow: hidden;
+  color: #757575; font-size: 11px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+}
+.wf-img .x-lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.wf-img .x-lines svg { width: 100%; height: 100%; display: block; }
+.wf-img.lg { aspect-ratio: 4 / 3; }
+.wf-img.md { aspect-ratio: 1 / 1; }
+.wf-img.sm { aspect-ratio: 1 / 1; min-height: 80px; }
+.wf-img.thumb { aspect-ratio: 1 / 1; min-height: 60px; }
+.wf-img.banner { aspect-ratio: 21 / 9; min-height: 220px; }
+.wf-img.tall { aspect-ratio: 3 / 4; min-height: 200px; }
+
+.wf-img.icon-circle { width: 48px; height: 48px; border-radius: 999px; aspect-ratio: 1; min-height: 0; }
+.wf-img.icon-sm { width: 24px; height: 24px; border-radius: 999px; aspect-ratio: 1; min-height: 0; }
+.wf-img.avatar { width: 40px; height: 40px; border-radius: 999px; aspect-ratio: 1; min-height: 0; background: #bdbdbd; color: #fff; }
+.wf-img.h-192 { aspect-ratio: auto; height: 192px; }
+.wf-img.h-256 { aspect-ratio: auto; height: 256px; }
+
+.wf-line { display: block; height: 12px; background: #e0e0e0; border-radius: 2px; margin-bottom: 8px; }
+.wf-line.sm { width: 40%; }
+.wf-line.md { width: 70%; }
+.wf-line.lg { width: 90%; }
+.wf-line.full { width: 100%; }
+.wf-line.tall { height: 18px; }
+.wf-line.huge { height: 28px; }
+.wf-line.dark { background: #bdbdbd; }
+.wf-line.darkest { background: #757575; }
+
+.wf-cta {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 12px 24px; border: 2px solid #212121; color: #212121;
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+  background: transparent;
+}
+.wf-cta.filled { background: #212121; color: #ffffff; }
+.wf-cta.sm { padding: 8px 16px; font-size: 10px; }
+.wf-cta.block { display: flex; width: 100%; }
+
+.wf-input {
+  display: flex; align-items: center;
+  height: 44px; padding: 0 16px;
+  border: 1px solid #757575; background: #ffffff;
+  color: #757575; font-size: 12px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1px;
+}
+
+.wf-tag {
+  display: inline-block; padding: 3px 8px;
+  background: #212121; color: #ffffff;
+  font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+}
+.wf-tag.outline { background: transparent; color: #212121; border: 1px solid #212121; }
+.wf-tag.gray { background: #bdbdbd; color: #212121; }
+.wf-tag.light { background: #e0e0e0; color: #212121; }
+
+.wf-stars { display: inline-flex; gap: 3px; align-items: center; }
+.wf-star { width: 12px; height: 12px; border: 1px solid #757575; transform: rotate(45deg); display: inline-block; }
+.wf-stars-count { font-size: 10px; color: #757575; margin-left: 6px; font-weight: 700; }
+
+/* ===================== 01 NAVBAR ===================== */
+.wf-navbar { background: #ffffff; border-bottom: 1px solid #bdbdbd; padding: 16px 0; position: sticky; top: 0; z-index: 100; }
+.wf-navbar-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.wf-navbar-brand { font-size: 18px; font-weight: 700; color: #212121; letter-spacing: 2px; text-transform: uppercase; min-width: 140px; }
+.wf-navbar-brand .accent { color: #757575; }
+.wf-navbar-links { display: flex; gap: 8px; flex: 1; justify-content: center; }
+.wf-navbar-link { display: inline-flex; align-items: center; justify-content: center; padding: 10px 18px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #424242; min-width: 80px; }
+.wf-navbar-link.active { background: #212121; color: #ffffff; }
+.wf-navbar-actions { display: flex; align-items: center; gap: 12px; }
+
+/* ===================== 02 HERO SECTION ===================== */
+.wf-hero { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; padding: 24px 0; min-height: 600px; }
+.wf-hero-text .wf-line { margin-bottom: 14px; }
+.wf-hero-text .wf-line.huge { margin-bottom: 22px; }
+.wf-hero-text .wf-cta { margin-top: 24px; }
+
+/* ===================== 03 TRUSTBAR ===================== */
+.wf-trust-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; text-align: center; }
+.wf-trust-cell { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 16px; }
+.wf-trust-cell .wf-line { margin-bottom: 6px; }
+
+/* ===================== 04 PARTNERS ===================== */
+.wf-partners { text-align: center; }
+.wf-partners-label { margin-bottom: 16px; text-align: center; }
+.wf-partners-logos { display: flex; gap: 32px; justify-content: center; align-items: center; }
+.wf-logo-box { width: 140px; height: 32px; }
+
+/* ===================== 05 EXPLORE GRADES ===================== */
+.wf-grades-head { border-left: 4px solid #bdbdbd; padding-left: 16px; margin-bottom: 32px; }
+.wf-grades { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+.wf-grade-card { border: 1px solid #bdbdbd; padding: 24px 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 120px; text-align: center; }
+.wf-grade-card .grade-title { font-size: 22px; font-weight: 700; color: #212121; margin-bottom: 6px; }
+.wf-grade-card .grade-sub { font-size: 10px; color: #757575; text-transform: uppercase; letter-spacing: 1px; }
+
+/* ===================== 06 FLASH SALE ===================== */
+.wf-flash { display: grid; grid-template-columns: 1fr 2fr; gap: 48px; align-items: center; }
+.wf-flash-products { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.wf-flash-card { background: #ffffff; border: 1px solid #bdbdbd; display: grid; grid-template-columns: 33% 1fr; overflow: hidden; }
+.wf-flash-card-img { padding: 16px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; }
+.wf-flash-card-body { padding: 24px; display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+.wf-flash-card-body .wf-line { margin-bottom: 4px; }
+.wf-flash-card-price-row { display: flex; align-items: baseline; gap: 12px; margin: 8px 0 16px; }
+
+/* ===================== 07 NEW ARRIVALS ===================== */
+.wf-na-top { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 24px; }
+.wf-na-feature { border: 1px solid #bdbdbd; background: #ffffff; display: grid; grid-template-columns: 1fr 1fr; position: relative; }
+.wf-na-feature .badges { position: absolute; top: 16px; left: 16px; display: flex; gap: 8px; z-index: 2; }
+.wf-na-feature-img { padding: 32px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; min-height: 280px; }
+.wf-na-feature-body { padding: 32px; display: flex; flex-direction: column; justify-content: center; gap: 10px; }
+.wf-na-feature-specs { border-top: 1px solid #e0e0e0; padding-top: 12px; margin: 12px 0; display: flex; flex-direction: column; gap: 10px; }
+.wf-na-feature-spec { display: flex; justify-content: space-between; border-bottom: 1px solid #f0f0f0; padding-bottom: 6px; }
+.wf-na-side { border: 1px solid #bdbdbd; background: #ffffff; display: flex; flex-direction: column; position: relative; }
+.wf-na-side .badges { position: absolute; top: 16px; left: 16px; display: flex; gap: 8px; z-index: 2; }
+.wf-na-side-img { padding: 24px; flex: 1; background: #f5f5f5; display: flex; align-items: center; justify-content: center; min-height: 280px; }
+.wf-na-side-body { padding: 16px; border-top: 1px solid #e0e0e0; }
+.wf-na-bottom { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.wf-na-small { border: 1px solid #bdbdbd; background: #ffffff; display: flex; flex-direction: column; position: relative; }
+.wf-na-small .badges { position: absolute; top: 16px; left: 16px; display: flex; gap: 8px; z-index: 2; }
+.wf-na-small-img { padding: 24px; background: #f5f5f5; min-height: 192px; display: flex; align-items: center; justify-content: center; }
+.wf-na-small-body { padding: 16px; border-top: 1px solid #e0e0e0; }
+
+/* ===================== 08 PRE-ORDER HUB ===================== */
+.wf-po-head { border-bottom: 2px solid #bdbdbd; padding-bottom: 16px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; }
+.wf-po-head-side { max-width: 280px; text-align: right; }
+.wf-po-list { display: flex; flex-direction: column; gap: 16px; }
+.wf-po-row { border: 1px solid #bdbdbd; padding: 16px; display: grid; grid-template-columns: 96px 1fr 200px; gap: 24px; align-items: center; }
+.wf-po-row-img { padding: 8px; background: #f5f5f5; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; }
+.wf-po-row-body { display: flex; flex-direction: column; gap: 6px; }
+.wf-po-row-side { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+
+/* ===================== 09 TOP RATED ===================== */
+.wf-tr-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.wf-tr-card { border: 1px solid #bdbdbd; background: #ffffff; display: flex; flex-direction: column; position: relative; }
+.wf-tr-card .wf-tag { position: absolute; top: 12px; left: 12px; z-index: 2; }
+.wf-tr-card-img { padding: 16px; background: #f5f5f5; height: 192px; display: flex; align-items: center; justify-content: center; }
+.wf-tr-card-body { padding: 16px; display: flex; flex-direction: column; flex-grow: 1; }
+.wf-tr-card-body .wf-line { margin-bottom: 4px; }
+.wf-tr-card-stars { margin-bottom: 8px; }
+.wf-tr-card-title { margin-bottom: 16px; }
+.wf-tr-card-price { font-size: 18px; font-weight: 700; color: #212121; margin-bottom: 12px; }
+.wf-tr-card-cta { margin-top: auto; }
+
+/* ===================== 10 COMMUNITY GALLERY ===================== */
+.wf-gallery-head { text-align: center; margin-bottom: 40px; }
+.wf-gallery-head .wf-section-sub { margin-left: auto; margin-right: auto; }
+.wf-gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.wf-gallery-large { grid-column: span 2; grid-row: span 2; aspect-ratio: 1; }
+.wf-gallery-wide { grid-column: span 2; aspect-ratio: 2 / 1; }
+
+/* ===================== 11 REVIEWS ===================== */
+.wf-reviews-head { text-align: center; margin-bottom: 40px; }
+.wf-reviews-head .wf-section-sub { margin-left: auto; margin-right: auto; }
+.wf-reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.wf-review-card { background: #ffffff; border: 1px solid #bdbdbd; padding: 24px; }
+.wf-review-card .wf-stars { margin-bottom: 16px; }
+.wf-review-card .wf-line { margin-bottom: 6px; }
+.wf-review-quote { margin-bottom: 24px; }
+.wf-review-author { display: flex; align-items: center; gap: 12px; }
+.wf-review-author .wf-line { margin-bottom: 4px; }
+.wf-review-author-text { display: flex; flex-direction: column; gap: 4px; }
+
+/* ===================== 12 ARTICLES ===================== */
+.wf-art-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.wf-art-card { border: 1px solid #bdbdbd; background: #ffffff; display: flex; flex-direction: column; overflow: hidden; }
+.wf-art-card-img { position: relative; height: 192px; }
+.wf-art-card-img .wf-img { height: 100%; aspect-ratio: auto; }
+.wf-art-card-img .wf-tag { position: absolute; top: 16px; left: 16px; }
+.wf-art-card-body { padding: 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.wf-art-card-body .wf-line { margin-bottom: 4px; }
+.wf-art-card-foot { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; margin-top: 12px; border-top: 1px solid #f0f0f0; }
+
+/* ===================== 13 NEWSLETTER ===================== */
+.wf-news { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.wf-news-text .wf-line { margin-bottom: 10px; }
+.wf-news-form { display: flex; gap: 0; }
+.wf-news-form .wf-input { flex: 1; border-right: none; }
+.wf-news-form .wf-cta { border-left: none; }
+
+/* ===================== 14 PRE-FOOTER LOCATION ===================== */
+.wf-loc { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.wf-loc-map { padding: 8px; background: #ffffff; border: 1px solid #bdbdbd; }
+.wf-loc-map-inner { position: relative; height: 256px; background: #e0e0e0; display: flex; align-items: center; justify-content: center; }
+.wf-loc-pin { width: 28px; height: 28px; border-radius: 50%; background: #212121; border: 3px solid #ffffff; box-shadow: 0 0 0 2px #424242; }
+.wf-loc-tag { position: absolute; top: 16px; left: 16px; background: #ffffff; padding: 4px 10px; font-size: 10px; font-weight: 700; color: #424242; text-transform: uppercase; letter-spacing: 1px; }
+.wf-loc-info { display: flex; flex-direction: column; gap: 24px; }
+.wf-loc-info-title { margin-bottom: 8px; }
+.wf-loc-row { display: flex; gap: 16px; align-items: flex-start; }
+.wf-loc-row-body { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.wf-loc-row .wf-line { margin-bottom: 4px; }
+
+/* ===================== 15 FOOTER ===================== */
+.wf-footer { background: #212121; color: #bdbdbd; padding: 64px 0 32px; }
+.wf-footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 32px; margin-bottom: 48px; }
+.wf-footer-brand { font-size: 18px; font-weight: 700; color: #ffffff; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+.wf-footer-desc { font-size: 12px; line-height: 1.6; margin-bottom: 24px; color: #9e9e9e; }
+.wf-socials { display: flex; gap: 12px; }
+.wf-social { width: 36px; height: 36px; border-radius: 999px; border: 1px solid #616161; background: #424242; }
+.wf-footer-col h4 { font-size: 11px; font-weight: 700; color: #ffffff; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; }
+.wf-footer-col .wf-line { background: #424242; margin-bottom: 8px; }
+.wf-footer-col .wf-line.dark { background: #616161; }
+.wf-footer-bottom { border-top: 1px solid #424242; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.wf-footer-meta { font-size: 10px; color: #757575; display: flex; gap: 16px; }
+
+/* ===================== Responsive ===================== */
+@media (max-width: 900px) {
+  .wireframe-section { padding: 40px 0; }
+  .wf-hero, .wf-flash, .wf-news, .wf-loc { grid-template-columns: 1fr; gap: 24px; }
+  .wf-trust-row { grid-template-columns: 1fr; gap: 16px; }
+  .wf-grades { grid-template-columns: repeat(2, 1fr); }
+  .wf-tr-grid { grid-template-columns: repeat(2, 1fr); }
+  .wf-flash-products { grid-template-columns: 1fr; }
+  .wf-na-top { grid-template-columns: 1fr; }
+  .wf-na-feature { grid-template-columns: 1fr; }
+  .wf-na-bottom { grid-template-columns: repeat(2, 1fr); }
+  .wf-tr-grid, .wf-reviews-grid, .wf-art-grid { grid-template-columns: 1fr; }
+  .wf-gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .wf-gallery-large, .wf-gallery-wide { grid-column: span 2; grid-row: auto; aspect-ratio: 16 / 9; }
+  .wf-po-row { grid-template-columns: 1fr; text-align: center; }
+  .wf-po-row-side { align-items: center; }
+  .wf-po-head { flex-direction: column; align-items: flex-start; }
+  .wf-po-head-side { text-align: left; max-width: none; }
+  .wf-footer-grid { grid-template-columns: 1fr; }
+  .wf-navbar-links { display: none; }
+  .wf-head-with-side { flex-direction: column; align-items: flex-start; }
+  .wf-flash-card { grid-template-columns: 100px 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== 01 NAVBAR ===================== -->
+<header class="wf-navbar">
+  <div class="container wf-navbar-inner">
+    <div class="wf-navbar-brand">GUNPLA <span class="accent">ELITE</span></div>
+    <nav class="wf-navbar-links">
+      <a class="wf-navbar-link active">Home</a>
+      <a class="wf-navbar-link">Katalog</a>
+      <a class="wf-navbar-link">Artikel</a>
+    </nav>
+    <div class="wf-navbar-actions">
+      <div class="wf-img icon-sm" title="Cart" style="position:relative;">
+        <span style="position:absolute;top:-4px;right:-4px;width:14px;height:14px;border-radius:999px;background:#212121;border:2px solid #fff;"></span>
+      </div>
+      <div class="wf-img icon-sm" title="Menu">≡</div>
+      <a class="wf-cta filled sm">Login</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ===================== 02 HERO SECTION ===================== -->
+<section class="wireframe-section">
+  <div class="container">
+    <p class="wf-section-label">01 — Hero</p>
+    <div class="wf-hero">
+      <div class="wf-hero-text">
+        <span class="wf-line huge lg dark"></span>
+        <span class="wf-line huge lg dark"></span>
+        <span class="wf-line huge md dark"></span>
+        <div style="margin-top:24px;">
+          <span class="wf-line full"></span>
+          <span class="wf-line full"></span>
+          <span class="wf-line full"></span>
+          <span class="wf-line md"></span>
+        </div>
+        <a class="wf-cta filled">Belanja Sekarang →</a>
+      </div>
+      <div class="wf-img banner" aria-label="Hero Image Placeholder">
+        <div class="x-lines"><svg viewBox="0 0 100 50" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="50" stroke="#000" stroke-width="1.5"/><line x1="100" y1="0" x2="0" y2="50" stroke="#000" stroke-width="1.5"/></svg></div>
+        IMG
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 03 TRUST BAR ===================== -->
+<section class="wireframe-section tight alt-bg">
+  <div class="container">
+    <p class="wf-section-label">02 — Trust Bar</p>
+    <div class="wf-trust-row">
+      <div class="wf-trust-cell">
+        <div class="wf-img icon-circle"></div>
+        <span class="wf-line tall md darkest"></span>
+        <span class="wf-line full"></span>
+      </div>
+      <div class="wf-trust-cell">
+        <div class="wf-img icon-circle"></div>
+        <span class="wf-line tall md darkest"></span>
+        <span class="wf-line full"></span>
+      </div>
+      <div class="wf-trust-cell">
+        <div class="wf-img icon-circle"></div>
+        <span class="wf-line tall md darkest"></span>
+        <span class="wf-line full"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 04 PARTNERS ===================== -->
+<section class="wireframe-section tight">
+  <div class="container wf-partners">
+    <p class="wf-section-label">03 — Partners</p>
+    <p class="wf-section-eyebrow wf-partners-label">Mitra Resmi</p>
+    <div class="wf-partners-logos">
+      <div class="wf-img md wf-logo-box">Logo</div>
+      <div class="wf-img md wf-logo-box">Logo</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 05 EXPLORE GRADES ===================== -->
+<section class="wireframe-section alt-bg">
+  <div class="container">
+    <p class="wf-section-label">04 — Explore Grades</p>
+    <div class="wf-grades-head">
+      <p class="wf-section-eyebrow">Kategori Tepat</p>
+      <h2 class="wf-section-title">Jelajahi Grade</h2>
+    </div>
+    <div class="wf-grades">
+      <div class="wf-grade-card"><span class="grade-title">SD</span><span class="grade-sub">Super Deformed</span></div>
+      <div class="wf-grade-card"><span class="grade-title">HG</span><span class="grade-sub">High Grade</span></div>
+      <div class="wf-grade-card"><span class="grade-title">RG</span><span class="grade-sub">Real Grade</span></div>
+      <div class="wf-grade-card"><span class="grade-title">MG</span><span class="grade-sub">Master Grade</span></div>
+      <div class="wf-grade-card"><span class="grade-title">PG</span><span class="grade-sub">Perfect Grade</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 06 FLASH SALE ===================== -->
+<section class="wireframe-section dark-bg">
+  <div class="container">
+    <p class="wf-section-label">05 — Flash Sale</p>
+    <div class="wf-flash">
+      <div class="wf-flash-info">
+        <span class="wf-tag">Berakhir Dalam 02:45:10</span>
+        <h2 class="wf-section-title lg" style="margin-top:16px;">Flash</h2>
+        <h2 class="wf-section-title lg">Sale</h2>
+        <p class="wf-section-sub">Penawaran waktu terbatas untuk kit pilihan. Jangan sampai kehabisan.</p>
+      </div>
+      <div class="wf-flash-products">
+        <div class="wf-flash-card">
+          <div class="wf-flash-card-img"><div class="wf-img" style="aspect-ratio:auto;width:100%;height:120px;border:none;background:transparent;"><div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div></div></div>
+          <div class="wf-flash-card-body">
+            <span class="wf-line tall md dark"></span>
+            <div class="wf-flash-card-price-row">
+              <span class="wf-line sm darkest" style="width:auto;min-width:80px;"></span>
+              <span class="wf-line sm" style="width:auto;min-width:60px;text-decoration:line-through;"></span>
+            </div>
+            <a class="wf-cta filled sm block">Beli</a>
+          </div>
+        </div>
+        <div class="wf-flash-card">
+          <div class="wf-flash-card-img"><div class="wf-img" style="aspect-ratio:auto;width:100%;height:120px;border:none;background:transparent;"><div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div></div></div>
+          <div class="wf-flash-card-body">
+            <span class="wf-line tall md dark"></span>
+            <div class="wf-flash-card-price-row">
+              <span class="wf-line sm darkest" style="width:auto;min-width:80px;"></span>
+              <span class="wf-line sm" style="width:auto;min-width:60px;text-decoration:line-through;"></span>
+            </div>
+            <a class="wf-cta filled sm block">Beli</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 07 NEW ARRIVALS ===================== -->
+<section class="wireframe-section alt-bg">
+  <div class="container">
+    <p class="wf-section-label">06 — New Arrivals</p>
+    <div class="wf-head-with-side">
+      <div>
+        <h2 class="wf-section-title lg">Kedatangan Baru</h2>
+        <p class="wf-section-sub">Spesifikasi teknis terbaru dari jalur perakitan. Mahakarya rekayasa miniatur untuk koleksi Anda.</p>
+      </div>
+    </div>
+
+    <!-- Top row: featured + side -->
+    <div class="wf-na-top">
+      <div class="wf-na-feature">
+        <div class="badges"><span class="wf-tag">Baru</span><span class="wf-tag gray">PG</span></div>
+        <div class="wf-na-feature-img"><div class="wf-img" style="aspect-ratio:auto;width:100%;height:100%;border:none;background:transparent;"><div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="1.5"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="1.5"/></svg></div>IMG</div></div>
+        <div class="wf-na-feature-body">
+          <span class="wf-line tall lg dark"></span>
+          <span class="wf-line tall lg dark"></span>
+          <span class="wf-line md darkest" style="margin-top:8px;"></span>
+          <div class="wf-na-feature-specs">
+            <div class="wf-na-feature-spec"><span class="wf-line sm" style="width:auto;min-width:60px;"></span><span class="wf-line sm dark" style="width:auto;min-width:80px;"></span></div>
+            <div class="wf-na-feature-spec"><span class="wf-line sm" style="width:auto;min-width:60px;"></span><span class="wf-line sm dark" style="width:auto;min-width:120px;"></span></div>
+            <div class="wf-na-feature-spec"><span class="wf-line sm" style="width:auto;min-width:60px;"></span><span class="wf-line sm dark" style="width:auto;min-width:80px;"></span></div>
+          </div>
+          <a class="wf-cta filled block">Beli Sekarang</a>
+        </div>
+      </div>
+      <div class="wf-na-side">
+        <div class="badges"><span class="wf-tag">Baru</span><span class="wf-tag light">MG</span></div>
+        <div class="wf-na-side-img"><div class="wf-img" style="aspect-ratio:auto;width:100%;height:100%;border:none;background:transparent;"><div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="1.5"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="1.5"/></svg></div>IMG</div></div>
+        <div class="wf-na-side-body">
+          <span class="wf-line tall md dark"></span>
+          <span class="wf-line sm darkest" style="margin-top:8px;"></span>
+          <a class="wf-cta sm block" style="margin-top:16px;">Lihat Detail</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom row: small cards -->
+    <div class="wf-na-bottom">
+      <div class="wf-na-small">
+        <div class="badges"><span class="wf-tag">Baru</span><span class="wf-tag light">RG</span></div>
+        <div class="wf-na-small-img"><div class="wf-img" style="aspect-ratio:auto;width:100%;height:100%;border:none;background:transparent;"><div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div></div></div>
+        <div class="wf-na-small-body">
+          <span class="wf-line tall md dark"></span>
+          <span class="wf-line sm darkest" style="margin-top:8px;"></span>
+          <a class="wf-cta sm block" style="margin-top:12px;">Lihat Detail</a>
+        </div>
+      </div>
+      <div class="wf-na-small">
+        <div class="badges"><span class="wf-tag">Baru</span><span class="wf-tag light">HG</span></div>
+        <div class="wf-na-small-img"><div class="wf-img" style="aspect-ratio:auto;width:100%;height:100%;border:none;background:transparent;"><div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div></div></div>
+        <div class="wf-na-small-body">
+          <span class="wf-line tall md dark"></span>
+          <span class="wf-line sm darkest" style="margin-top:8px;"></span>
+          <a class="wf-cta sm block" style="margin-top:12px;">Lihat Detail</a>
+        </div>
+      </div>
+      <div class="wf-na-small" style="opacity:0.3;">
+        <div class="badges"></div>
+        <div class="wf-na-small-img"></div>
+        <div class="wf-na-small-body"></div>
+      </div>
+      <div class="wf-na-small" style="opacity:0.3;">
+        <div class="badges"></div>
+        <div class="wf-na-small-img"></div>
+        <div class="wf-na-small-body"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 08 PRE-ORDER HUB ===================== -->
+<section class="wireframe-section">
+  <div class="container-narrow">
+    <p class="wf-section-label">07 — Pre-Order Hub</p>
+    <div class="wf-po-head">
+      <div>
+        <p class="wf-section-eyebrow">● Segera Datang</p>
+        <h2 class="wf-section-title">Pre-Order Hub</h2>
+      </div>
+      <div class="wf-po-head-side">
+        <span class="wf-line sm" style="margin-bottom:6px;"></span>
+        <span class="wf-line sm"></span>
+        <span class="wf-line sm md"></span>
+      </div>
+    </div>
+    <div class="wf-po-list">
+      <div class="wf-po-row">
+        <div class="wf-po-row-img"><div class="wf-img" style="aspect-ratio:1;width:100%;border:none;background:transparent;"><div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div></div></div>
+        <div class="wf-po-row-body">
+          <span class="wf-tag">PG</span>
+          <span class="wf-line tall md dark"></span>
+          <span class="wf-line full"></span>
+          <span class="wf-line md"></span>
+        </div>
+        <div class="wf-po-row-side">
+          <span class="wf-line sm darkest" style="width:auto;min-width:100px;"></span>
+          <span class="wf-line sm" style="width:auto;min-width:80px;"></span>
+          <a class="wf-cta filled sm">Pre-Order Sekarang →</a>
+        </div>
+      </div>
+      <div class="wf-po-row">
+        <div class="wf-po-row-img"><div class="wf-img" style="aspect-ratio:1;width:100%;border:none;background:transparent;"><div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div></div></div>
+        <div class="wf-po-row-body">
+          <span class="wf-tag">RG</span>
+          <span class="wf-line tall md dark"></span>
+          <span class="wf-line full"></span>
+          <span class="wf-line md"></span>
+        </div>
+        <div class="wf-po-row-side">
+          <span class="wf-line sm darkest" style="width:auto;min-width:100px;"></span>
+          <span class="wf-line sm" style="width:auto;min-width:80px;"></span>
+          <a class="wf-cta filled sm">Pre-Order Sekarang →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 09 TOP RATED ===================== -->
+<section class="wireframe-section">
+  <div class="container">
+    <p class="wf-section-label">08 — Top Rated</p>
+    <div class="wf-head-with-side">
+      <div>
+        <p class="wf-section-eyebrow">Top Tier Kits</p>
+        <h2 class="wf-section-title lg">Rating Tertinggi</h2>
+      </div>
+    </div>
+    <div class="wf-tr-grid">
+      <div class="wf-tr-card">
+        <span class="wf-tag">MG</span>
+        <div class="wf-tr-card-img"><div class="wf-img" style="aspect-ratio:auto;width:100%;height:100%;border:none;background:transparent;"><div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div></div></div>
+        <div class="wf-tr-card-body">
+          <div class="wf-tr-card-stars wf-stars"><span class="wf-star"></span><span class="wf-star"></span><span class="wf-star"></span><span class="wf-star"></span><span class="wf-star"></span><span class="wf-stars-count">(124)</span></div>
+          <span class="wf-line tall md dark wf-tr-card-title"></span>
+          <span class="wf-tr-card-price">Rp 2.500.000</span>
+          <a class="wf-cta filled sm block wf-tr-card-cta">Beli Sekarang</a>
+        </div>
+      </div>
+      <div class="wf-tr-card">
+        <span class="wf-tag">PG</span>
+        <div class="wf-tr-card-img"><div class="wf-img" style="aspect-ratio:auto;width:100%;height:100%;border:none;background:transparent;"><div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div></div></div>
+        <div class="wf-tr-card-body">
+          <div class="wf-tr-card-stars wf-stars"><span class="wf-star"></span><span class="wf-star"></span><span class="wf-star"></span><span class="wf-star"></span><span class="wf-star"></span><span class="wf-stars-count">(89)</span></div>
+          <span class="wf-line tall md dark wf-tr-card-title"></span>
+          <span class="wf-tr-card-price">Rp 4.200.000</span>
+          <a class="wf-cta filled sm block wf-tr-card-cta">Beli Sekarang</a>
+        </div>
+      </div>
+      <div class="wf-tr-card">
+        <span class="wf-tag">RG</span>
+        <div class="wf-tr-card-img"><div class="wf-img" style="aspect-ratio:auto;width:100%;height:100%;border:none;background:transparent;"><div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div></div></div>
+        <div class="wf-tr-card-body">
+          <div class="wf-tr-card-stars wf-stars"><span class="wf-star"></span><span class="wf-star"></span><span class="wf-star"></span><span class="wf-star"></span><span class="wf-star"></span><span class="wf-stars-count">(215)</span></div>
+          <span class="wf-line tall md dark wf-tr-card-title"></span>
+          <span class="wf-tr-card-price">Rp 1.850.000</span>
+          <a class="wf-cta filled sm block wf-tr-card-cta">Beli Sekarang</a>
+        </div>
+      </div>
+      <div class="wf-tr-card">
+        <span class="wf-tag">MG</span>
+        <div class="wf-tr-card-img"><div class="wf-img" style="aspect-ratio:auto;width:100%;height:100%;border:none;background:transparent;"><div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div></div></div>
+        <div class="wf-tr-card-body">
+          <div class="wf-tr-card-stars wf-stars"><span class="wf-star"></span><span class="wf-star"></span><span class="wf-star"></span><span class="wf-star"></span><span class="wf-star"></span><span class="wf-stars-count">(156)</span></div>
+          <span class="wf-line tall md dark wf-tr-card-title"></span>
+          <span class="wf-tr-card-price">Rp 380.000</span>
+          <a class="wf-cta filled sm block wf-tr-card-cta">Beli Sekarang</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 10 COMMUNITY GALLERY ===================== -->
+<section class="wireframe-section">
+  <div class="container">
+    <p class="wf-section-label">09 — Community Gallery</p>
+    <div class="wf-gallery-head">
+      <p class="wf-section-eyebrow">Galeri Komunitas</p>
+      <h2 class="wf-section-title lg">Karya Builder</h2>
+      <p class="wf-section-sub">Lihat mahakarya dari komunitas Gunpla Elite. Bagikan rakitan Anda dengan tagar #GunplaBuilds.</p>
+    </div>
+    <div class="wf-gallery-grid">
+      <div class="wf-img wf-gallery-large"><div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="1.5"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="1.5"/></svg></div></div>
+      <div class="wf-img md"><div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div></div>
+      <div class="wf-img md"><div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div></div>
+      <div class="wf-img md"><div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div></div>
+      <div class="wf-img md"><div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div></div>
+      <div class="wf-img wf-gallery-wide"><div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="1.5"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="1.5"/></svg></div></div>
+      <div class="wf-img md"><div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div></div>
+      <div class="wf-img md"><div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 11 REVIEWS ===================== -->
+<section class="wireframe-section alt-bg">
+  <div class="container">
+    <p class="wf-section-label">10 — Reviews</p>
+    <div class="wf-reviews-head">
+      <h2 class="wf-section-title lg">Ulasan Mereka</h2>
+      <p class="wf-section-sub">Pengalaman langsung dari para builder elit kami. Ketepatan pengiriman dan kualitas kit terjamin.</p>
+    </div>
+    <div class="wf-reviews-grid">
+      <div class="wf-review-card">
+        <div class="wf-stars"><span class="wf-star"></span><span class="wf-star"></span><span class="wf-star"></span><span class="wf-star"></span><span class="wf-star"></span></div>
+        <div class="wf-review-quote">
+          <span class="wf-line full"></span>
+          <span class="wf-line full"></span>
+          <span class="wf-line full"></span>
+          <span class="wf-line md"></span>
+        </div>
+        <div class="wf-review-author">
+          <div class="wf-img avatar">AK</div>
+          <div class="wf-review-author-text">
+            <span class="wf-line tall md dark"></span>
+            <span class="wf-line sm"></span>
+          </div>
+        </div>
+      </div>
+      <div class="wf-review-card">
+        <div class="wf-stars"><span class="wf-star"></span><span class="wf-star"></span><span class="wf-star"></span><span class="wf-star"></span><span class="wf-star"></span></div>
+        <div class="wf-review-quote">
+          <span class="wf-line full"></span>
+          <span class="wf-line full"></span>
+          <span class="wf-line full"></span>
+          <span class="wf-line md"></span>
+        </div>
+        <div class="wf-review-author">
+          <div class="wf-img avatar">BS</div>
+          <div class="wf-review-author-text">
+            <span class="wf-line tall md dark"></span>
+            <span class="wf-line sm"></span>
+          </div>
+        </div>
+      </div>
+      <div class="wf-review-card">
+        <div class="wf-stars"><span class="wf-star"></span><span class="wf-star"></span><span class="wf-star"></span><span class="wf-star"></span><span class="wf-star"></span></div>
+        <div class="wf-review-quote">
+          <span class="wf-line full"></span>
+          <span class="wf-line full"></span>
+          <span class="wf-line full"></span>
+          <span class="wf-line md"></span>
+        </div>
+        <div class="wf-review-author">
+          <div class="wf-img avatar">DR</div>
+          <div class="wf-review-author-text">
+            <span class="wf-line tall md dark"></span>
+            <span class="wf-line sm"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 12 ARTICLES ===================== -->
+<section class="wireframe-section">
+  <div class="container">
+    <p class="wf-section-label">11 — Articles</p>
+    <div class="wf-head-with-side">
+      <div>
+        <h2 class="wf-section-title lg">Artikel Builder</h2>
+        <p class="wf-section-sub">Teknik, review, dan panduan untuk meningkatkan skill merakit Anda.</p>
+      </div>
+      <a class="wf-cta sm">Lihat Artikel →</a>
+    </div>
+    <div class="wf-art-grid">
+      <div class="wf-art-card">
+        <div class="wf-art-card-img">
+          <div class="wf-img"><div class="x-lines"><svg viewBox="0 0 100 75" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="75" stroke="#000" stroke-width="1.5"/><line x1="100" y1="0" x2="0" y2="75" stroke="#000" stroke-width="1.5"/></svg></div></div>
+          <span class="wf-tag">Tutorial</span>
+        </div>
+        <div class="wf-art-card-body">
+          <span class="wf-line tall md dark"></span>
+          <span class="wf-line tall md dark"></span>
+          <span class="wf-line full"></span>
+          <span class="wf-line full"></span>
+          <span class="wf-line md"></span>
+          <div class="wf-art-card-foot">
+            <span class="wf-line sm"></span>
+            <span class="wf-line sm" style="max-width:120px;"></span>
+          </div>
+        </div>
+      </div>
+      <div class="wf-art-card">
+        <div class="wf-art-card-img">
+          <div class="wf-img"><div class="x-lines"><svg viewBox="0 0 100 75" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="75" stroke="#000" stroke-width="1.5"/><line x1="100" y1="0" x2="0" y2="75" stroke="#000" stroke-width="1.5"/></svg></div></div>
+          <span class="wf-tag">Review</span>
+        </div>
+        <div class="wf-art-card-body">
+          <span class="wf-line tall md dark"></span>
+          <span class="wf-line tall md dark"></span>
+          <span class="wf-line full"></span>
+          <span class="wf-line full"></span>
+          <span class="wf-line md"></span>
+          <div class="wf-art-card-foot">
+            <span class="wf-line sm"></span>
+            <span class="wf-line sm" style="max-width:120px;"></span>
+          </div>
+        </div>
+      </div>
+      <div class="wf-art-card">
+        <div class="wf-art-card-img">
+          <div class="wf-img"><div class="x-lines"><svg viewBox="0 0 100 75" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="75" stroke="#000" stroke-width="1.5"/><line x1="100" y1="0" x2="0" y2="75" stroke="#000" stroke-width="1.5"/></svg></div></div>
+          <span class="wf-tag">Teknik</span>
+        </div>
+        <div class="wf-art-card-body">
+          <span class="wf-line tall md dark"></span>
+          <span class="wf-line tall md dark"></span>
+          <span class="wf-line full"></span>
+          <span class="wf-line full"></span>
+          <span class="wf-line md"></span>
+          <div class="wf-art-card-foot">
+            <span class="wf-line sm"></span>
+            <span class="wf-line sm" style="max-width:120px;"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 13 NEWSLETTER ===================== -->
+<section class="wireframe-section dark-bg" style="padding:48px 0;">
+  <div class="container">
+    <p class="wf-section-label">12 — Newsletter</p>
+    <div class="wf-news">
+      <div class="wf-news-text">
+        <h2 class="wf-section-title" style="color:#ffffff;">Gabung Elite Club</h2>
+        <span class="wf-line full" style="background:#757575;"></span>
+        <span class="wf-line full" style="background:#757575;"></span>
+        <span class="wf-line md" style="background:#757575;"></span>
+      </div>
+      <div class="wf-news-form">
+        <div class="wf-input">Alamat Email Anda</div>
+        <a class="wf-cta filled">Daftar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 14 PRE-FOOTER LOCATION ===================== -->
+<section class="wireframe-section alt-bg">
+  <div class="container">
+    <p class="wf-section-label">13 — Pre-Footer Location</p>
+    <div class="wf-loc">
+      <div class="wf-loc-map">
+        <div class="wf-loc-map-inner">
+          <span class="wf-loc-tag">Surabaya Timur</span>
+          <div class="wf-loc-pin"></div>
+        </div>
+      </div>
+      <div class="wf-loc-info">
+        <h2 class="wf-section-title wf-loc-info-title">Kunjungi Toko Kami</h2>
+        <div class="wf-loc-row">
+          <div class="wf-img icon-circle"></div>
+          <div class="wf-loc-row-body">
+            <span class="wf-line tall md dark"></span>
+            <span class="wf-line full"></span>
+            <span class="wf-line md"></span>
+          </div>
+        </div>
+        <div class="wf-loc-row">
+          <div class="wf-img icon-circle"></div>
+          <div class="wf-loc-row-body">
+            <span class="wf-line tall md dark"></span>
+            <span class="wf-line full"></span>
+          </div>
+        </div>
+        <div class="wf-loc-row">
+          <div class="wf-img icon-circle"></div>
+          <div class="wf-loc-row-body">
+            <span class="wf-line tall md dark"></span>
+            <span class="wf-line sm md"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===================== 15 FOOTER ===================== -->
+<footer class="wf-footer">
+  <div class="container">
+    <p class="wf-section-label">14 — Footer</p>
+    <div class="wf-footer-grid">
+      <div>
+        <div class="wf-footer-brand">GUNPLA <span style="color:#9e9e9e;">ELITE</span></div>
+        <div class="wf-footer-desc">
+          <span class="wf-line full" style="background:#424242;"></span>
+          <span class="wf-line full" style="background:#424242;"></span>
+          <span class="wf-line md" style="background:#424242;"></span>
+        </div>
+        <div class="wf-socials">
+          <div class="wf-social"></div>
+          <div class="wf-social"></div>
+          <div class="wf-social"></div>
+        </div>
+      </div>
+      <div class="wf-footer-col">
+        <h4>Quick Links</h4>
+        <span class="wf-line full"></span>
+        <span class="wf-line full"></span>
+        <span class="wf-line full"></span>
+      </div>
+      <div class="wf-footer-col">
+        <h4>Hubungi Kami</h4>
+        <span class="wf-line sm" style="margin-bottom:12px;"></span>
+        <span class="wf-line full" style="margin-bottom:16px;"></span>
+        <span class="wf-line sm" style="margin-bottom:8px;"></span>
+        <span class="wf-line md"></span>
+      </div>
+    </div>
+    <div class="wf-footer-bottom">
+      <span class="wf-footer-meta">© 2024 Gunpla Elite. All Rights Reserved.</span>
+      <div class="wf-footer-meta">
+        <span>ENG_VER: 2.0.4</span>
+        <span>STATUS: ONLINE</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

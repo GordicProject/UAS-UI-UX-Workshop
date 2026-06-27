@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Kelola Produk — Admin Gunpla Elite (Wireframe)</title>
+<link rel="stylesheet" href="admin.css"/>
+<link rel="stylesheet" href="kelola-produk.css"/>
+</head>
+<body>
+<div id="admin-layout"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ==================== Sidebar/Topbar Render ==================== */
+  function currentPage() {
+    var p = window.location.pathname.toLowerCase();
+    if (p.indexOf('arsip-artikel') !== -1) return 'arsip-artikel';
+    if (p.indexOf('kelola-artikel') !== -1) return 'kelola-artikel';
+    if (p.indexOf('kelola-produk') !== -1) return 'kelola-produk';
+    if (p.indexOf('kelola-pengguna') !== -1) return 'kelola-pengguna';
+    if (p.indexOf('kelola-transaksi') !== -1) return 'kelola-transaksi';
+    return 'dashboard';
+  }
+  function getCurrentAdmin() {
+    try {
+      var raw = localStorage.getItem('gunpla_user');
+      if (!raw) return null;
+      var u = JSON.parse(raw);
+      if (u.email === 'admin@gunpla.id' && (!u.role || u.role === 'Customer')) {
+        u.role = 'Super Admin';
+        u.name = u.name || 'Admin Gunpla';
+        try { localStorage.setItem('gunpla_user', JSON.stringify(u)); } catch (e) {}
+      }
+      return {
+        nama: u.name || u.nama || (u.email ? u.email.split('@')[0] : 'Admin'),
+        email: u.email || '',
+        role: u.role || 'Admin',
+        initials: (u.name || u.nama || 'AD').split(' ').map(function(s){return s[0];}).join('').slice(0,2).toUpperCase()
+      };
+    } catch (e) { return null; }
+  }
+  function renderLayout(options) {
+    var cp = options.page || currentPage();
+    var pageTitle = options.title || 'Dashboard';
+    var pageSubtitle = options.subtitle || '';
+    var content = options.content || '';
+    var me = getCurrentAdmin() || { nama: 'Admin Gunpla', email: '', role: 'Super Admin', initials: 'AD' };
+    var navItems = [
+      { key: 'dashboard', label: 'Dashboard', href: 'dashboard.html' },
+      { key: 'kelola-produk', label: 'Kelola Produk', href: 'kelola-produk.html' },
+      { key: 'kelola-transaksi', label: 'Kelola Transaksi', href: 'kelola-transaksi.html' },
+      { key: 'kelola-artikel', label: 'Kelola Artikel', href: 'kelola-artikel.html' },
+      { key: 'arsip-artikel', label: 'Arsip Artikel', href: 'arsip-artikel.html' },
+      { key: 'kelola-pengguna', label: 'Kelola Pengguna', href: 'kelola-pengguna.html' }
+    ];
+    var navIcons = {
+      'dashboard': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>',
+      'kelola-produk': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+      'kelola-transaksi': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+      'kelola-artikel': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>',
+      'arsip-artikel': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>',
+      'kelola-pengguna': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'
+    };
+    var navHTML = '';
+    for (var i = 0; i < navItems.length; i++) {
+      var item = navItems[i];
+      var activeClass = cp === item.key ? ' active' : '';
+      navHTML += '<a href="' + item.href + '" class="admin-nav-link' + activeClass + '">'
+        + '<span class="icon">' + (navIcons[item.key] || '') + '</span>'
+        + '<span>' + item.label + '</span>'
+        + '</a>';
+    }
+    return ''
+      + '<div class="admin-wrapper">'
+      + '<aside class="admin-sidebar" id="admin-sidebar">'
+      +   '<div class="admin-sidebar-brand">'
+      +     '<div class="admin-sidebar-brand-icon">GE</div>'
+      +     '<div class="admin-sidebar-brand-text"><strong>Gunpla Elite</strong><small>Admin Panel</small></div>'
+      +   '</div>'
+      +   '<div class="admin-sidebar-section">Menu Utama</div>'
+      +   '<nav class="admin-sidebar-nav">' + navHTML + '</nav>'
+      +   '<div class="admin-sidebar-footer">'
+      +     '<a href="../home.html" class="admin-user-card" title="' + me.email + '">'
+      +       '<div class="admin-user-avatar">' + me.initials + '</div>'
+      +       '<div class="admin-user-info"><strong>' + me.nama + '</strong><small>' + me.role + '</small></div>'
+      +     '</a>'
+      +     '<button class="admin-logout-btn" id="adminLogoutBtn" title="Keluar" style="display:flex;align-items:center;gap:8px;padding:8px 10px;margin-top:6px;width:100%;background:transparent;border:1px solid #e5e7eb;border-radius:6px;cursor:pointer;color:#6b7280;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;transition:background 120ms ease, color 120ms ease;" onmouseover="this.style.background=\'#f9fafb\';this.style.color=\'#1e293b\';this.style.borderColor=\'#c0c0c0\'" onmouseout="this.style.background=\'transparent\';this.style.color=\'#6b7280\';this.style.borderColor=\'#e5e7eb\'">'
+      +       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>'
+      +       'Keluar'
+      +     '</button>'
+      +   '</div>'
+      + '</aside>'
+      + '<main class="admin-main">'
+      +   '<header class="admin-topbar">'
+      +     '<div style="display:flex;align-items:center;gap:12px;">'
+      +       '<button class="admin-menu-toggle" id="adminMenuToggle" aria-label="Menu">&#9776;</button>'
+      +       '<div class="admin-topbar-title">'
+      +         '<h1>' + pageTitle + '</h1>'
+      +         (pageSubtitle ? '<p>' + pageSubtitle + '</p>' : '')
+      +       '</div>'
+      +     '</div>'
+      +     '<div class="admin-topbar-actions">'
+      +     '<div class="admin-topbar-search">'
+      +       '<span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>'
+      +       '<input type="text" placeholder="Cari data..."/>'
+      +     '</div>'
+      +     '<a href="#" class="admin-icon-btn" title="Notifikasi">'
+      +       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>'
+      +       '<span class="dot"></span>'
+      +     '</a>'
+      +     '<a href="../home.html" class="admin-icon-btn" title="Ke Website">'
+      +       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>'
+      +     '</a>'
+      +     '<a href="#" class="admin-icon-btn" id="adminLogoutTopbar" title="Keluar" style="color:#6b7280;">'
+      +       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>'
+      +     '</a>'
+      +     '</div>'
+      +   '</header>'
+      +   '<section class="admin-content">' + content + '</section>'
+      + '</main>'
+      + '</div>';
+  }
+
+  /* ==================== LocalStorage Store ==================== */
+  var KEYS = { produk:'gunpla_produk', transaksi:'gunpla_transaksi', artikel:'gunpla_artikel', pengguna:'gunpla_pengguna', activity:'gunpla_activity' };
+  function read(k){try{var r=localStorage.getItem(KEYS[k]||k);return r?JSON.parse(r):[];}catch(e){return[];}}
+  function write(k,d){localStorage.setItem(KEYS[k]||k,JSON.stringify(d));}
+  function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+  function logActivity(m){var l=read('activity');l.unshift({time:new Date().toISOString(),message:m});if(l.length>50)l=l.slice(0,50);write('activity',l);}
+  function seedIfEmpty(){
+    if (read('produk').length === 0) {
+      write('produk', [
+        { id: uid(), sku: 'GSE-HG-001', nama: 'RX-78-2 Gundam', grade: 'HG', harga: 350000, stok: 50, status: 'Aktif', seri: 'Original', skala: '1/144', badge: 'BEST SELLER' },
+        { id: uid(), sku: 'GSE-MG-002', nama: 'Wing Gundam Zero EW', grade: 'MG', harga: 580000, stok: 30, status: 'Aktif', seri: 'Wing Gundam', skala: '1/100', badge: 'NEW' },
+        { id: uid(), sku: 'GSE-MG-003', nama: 'ZGMF-X10A Freedom', grade: 'MG', harga: 720000, stok: 25, status: 'Aktif', seri: 'SEED', skala: '1/100' },
+        { id: uid(), sku: 'GSE-RG-004', nama: 'RX-0 Unicorn Hoope', grade: 'RG', harga: 450000, stok: 40, status: 'Aktif', seri: 'UC', skala: '1/144' },
+        { id: uid(), sku: 'GSE-MG-005', nama: 'ASW-G-80 Barbatos', grade: 'MG', harga: 650000, stok: 18, status: 'Aktif', seri: 'IBO', skala: '1/100', hargaCoret: 750000 },
+        { id: uid(), sku: 'GSE-MG-006', nama: 'GN-000 Exia', grade: 'MG', harga: 480000, stok: 22, status: 'Aktif', seri: '00', skala: '1/100', hargaCoret: 550000 },
+        { id: uid(), sku: 'GSE-MG-007', nama: 'MSN-04 Sazabi', grade: 'MG', harga: 890000, stok: 12, status: 'Aktif', seri: 'Char Counterattack', skala: '1/100' },
+        { id: uid(), sku: 'GSE-MG-008', nama: 'Hi-Nu Gundam', grade: 'MG', harga: 1850000, stok: 8, status: 'Aktif', seri: 'Char Counterattack', skala: '1/100' },
+        { id: uid(), sku: 'GSE-MG-009', nama: 'RX-0 Epyon', grade: 'MG', harga: 520000, stok: 20, status: 'Aktif', seri: 'Wing Gundam', skala: '1/100' },
+        { id: uid(), sku: 'GSE-MG-010', nama: 'ZGMF-1000 Justice', grade: 'MG', harga: 380000, stok: 35, status: 'Aktif', seri: 'SEED', skala: '1/100' },
+        { id: uid(), sku: 'GSE-MG-011', nama: 'God Gundam', grade: 'MG', harga: 2450000, stok: 5, status: 'Aktif', seri: 'G Gundam', skala: '1/100' },
+        { id: uid(), sku: 'GSE-MG-012', nama: 'X1 Gundam Zero', grade: 'MG', harga: 1650000, stok: 10, status: 'Aktif', seri: 'X', skala: '1/100' }
+      ]);
+    }
+  }
+  var gunplaStore = {
+    list: function(k){return read(k);},
+    get: function(k,id){var a=read(k);for(var i=0;i<a.length;i++)if(a[i].id===id)return a[i];return null;},
+    create: function(k,it){var a=read(k);it.id=uid();a.push(it);write(k,a);logActivity('Tambah data '+k);return it;},
+    update: function(k,id,p){var a=read(k);for(var i=0;i<a.length;i++){if(a[i].id===id){Object.keys(p).forEach(function(key){a[i][key]=p[key];});write(k,a);logActivity('Ubah data '+k);return a[i];}}return null;},
+    remove: function(k,id){var a=read(k).filter(function(x){return x.id!==id;});write(k,a);logActivity('Hapus data '+k);},
+    removeByField: function(k,f,v){var a=read(k).filter(function(x){return x[f]!==v;});write(k,a);logActivity('Hapus data '+k);},
+    seed: seedIfEmpty,
+    log: logActivity,
+    activity: function(){return read('activity');},
+    formatRp: function(n){return 'Rp '+Number(n).toLocaleString('id-ID');}
+  };
+
+  /* ==================== Modal & Toast ==================== */
+  function ensureOverlay(){var e=document.getElementById('wf-modal-root');if(e)return e;e=document.createElement('div');e.id='wf-modal-root';e.className='wf-modal-overlay';document.body.appendChild(e);return e;}
+  function ensureToast(){var e=document.getElementById('wf-toast');if(e)return e;e=document.createElement('div');e.id='wf-toast';e.className='wf-toast';document.body.appendChild(e);return e;}
+  var gunplaUI = {
+    openModal: function(t,b,on){var r=ensureOverlay();r.innerHTML='<div class="wf-modal"><div class="wf-modal-header"><div class="wf-modal-title">'+t+'</div><button class="wf-modal-close" id="wfModalClose">&times;</button></div><form id="wfModalForm"><div class="wf-modal-body">'+b+'</div><div class="wf-modal-footer"><button type="button" class="btn-admin btn-admin-secondary" id="wfModalCancel">Batal</button><button type="submit" class="btn-admin btn-admin-primary">Simpan</button></div></form></div>';r.classList.add('open');function c(){r.classList.remove('open');r.innerHTML='';}document.getElementById('wfModalClose').onclick=c;document.getElementById('wfModalCancel').onclick=c;r.onclick=function(e){if(e.target===r)c();};document.getElementById('wfModalForm').onsubmit=function(e){e.preventDefault();var d={};var es=r.querySelectorAll('input,select,textarea');es.forEach(function(el){d[el.name]=el.value;});var rs=on(d);if(rs!==false)c();};},
+    confirm: function(m,on){var r=ensureOverlay();r.innerHTML='<div class="wf-modal" style="max-width:420px;"><div class="wf-modal-header"><div class="wf-modal-title">Konfirmasi</div><button class="wf-modal-close" id="wfModalClose">&times;</button></div><div class="wf-modal-body"><p style="margin:0;color:#6b7280;">'+m+'</p></div><div class="wf-modal-footer"><button type="button" class="btn-admin btn-admin-secondary" id="wfNo">Batal</button><button type="button" class="btn-admin btn-admin-primary" id="wfYes">Ya</button></div></div>';r.classList.add('open');function c(){r.classList.remove('open');r.innerHTML='';}document.getElementById('wfModalClose').onclick=c;document.getElementById('wfNo').onclick=c;document.getElementById('wfYes').onclick=function(){c();on();};r.onclick=function(e){if(e.target===r)c();};},
+    toast: function(m){var t=ensureToast();t.textContent=m;t.classList.add('show');clearTimeout(t._timer);t._timer=setTimeout(function(){t.classList.remove('show');},2200);}
+  };
+
+  /* ==================== Menu Toggle & Logout ==================== */
+  function doLogout(e){if(e)e.preventDefault();try{localStorage.removeItem('gunpla_user');}catch(err){}window.location.href='../login/login.html';}
+  function initMenuToggle(){var b=document.getElementById('adminMenuToggle');var s=document.getElementById('admin-sidebar');if(!b||!s)return;b.addEventListener('click',function(e){e.stopPropagation();s.classList.toggle('open');});document.addEventListener('click',function(e){if(!e.target.closest('.admin-sidebar')&&!e.target.closest('#adminMenuToggle'))s.classList.remove('open');});}
+  function initLogout(){var s=document.getElementById('adminLogoutBtn');var t=document.getElementById('adminLogoutTopbar');if(s)s.addEventListener('click',doLogout);if(t)t.addEventListener('click',doLogout);}
+
+  /* ==================== Page: Kelola Produk ==================== */
+  initMenuToggle();
+  gunplaStore.seed();
+
+  var me = (function(){try{return JSON.parse(localStorage.getItem('gunpla_user')||'null')||{};}catch(e){return{};}})();
+  var meRole = me.role || 'Super Admin';
+  if (me.email === 'admin@gunpla.id') meRole = 'Super Admin';
+  if (!me.email) meRole = 'Super Admin';
+
+  var allProducts = [
+    { id: '1', sku: 'GSE-HG-001', nama: 'RX-78-2 Gundam', grade: 'HG', harga: 350000, stok: 50, status: 'Aktif', seri: 'Original', skala: '1/144', badge: 'BEST SELLER' },
+    { id: '2', sku: 'GSE-MG-002', nama: 'Wing Gundam Zero EW', grade: 'MG', harga: 580000, stok: 30, status: 'Aktif', seri: 'Wing Gundam', skala: '1/100', badge: 'NEW' },
+    { id: '3', sku: 'GSE-MG-003', nama: 'ZGMF-X10A Freedom', grade: 'MG', harga: 720000, stok: 25, status: 'Aktif', seri: 'SEED', skala: '1/100' },
+    { id: '4', sku: 'GSE-RG-004', nama: 'RX-0 Unicorn Hope', grade: 'RG', harga: 450000, stok: 40, status: 'Aktif', seri: 'UC', skala: '1/144' },
+    { id: '5', sku: 'GSE-MG-005', nama: 'ASW-G-80 Barbatos', grade: 'MG', harga: 650000, stok: 18, status: 'Aktif', seri: 'IBO', skala: '1/100', hargaCoret: 750000 },
+    { id: '6', sku: 'GSE-RG-006', nama: 'GN-000 Exia', grade: 'RG', harga: 480000, stok: 22, status: 'Aktif', seri: '00', skala: '1/100', hargaCoret: 550000 },
+    { id: '7', sku: 'GSE-HG-007', nama: 'MSN-04 Sazabi', grade: 'HG', harga: 890000, stok: 12, status: 'Aktif', seri: 'Char Counterattack', skala: '1/144' },
+    { id: '8', sku: 'GSE-MB-008', nama: 'Hi-Nu Gundam', grade: 'MB', harga: 1850000, stok: 8, status: 'Aktif', seri: 'Char Counterattack', skala: '1/100' },
+    { id: '9', sku: 'GSE-RG-009', nama: 'RX-0 Epyon', grade: 'RG', harga: 520000, stok: 20, status: 'Aktif', seri: 'Wing Gundam', skala: '1/144' },
+    { id: '10', sku: 'GSE-HG-010', nama: 'ZGMF-1000 Justice', grade: 'HG', harga: 380000, stok: 35, status: 'Aktif', seri: 'SEED', skala: '1/144' },
+    { id: '11', sku: 'GSE-PG-011', nama: 'God Gundam', grade: 'PG', harga: 2450000, stok: 5, status: 'Aktif', seri: 'G Gundam', skala: '1/60' },
+    { id: '12', sku: 'GSE-MB-012', nama: 'X1 Gundam Zero', grade: 'MB', harga: 1650000, stok: 10, status: 'Aktif', seri: 'X', skala: '1/100' }
+  ];
+
+  var products = (meRole === 'Super Admin' || meRole === 'Admin')
+    ? allProducts
+    : allProducts.filter(function(p){ return p.status === 'Aktif' && p.stok > 0; });
+  var canEdit = meRole === 'Super Admin' || meRole === 'Admin';
+  var tableBody = '';
+  for (var i = 0; i < products.length; i++) {
+    var p = products[i];
+    var gradeClass = 'blue';
+    if (p.grade === 'HG') gradeClass = 'cyan';
+    else if (p.grade === 'MG') gradeClass = 'green';
+    else if (p.grade === 'RG') gradeClass = 'purple';
+    else if (p.grade === 'PG') gradeClass = 'amber';
+    else if (p.grade === 'MB') gradeClass = 'gray';
+    var gradeLabel = '<span class="admin-badge ' + gradeClass + '">' + p.grade + '</span>';
+    var stokBadge = '';
+    if (p.stok === 0) stokBadge = '<span class="admin-badge outline">Habis</span>';
+    else if (p.stok <= 10) stokBadge = '<span class="admin-badge amber">Menipis</span>';
+    else stokBadge = '<span class="admin-badge outline">Tersedia</span>';
+    var statusBadge = '<span class="admin-badge outline">' + p.status + '</span>';
+
+    var actionCell = canEdit
+      ? '<td><div class="admin-action-cell">'
+        + '<button class="admin-action-btn edit" title="Edit" onclick="editProduct(\'' + p.id + '\')" style="font-size:10px;">&#9998;</button>'
+        + '<button class="admin-action-btn danger" title="Hapus" onclick="deleteProduct(\'' + p.id + '\')" style="font-size:10px;">&#10005;</button>'
+        + '</div></td>'
+      : '<td><span style="font-size:11px;color:#6b7280;">Lihat</span></td>';
+
+    tableBody += '<tr>'
+      + '<td><div class="product-thumb"><div class="admin-thumbnail">IMG</div><div><strong>' + p.nama + '</strong><div class="product-thumb-sku">' + p.sku + '</div></div></div></td>'
+      + '<td>' + gradeLabel + '</td>'
+      + '<td>' + gunplaStore.formatRp(p.harga) + '</td>'
+      + '<td>' + p.stok + '</td>'
+      + '<td>' + stokBadge + ' ' + statusBadge + '</td>'
+      + actionCell
+      + '</tr>';
+  }
+
+  var subtitleText = canEdit
+    ? 'Tambah, edit, atau hapus katalog produk Gunpla Elite'
+    : 'Katalog produk yang tersedia untuk Anda';
+  var newBtn = canEdit
+    ? '<button class="btn-admin btn-admin-primary" onclick="openForm()"><span>&#43;</span> Produk Baru</button>'
+    : '';
+
+  var content = ''
+    + '<div class="admin-page-header">'
+    +   '<div class="admin-page-header-text">'
+    +     '<div class="admin-page-eyebrow">Manajemen Inventory &middot; ' + meRole + '</div>'
+    +     '<h2>Kelola Produk</h2>'
+    +     '<p>' + subtitleText + '</p>'
+    +   '</div>'
+    +   newBtn
+    + '</div>'
+
+    + '<div class="stat-grid">'
+    +   '<div class="stat-card">'
+    +     '<div class="stat-card-header"><span class="stat-card-label">Total Produk</span><div class="stat-card-icon">P</div></div>'
+    +     '<div class="stat-card-value">' + products.length + '</div>'
+    +   '</div>'
+    +   '<div class="stat-card">'
+    +     '<div class="stat-card-header"><span class="stat-card-label">Stok Menipis</span><div class="stat-card-icon">!</div></div>'
+    +     '<div class="stat-card-value">' + products.filter(function(x){return x.stok > 0 && x.stok <= 10;}).length + '</div>'
+    +   '</div>'
+    +   '<div class="stat-card">'
+    +     '<div class="stat-card-header"><span class="stat-card-label">Habis Stok</span><div class="stat-card-icon">X</div></div>'
+    +     '<div class="stat-card-value">' + products.filter(function(x){return x.stok === 0;}).length + '</div>'
+    +   '</div>'
+    +   '<div class="stat-card">'
+    +     '<div class="stat-card-header"><span class="stat-card-label">Grade Terdaftar</span><div class="stat-card-icon">#</div></div>'
+    +     '<div class="stat-card-value">' + (Array.from(new Set(products.map(function(x){return x.grade;}))).length) + '</div>'
+    +   '</div>'
+    + '</div>'
+
+    + '<div class="admin-panel">'
+    +   '<div class="admin-panel-header">'
+    +     '<div class="filter-bar">'
+    +       '<select class="form-select" onchange="filterGrade(this.value)"><option value="">Semua Grade</option>'
+    +         '<option value="HG">HG</option><option value="RG">RG</option><option value="MG">MG</option><option value="PG">PG</option><option value="MB">MB</option>'
+    +       '</select>'
+    +       '<select class="form-select" onchange="filterStatus(this.value)"><option value="">Semua Status</option><option value="Aktif">Aktif</option><option value="Stok Habis">Stok Habis</option></select>'
+    +       '<input class="form-input" placeholder="Cari produk..." id="productSearchInput" onkeyup="filterSearch()" style="min-width:180px;" />'
+    +     '</div>'
+    +   '</div>'
+    +   '<div class="admin-panel-body no-padding">'
+    +     '<table class="admin-table" id="productsTable">'
+    +       '<thead><tr><th>Produk</th><th>Grade</th><th>Harga</th><th>Stok</th><th>Status</th><th>Aksi</th></tr></thead>'
+    +       '<tbody id="productsTbody">' + tableBody + '</tbody>'
+    +     '</table>'
+    +   '</div>'
+    + '</div>';
+
+  document.getElementById('admin-layout').innerHTML = renderLayout({
+    title: 'Kelola Produk',
+    subtitle: 'Manage katalog Gunpla Elite Anda',
+    page: 'kelola-produk',
+    content: content
+  });
+  initMenuToggle();
+  initLogout();
+
+  function openForm(id) {
+    var existing = null;
+    if (id) {
+      existing = gunplaStore.get('produk', id);
+      productData = existing;
+    } else {
+      productData = { id: '', sku: '', nama: '', grade: 'MG', harga: 0, stok: 0, status: 'Aktif', seri: '', skala: '' };
+    }
+
+    var gradeOptions = ['HG','RG','MG','PG','MB'];
+    var opts = gradeOptions.map(function(g){
+      return '<option value="'+g+'"'+(existing?(existing.grade===g?' selected':''):(''))+'>'+g+'</option>';
+    }).join('');
+
+    gunplaUI.openModal(existing ? 'Edit Produk' : 'Tambah Produk',
+      '<div class="form-row">'
+      + '<div class="form-field"><label>Nama Produk *</label><input type="text" name="nama" value="'+(productData.nama||'')+'" required/></div>'
+      + '<div class="form-field"><label>SKU</label><input type="text" name="sku" value="'+(productData.sku||'')+'"/></div>'
+      + '</div>'
+      + '<div class="form-row">'
+      + '<div class="form-field"><label>Grade *</label><select name="grade" required>'+opts+'</select></div>'
+      + '<div class="form-field"><label>Seri</label><input type="text" name="seri" value="'+(productData.seri||'')+'"/></div>'
+      + '</div>'
+      + '<div class="form-row">'
+      + '<div class="form-field"><label>Harga (Rp) *</label><input type="number" name="harga" value="'+(productData.harga||'')+'" required/></div>'
+      + '<div class="form-field"><label>Stok *</label><input type="number" name="stok" value="'+(productData.stok||'0')+'" required/></div>'
+      + '</div>'
+      + '<div class="form-row">'
+      + '<div class="form-field"><label>Status</label><select name="status"><option'+(productData.status==='Aktif'?' selected':'')+'>Aktif</option><option'+(productData.status==='Stok Habis'?' selected':'')+'>Stok Habis</option></select></div>'
+      + '<div class="form-field"><label>Skala</label><input type="text" name="skala" value="'+(productData.skala||'')+'"/></div>'
+      + '</div>',
+      function(data) {
+        if (!id) {
+          gunplaStore.create('produk', data);
+        } else {
+          gunplaStore.update('produk', id, data);
+        }
+        renderAll();
+        gunplaUI.toast(id ? 'Produk berhasil diubah!' : 'Produk baru berhasil ditambahkan!');
+      }
+    );
+  }
+
+  var productData = gunplaStore.list('produk');
+
+  function editProduct(id) { openForm(id); }
+  function deleteProduct(id) {
+    gunplaUI.confirm('Hapus produk ini? Tindakan ini tidak dapat dibatalkan.', function() {
+      gunplaStore.remove('produk', id);
+      renderAll();
+      gunplaUI.toast('Produk berhasil dihapus!');
+    });
+  }
+  function filterGrade(v) {
+    var rows = document.querySelectorAll('#productsTbody tr');
+    for (var i = 0; i < rows.length; i++) {
+      if (!v) { rows[i].style.display = ''; continue; }
+      rows[i].style.display = rows[i].textContent.indexOf(v) !== -1 ? '' : 'none';
+    }
+  }
+  function filterStatus(v) {
+    var rows = document.querySelectorAll('#productsTbody tr');
+    for (var i = 0; i < rows.length; i++) {
+      if (!v) { rows[i].style.display = ''; continue; }
+      rows[i].style.display = rows[i].textContent.indexOf(v) !== -1 ? '' : 'none';
+    }
+  }
+  function filterSearch() {
+    var q = document.getElementById('productSearchInput').value.toLowerCase();
+    var rows = document.querySelectorAll('#productsTbody tr');
+    for (var i = 0; i < rows.length; i++) {
+      var txt = rows[i].textContent.toLowerCase();
+      rows[i].style.display = txt.indexOf(q) !== -1 ? '' : 'none';
+    }
+  }
+  function renderAll() {
+    var allData = gunplaStore.list('produk');
+    productData = (meRole === 'Super Admin' || meRole === 'Admin')
+      ? allData
+      : allData.filter(function(p){ return p.status === 'Aktif' && p.stok > 0; });
+    var tbody = '';
+    for (var i = 0; i < productData.length; i++) {
+      var p = productData[i];
+      var stokBadge = '';
+      if (p.stok === 0) stokBadge = '<span class="admin-badge outline">Habis</span>';
+      else if (p.stok <= 10) stokBadge = '<span class="admin-badge amber">Menipis</span>';
+      else stokBadge = '<span class="admin-badge outline">Tersedia</span>';
+      var actionCell = canEdit
+        ? '<td><div class="admin-action-cell">'
+          + '<button class="admin-action-btn edit" title="Edit" onclick="editProduct(\'' + p.id + '\')" style="font-size:10px;">&#9998;</button>'
+          + '<button class="admin-action-btn danger" title="Hapus" onclick="deleteProduct(\'' + p.id + '\')" style="font-size:10px;">&#10005;</button>'
+          + '</div></td>'
+        : '<td><span style="font-size:11px;color:#6b7280;">Lihat</span></td>';
+      var gradeClass = 'blue';
+      if (p.grade === 'HG') gradeClass = 'cyan';
+      else if (p.grade === 'MG') gradeClass = 'green';
+      else if (p.grade === 'RG') gradeClass = 'purple';
+      else if (p.grade === 'PG') gradeClass = 'amber';
+      else if (p.grade === 'MB') gradeClass = 'gray';
+      tbody += '<tr>'
+        + '<td><div class="product-thumb"><div class="admin-thumbnail">IMG</div><div><strong>' + p.nama + '</strong><div class="product-thumb-sku">' + p.sku + '</div></div></div></td>'
+        + '<td><span class="admin-badge ' + gradeClass + '">' + p.grade + '</span></td>'
+        + '<td>' + gunplaStore.formatRp(p.harga) + '</td>'
+        + '<td>' + p.stok + '</td>'
+        + '<td>' + stokBadge + ' <span class="admin-badge outline">' + p.status + '</span></td>'
+        + actionCell
+        + '</tr>';
+    }
+    document.getElementById('productsTbody').innerHTML = tbody;
+    document.querySelectorAll('.stat-card-value')[0].textContent = productData.length;
+    document.querySelectorAll('.stat-card-value')[1].textContent = productData.filter(function(x){return x.stok>0&&x.stok<=10;}).length;
+    document.querySelectorAll('.stat-card-value')[2].textContent = productData.filter(function(x){return x.stok===0;}).length;
+    document.querySelectorAll('.stat-card-value')[3].textContent = Array.from(new Set(productData.map(function(x){return x.grade;}))).length;
+  }
+
+  window.openForm = openForm;
+  window.editProduct = editProduct;
+  window.deleteProduct = deleteProduct;
+  window.filterGrade = filterGrade;
+  window.filterStatus = filterStatus;
+  window.filterSearch = filterSearch;
+})();
+</script>
+</body>
+</html>

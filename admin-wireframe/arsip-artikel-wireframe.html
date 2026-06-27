@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Arsip Artikel — Gunpla Elite (Wireframe)</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #ffffff; color: #424242; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.4; }
+a { text-decoration: none; color: inherit; }
+img, svg { display: block; max-width: 100%; }
+button { font-family: inherit; cursor: pointer; }
+
+.wf-layout { display: flex; min-height: 100vh; }
+.wf-sidebar { width: 240px; border-right: 1px solid #e0e0e0; flex-shrink: 0; display: flex; flex-direction: column; background: #ffffff; }
+.wf-brand { padding: 16px; border-bottom: 1px solid #e0e0e0; display: flex; gap: 10px; align-items: center; }
+.wf-brand-logo { width: 32px; height: 32px; border-radius: 999px; background: #212121; }
+.wf-nav { padding: 16px 12px; }
+.wf-nav-title { font-size: 10px; font-weight: 700; color: #757575; letter-spacing: 2px; margin-bottom: 12px; border-bottom: 1px solid #e0e0e0; padding-bottom: 6px; }
+.wf-nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; margin-bottom: 4px; border: 1px solid #e0e0e0; font-size: 11px; font-weight: 700; color: #424242; text-transform: uppercase; letter-spacing: 1px; }
+.wf-nav-item.active { background: #212121; color: #ffffff; border-color: #212121; }
+.wf-nav-item .icon { width: 14px; height: 14px; border-radius: 999px; background: #757575; flex-shrink: 0; }
+.wf-nav-item.active .icon { background: #ffffff; }
+.wf-sidebar-footer { margin-top: auto; padding: 12px; border-top: 1px solid #e0e0e0; }
+.wf-user-card { display: flex; gap: 10px; align-items: center; padding: 10px; border: 1px solid #e0e0e0; margin-bottom: 10px; }
+.wf-user-avatar { width: 32px; height: 32px; border-radius: 999px; background: #212121; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; }
+.wf-user-name { font-size: 12px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1px; }
+.wf-user-role { font-size: 10px; color: #757575; text-transform: uppercase; letter-spacing: 1px; }
+
+.wf-main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.wf-topbar { border-bottom: 1px solid #e0e0e0; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; background: #ffffff; }
+.wf-topbar h1 { margin: 0; font-size: 18px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1px; }
+.wf-topbar-right { display: flex; gap: 8px; align-items: center; }
+.wf-search { width: 240px; height: 36px; border: 1px solid #bdbdbd; padding: 0 12px; display: flex; align-items: center; font-size: 12px; color: #757575; background: #ffffff; }
+.wf-icon-btn { width: 36px; height: 36px; border-radius: 999px; border: 1px solid #bdbdbd; background: #ffffff; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; color: #424242; }
+
+.wf-content { padding: 24px; flex: 1; }
+.wf-page-header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #212121; padding-bottom: 16px; margin-bottom: 24px; gap: 16px; flex-wrap: wrap; }
+.wf-page-header h2 { margin: 0 0 6px; font-size: 22px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 12px; }
+.wf-page-header h2 .bar { display: inline-block; width: 4px; height: 24px; background: #212121; }
+.wf-page-eyebrow { font-size: 10px; letter-spacing: 2px; font-weight: 700; color: #757575; text-transform: uppercase; }
+.wf-page-sub { font-size: 12px; color: #757575; margin-top: 6px; }
+
+.wf-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; border: 2px solid #212121; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; background: #ffffff; color: #212121; }
+.wf-btn-primary { background: #212121; color: #ffffff; }
+
+.wf-stats { display: grid; grid-template-columns: repeat(1, 1fr); gap: 16px; margin-bottom: 24px; }
+@media (min-width: 640px) { .wf-stats { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .wf-stats { grid-template-columns: repeat(4, 1fr); } }
+
+.wf-stat-card { border: 1px solid #e0e0e0; padding: 20px; background: #ffffff; }
+.wf-stat-card .label { font-size: 10px; font-weight: 700; color: #757575; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+.wf-stat-card .value { font-size: 24px; font-weight: 700; color: #212121; }
+.wf-stat-card .foot { font-size: 11px; color: #757575; margin-top: 6px; }
+
+.wf-panel { border: 1px solid #e0e0e0; background: #ffffff; }
+.wf-panel-header { padding: 16px 20px; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.wf-panel-header h3 { margin: 0; font-size: 14px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1px; }
+.wf-panel-filters { display: flex; gap: 8px; flex-wrap: wrap; padding: 12px 20px; border-bottom: 1px solid #e0e0e0; background: #fafafa; }
+.wf-filter { height: 36px; border: 1px solid #bdbdbd; padding: 0 12px; display: inline-flex; align-items: center; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #424242; min-width: 150px; background: #ffffff; }
+
+.wf-table { width: 100%; border-collapse: collapse; }
+.wf-table th { text-align: left; padding: 12px 20px; background: #fafafa; border-bottom: 1px solid #e0e0e0; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: #757575; text-transform: uppercase; }
+.wf-table td { padding: 14px 20px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; font-size: 13px; color: #424242; }
+.wf-table tr:last-child td { border-bottom: 0; }
+.wf-table tr:hover td { background: #fafafa; }
+.wf-table .name { font-weight: 700; color: #212121; font-size: 12px; letter-spacing: 0.5px; }
+
+.wf-block { display: inline-block; padding: 4px 10px; border: 1px solid #212121; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #212121; background: #ffffff; border-radius: 2px; }
+.wf-action { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border: 1px solid #bdbdbd; font-size: 12px; font-weight: 700; color: #424242; margin-right: 4px; background: #ffffff; }
+.wf-action:hover { background: #212121; color: #ffffff; border-color: #212121; }
+
+/* Footer */
+.wf-footer { background: #212121; color: #bdbdbd; padding: 48px 24px 24px; }
+.wf-footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 32px; margin-bottom: 32px; max-width: 1280px; margin-left: auto; margin-right: auto; }
+.wf-footer-brand { font-size: 18px; font-weight: 700; color: #ffffff; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+.wf-footer-line { display: block; height: 10px; background: #424242; border-radius: 2px; margin-bottom: 8px; }
+.wf-footer-line.full { width: 100%; }
+.wf-footer-line.md { width: 70%; }
+.wf-footer-line.sm { width: 40%; }
+.wf-socials { display: flex; gap: 12px; margin-top: 24px; }
+.wf-social { width: 36px; height: 36px; border-radius: 999px; border: 1px solid #616161; background: #424242; }
+.wf-footer-col h4 { font-size: 11px; font-weight: 700; color: #ffffff; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; }
+.wf-footer-bottom { border-top: 1px solid #424242; padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; max-width: 1280px; margin: 0 auto; }
+.wf-footer-meta { font-size: 10px; color: #757575; display: flex; gap: 16px; }
+
+@media (max-width: 900px) { .wf-sidebar { width: 200px; } .wf-footer-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="wf-layout">
+
+  <aside class="wf-sidebar">
+    <div class="wf-brand">
+      <div class="wf-brand-logo"></div>
+      <div>
+        <div style="font-weight:700;font-size:13px;letter-spacing:2px;color:#212121;">GUNPLA <span style="color:#757575;">ELITE</span></div>
+        <div style="font-size:9px;letter-spacing:1.5px;color:#757575;text-transform:uppercase;">Admin Panel</div>
+      </div>
+    </div>
+    <div class="wf-nav">
+      <div class="wf-nav-title">Navigasi Utama</div>
+      <a class="wf-nav-item" href="admin-dashboard-wireframe.html"><span class="icon"></span>Dashboard</a>
+      <a class="wf-nav-item" href="kelola-produk-wireframe.html"><span class="icon"></span>Kelola Produk</a>
+      <a class="wf-nav-item" href="kelola-transaksi-wireframe.html"><span class="icon"></span>Kelola Transaksi</a>
+      <a class="wf-nav-item" href="kelola-artikel-wireframe.html"><span class="icon"></span>Kelola Artikel</a>
+      <a class="wf-nav-item active" href="arsip-artikel-wireframe.html"><span class="icon"></span>Arsip Artikel</a>
+      <a class="wf-nav-item" href="kelola-pengguna-wireframe.html"><span class="icon"></span>Kelola Pengguna</a>
+    </div>
+    <div class="wf-sidebar-footer">
+      <div class="wf-user-card">
+        <div class="wf-user-avatar">A</div>
+        <div>
+          <div class="wf-user-name">Admin</div>
+          <div class="wf-user-role">Administrator</div>
+        </div>
+      </div>
+      <button class="wf-btn" style="width:100%;justify-content:center;">Logout</button>
+    </div>
+  </aside>
+
+  <main class="wf-main">
+    <header class="wf-topbar">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <h1>Arsip Artikel</h1>
+      </div>
+      <div class="wf-topbar-right">
+        <div class="wf-search">Cari artikel arsip...</div>
+        <div class="wf-icon-btn" title="Notifikasi">N</div>
+        <div class="wf-icon-btn" title="Pesan">P</div>
+      </div>
+    </header>
+
+    <section class="wf-content">
+
+      <div class="wf-page-header">
+        <div>
+          <div class="wf-page-eyebrow">05 — Arsip</div>
+          <h2><span class="bar"></span>Artikel Diarsipkan</h2>
+          <p class="wf-page-sub">Artikel yang sudah diarsipkan — dapat dipulihkan atau dihapus permanen.</p>
+        </div>
+      </div>
+
+      <div class="wf-stats">
+        <div class="wf-stat-card"><div class="label">Total Arsip</div><div class="value">42</div><div class="foot">Sepanjang masa</div></div>
+        <div class="wf-stat-card"><div class="label">Periode</div><div class="value">2020–2024</div><div class="foot">4 tahun arsip</div></div>
+        <div class="wf-stat-card"><div class="label">Kategori</div><div class="value">6</div><div class="foot">Kategori diarsipkan</div></div>
+        <div class="wf-stat-card"><div class="label">Bulan Ini</div><div class="value">3</div><div class="foot">Artikel baru diarsipkan</div></div>
+      </div>
+
+      <div class="wf-panel">
+        <div class="wf-panel-filters">
+          <div class="wf-filter">Semua Tahun ▾</div>
+          <div class="wf-filter">Semua Kategori ▾</div>
+          <div class="wf-filter" style="min-width:200px;flex:1;">Cari judul diarsipkan...</div>
+        </div>
+        <table class="wf-table">
+          <thead>
+            <tr><th>Judul</th><th>Kategori</th><th>Penulis</th><th>Tanggal Arsip</th><th>Aksi</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><div class="name">Review MG Gundam Astray Red Frame (Versi Lama)</div></td><td><span class="wf-block">Review</span></td><td>Admin</td><td>15 Mar 2024</td><td><a class="wf-action" title="Restore">↺</a><a class="wf-action" title="Hapus Permanen">✕</a></td></tr>
+            <tr><td><div class="name">List Harga Gunpla 2019</div></td><td><span class="wf-block">Referensi</span></td><td>Redaksi</td><td>02 Mar 2024</td><td><a class="wf-action" title="Restore">↺</a><a class="wf-action" title="Hapus Permanen">✕</a></td></tr>
+            <tr><td><div class="name">Promo Toko Bulan Januari</div></td><td><span class="wf-block">Promo</span></td><td>Admin</td><td>28 Feb 2024</td><td><a class="wf-action" title="Restore">↺</a><a class="wf-action" title="Hapus Permanen">✕</a></td></tr>
+            <tr><td><div class="name">Event Gunpla Expo 2023</div></td><td><span class="wf-block">Event</span></td><td>Redaksi</td><td>20 Feb 2024</td><td><a class="wf-action" title="Restore">↺</a><a class="wf-action" title="Hapus Permanen">✕</a></td></tr>
+            <tr><td><div class="name">Rekomendasi Toko Online (Update Lama)</div></td><td><span class="wf-block">Tips</span></td><td>Admin</td><td>10 Feb 2024</td><td><a class="wf-action" title="Restore">↺</a><a class="wf-action" title="Hapus Permanen">✕</a></td></tr>
+            <tr><td><div class="name">Panduan Starter Pack 2022</div></td><td><span class="wf-block">Tutorial</span></td><td>Redaksi</td><td>05 Feb 2024</td><td><a class="wf-action" title="Restore">↺</a><a class="wf-action" title="Hapus Permanen">✕</a></td></tr>
+            <tr><td><div class="name">Perbandingan HGUC 2018</div></td><td><span class="wf-block">Edukasi</span></td><td>Admin</td><td>28 Jan 2024</td><td><a class="wf-action" title="Restore">↺</a><a class="wf-action" title="Hapus Permanen">✕</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </section>
+  </main>
+</div>
+
+<footer class="wf-footer">
+  <div class="wf-footer-grid">
+    <div>
+      <div class="wf-footer-brand">GUNPLA <span style="color:#9e9e9e;">ELITE</span></div>
+      <div>
+        <span class="wf-footer-line full"></span>
+        <span class="wf-footer-line full"></span>
+        <span class="wf-footer-line md"></span>
+      </div>
+      <div class="wf-socials">
+        <div class="wf-social"></div>
+        <div class="wf-social"></div>
+        <div class="wf-social"></div>
+      </div>
+    </div>
+    <div class="wf-footer-col">
+      <h4>Quick Links</h4>
+      <span class="wf-footer-line full"></span>
+      <span class="wf-footer-line full"></span>
+      <span class="wf-footer-line full"></span>
+    </div>
+    <div class="wf-footer-col">
+      <h4>Hubungi Kami</h4>
+      <span class="wf-footer-line sm" style="margin-bottom:12px;"></span>
+      <span class="wf-footer-line full" style="margin-bottom:16px;"></span>
+      <span class="wf-footer-line sm" style="margin-bottom:8px;"></span>
+      <span class="wf-footer-line md"></span>
+    </div>
+  </div>
+  <div class="wf-footer-bottom">
+    <span class="wf-footer-meta">© 2024 Gunpla Elite. All Rights Reserved.</span>
+    <div class="wf-footer-meta">
+      <span>ADMIN_PANEL v1.0</span>
+      <span>STATUS: ONLINE</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

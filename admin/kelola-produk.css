@@ -1,0 +1,20 @@
+/* Kelola Produk — Gunpla Elite Admin Wireframe */
+
+/* Product table thumbnail */
+.product-thumb {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.product-thumb-name strong {
+  display: block;
+}
+.product-thumb-sku {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* Stock indicator */
+.stock-ok { color: #16a34a; font-size: 11px; font-weight: 600; }
+.stock-low { color: #f59e0b; font-size: 11px; font-weight: 600; }
+.stock-out { color: #dc2626; font-size: 11px; font-weight: 600; }

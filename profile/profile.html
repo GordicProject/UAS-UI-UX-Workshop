@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Profile Saya - Gunpla Elite</title>
+<link rel="stylesheet" href="profile.css"/>
+<link rel="stylesheet" href="../home.css"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;500;600;700&display=swap');
+  body { font-family: 'Inter', sans-serif; }
+  h1, h2, h3, .font-oswald { font-family: 'Oswald', sans-serif; }
+</style>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+<div id="navbar-container"></div>
+<script src="../components/navbar.js"></script>
+
+
+<main class="container mx-auto px-4 py-12">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+    <aside class="lg:col-span-1">
+      <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-6 text-center">
+        <div class="relative inline-block">
+          <div id="avatar" class="w-24 h-24 rounded-full bg-primary-red text-white text-3xl font-bold flex items-center justify-center mx-auto font-oswald">
+            U
+          </div>
+          <button class="absolute bottom-0 right-0 bg-primary-red text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-red-700" type="button" title="Ganti foto">
+            <i class="fas fa-camera text-xs"></i>
+          </button>
+        </div>
+        <h2 id="displayName" class="font-oswald text-2xl font-bold mt-4">User</h2>
+        <p id="displayEmail" class="text-sm text-gray-500 mt-1">user@email.com</p>
+        <span class="inline-block mt-3 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">
+          <i class="fas fa-check-circle mr-1"></i> Member Aktif
+        </span>
+      </div>
+
+      <nav class="bg-white border border-gray-200 rounded-lg shadow-sm mt-6 overflow-hidden">
+        <a class="flex items-center gap-3 px-5 py-3 font-semibold text-gray-700 hover:bg-gray-50 border-b border-gray-100" href="../pesanan/pesanan.html">
+          <i class="fas fa-shopping-bag text-primary-red w-5"></i> Pesanan Saya
+        </a>
+        <a class="flex items-center gap-3 px-5 py-3 font-semibold text-gray-700 hover:bg-gray-50 border-b border-gray-100" href="../riwayat/riwayat.html">
+          <i class="fas fa-history text-primary-red w-5"></i> Riwayat Transaksi
+        </a>
+        <a class="flex items-center gap-3 px-5 py-3 font-semibold text-primary-red bg-red-50" href="profile.html">
+          <i class="fas fa-user text-primary-red w-5"></i> Profile
+        </a>
+        <a id="logoutBtn" class="flex items-center gap-3 px-5 py-3 font-semibold text-red-600 hover:bg-red-50 cursor-pointer" href="#">
+          <i class="fas fa-sign-out-alt w-5"></i> Keluar
+        </a>
+      </nav>
+    </aside>
+
+    <section class="lg:col-span-2">
+      <div class="bg-white border border-gray-200 rounded-lg shadow-sm">
+        <div class="border-b border-gray-200 px-6 py-4">
+          <h2 class="font-oswald text-2xl font-bold uppercase">Informasi Pribadi</h2>
+          <p class="text-sm text-gray-500 mt-1">Perbarui data diri Anda untuk pengalaman belanja yang lebih baik.</p>
+        </div>
+
+        <form id="profileForm" class="p-6 space-y-5">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">Nama Lengkap</label>
+              <input id="nameInput" class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-primary-red" type="text" placeholder="Nama Anda"/>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">Nomor Telepon</label>
+              <input id="phoneInput" class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-primary-red" type="tel" placeholder="08xxxxxxxxxx"/>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+            <input id="emailInput" class="w-full border border-gray-300 rounded px-4 py-2 bg-gray-50 text-gray-500 cursor-not-allowed" type="email" readonly/>
+            <p class="text-xs text-gray-400 mt-1">Email tidak dapat diubah.</p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Alamat</label>
+            <textarea id="addressInput" class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-primary-red" rows="3" placeholder="Alamat lengkap Anda"></textarea>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">Kota</label>
+              <input id="cityInput" class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-primary-red" type="text" placeholder="Kota"/>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">Kode Pos</label>
+              <input id="zipInput" class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-primary-red" type="text" placeholder="12345"/>
+            </div>
+          </div>
+
+          <div class="flex justify-end gap-3 pt-4 border-t border-gray-100">
+            <button class="px-5 py-2 border border-gray-300 rounded text-sm font-semibold text-gray-600 hover:bg-gray-50" type="button" id="cancelBtn">Batal</button>
+            <button class="px-6 py-2 bg-primary-red text-white rounded font-bold text-sm hover:bg-red-700" type="submit">Simpan Perubahan</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="bg-white border border-gray-200 rounded-lg shadow-sm mt-6">
+        <div class="border-b border-gray-200 px-6 py-4">
+          <h2 class="font-oswald text-2xl font-bold uppercase">Ubah Password</h2>
+          <p class="text-sm text-gray-500 mt-1">Pastikan akun Anda tetap aman dengan password yang kuat.</p>
+        </div>
+        <form id="passwordForm" class="p-6 space-y-5">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Password Lama</label>
+            <input class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-primary-red" type="password" placeholder="Masukkan password lama"/>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">Password Baru</label>
+              <input class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-primary-red" type="password" placeholder="Minimal 8 karakter"/>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 mb-2">Konfirmasi Password Baru</label>
+              <input class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-primary-red" type="password" placeholder="Ulangi password baru"/>
+            </div>
+          </div>
+          <div class="flex justify-end pt-4 border-t border-gray-100">
+            <button class="px-6 py-2 bg-primary-red text-white rounded font-bold text-sm hover:bg-red-700" type="submit">Update Password</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<div id="footer-placeholder"></div>
+<script>
+  function getUser() {
+    try {
+      var raw = localStorage.getItem('gunpla_user');
+      if (raw) return JSON.parse(raw);
+    } catch (e) {}
+    return {
+      name: 'Guest User',
+      email: 'guest@email.com',
+      phone: '',
+      address: '',
+      city: '',
+      zip: ''
+    };
+  }
+
+  function saveUser(u) {
+    try { localStorage.setItem('gunpla_user', JSON.stringify(u)); } catch (e) {}
+  }
+
+  function init() {
+    var user = getUser();
+    document.getElementById('displayName').textContent = user.name || 'User';
+    document.getElementById('displayEmail').textContent = user.email || '-';
+    document.getElementById('avatar').textContent = (user.name || 'U').charAt(0).toUpperCase();
+    document.getElementById('nameInput').value = user.name || '';
+    document.getElementById('phoneInput').value = user.phone || '';
+    document.getElementById('emailInput').value = user.email || '';
+    document.getElementById('addressInput').value = user.address || '';
+    document.getElementById('cityInput').value = user.city || '';
+    document.getElementById('zipInput').value = user.zip || '';
+  }
+
+  document.getElementById('profileForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var user = getUser();
+    user.name = document.getElementById('nameInput').value.trim();
+    user.phone = document.getElementById('phoneInput').value.trim();
+    user.address = document.getElementById('addressInput').value.trim();
+    user.city = document.getElementById('cityInput').value.trim();
+    user.zip = document.getElementById('zipInput').value.trim();
+    saveUser(user);
+    document.getElementById('displayName').textContent = user.name || 'User';
+    document.getElementById('avatar').textContent = (user.name || 'U').charAt(0).toUpperCase();
+    alert('Profile berhasil diperbarui!');
+  });
+
+  document.getElementById('cancelBtn').addEventListener('click', init);
+
+  document.getElementById('logoutBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    if (confirm('Yakin ingin keluar?')) {
+      try { localStorage.removeItem('gunpla_user'); } catch (e) {}
+      window.location.href = '../home.html';
+    }
+  });
+
+  document.getElementById('passwordForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('Password berhasil diperbarui!');
+    this.reset();
+  });
+
+  init();
+</script>
+
+</body></html>

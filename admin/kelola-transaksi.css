@@ -1,0 +1,14 @@
+/* Kelola Transaksi — Gunpla Elite Admin Wireframe */
+
+/* Stat grid 5-column override */
+.stat-grid.transaksi-grid {
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+/* Transaction status badge */
+.status-selesai { background: #16a34a; color: #fff; }
+.status-dikirim { background: #d32f2f; color: #fff; }
+.status-diproses { background: #f59e0b; color: #fff; }
+.status-dibatalkan { background: #dc2626; color: #fff; }
+.status-dikemas { background: #6b7280; color: #fff; }

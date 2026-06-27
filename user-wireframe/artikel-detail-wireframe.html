@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Detail Artikel — Gunpla Elite (Wireframe)</title>
+<style>
+/* ===================== Reset & Base ===================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #ffffff; color: #424242; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.4; }
+a { text-decoration: none; color: inherit; }
+img, svg { display: block; max-width: 100%; }
+
+.container { max-width: 1280px; margin: 0 auto; padding: 0 16px; width: 100%; }
+.container-narrow { max-width: 896px; margin: 0 auto; padding: 0 16px; width: 100%; }
+.wireframe-section { padding: 64px 0; border-bottom: 1px solid #f0f0f0; }
+.wireframe-section.tight { padding: 48px 0; }
+.wireframe-section.alt-bg { background: #f5f5f5; }
+.wireframe-section.dark-bg { background: #424242; color: #e0e0e0; }
+.wireframe-section.dark-bg .wf-section-label,
+.wireframe-section.dark-bg .wf-section-title { color: #bdbdbd; }
+
+.wf-section-label { font-size: 10px; font-weight: 700; color: #9e9e9e; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; }
+.wf-section-eyebrow { font-size: 11px; font-weight: 700; color: #757575; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
+.wf-section-title { font-size: 24px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.wf-section-title.lg { font-size: 30px; }
+.wf-section-sub { font-size: 13px; color: #757575; margin-bottom: 24px; max-width: 600px; }
+
+/* ===================== Wireframe Utilities ===================== */
+.wf-img {
+  background: #e0e0e0;
+  border: 1px solid #bdbdbd;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  color: #757575; font-size: 11px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+}
+.wf-img .x-lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.wf-img .x-lines svg { width: 100%; height: 100%; display: block; }
+.wf-img .x-lines line { stroke: #000; stroke-width: 2; }
+.wf-img.icon-sm { width: 24px; height: 24px; border-radius: 999px; aspect-ratio: 1; min-height: 0; font-size: 12px; }
+.wf-img.avatar { width: 40px; height: 40px; border-radius: 999px; aspect-ratio: 1; min-height: 0; background: #bdbdbd; color: #fff; }
+.wf-img.avatar.lg { width: 64px; height: 64px; font-size: 18px; }
+.wf-img.avatar.sm { width: 32px; height: 32px; font-size: 11px; }
+
+.wf-line { display: block; height: 12px; background: #e0e0e0; border-radius: 2px; margin-bottom: 8px; }
+.wf-line.sm { width: 40%; }
+.wf-line.md { width: 70%; }
+.wf-line.lg { width: 90%; }
+.wf-line.full { width: 100%; }
+.wf-line.tall { height: 18px; }
+.wf-line.huge { height: 28px; }
+.wf-line.dark { background: #bdbdbd; }
+.wf-line.darkest { background: #757575; }
+
+.wf-cta {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 12px 24px; border: 2px solid #212121; color: #212121;
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+  background: transparent;
+}
+.wf-cta.filled { background: #212121; color: #ffffff; }
+.wf-cta.sm { padding: 8px 16px; font-size: 10px; }
+.wf-cta.block { display: flex; width: 100%; }
+
+.wf-tag {
+  display: inline-block; padding: 3px 8px;
+  background: #212121; color: #ffffff;
+  font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+}
+.wf-tag.outline { background: transparent; color: #212121; border: 1px solid #212121; }
+.wf-tag.gray { background: #bdbdbd; color: #212121; }
+.wf-tag.light { background: #e0e0e0; color: #212121; }
+
+/* ===================== 01 NAVBAR (match home-wireframe style) ===================== */
+.wf-navbar { background: #ffffff; border-bottom: 1px solid #bdbdbd; padding: 16px 0; position: sticky; top: 0; z-index: 100; }
+.wf-navbar-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.wf-navbar-brand { font-size: 18px; font-weight: 700; color: #212121; letter-spacing: 2px; text-transform: uppercase; min-width: 140px; }
+.wf-navbar-brand .accent { color: #757575; }
+.wf-navbar-links { display: flex; gap: 8px; flex: 1; justify-content: center; }
+.wf-navbar-link { display: inline-flex; align-items: center; justify-content: center; padding: 10px 18px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #424242; min-width: 80px; }
+.wf-navbar-link.active { background: #212121; color: #ffffff; }
+.wf-navbar-actions { display: flex; align-items: center; gap: 12px; }
+
+/* ===================== Breadcrumb (match katalog-rx-78 style) ===================== */
+.wf-breadcrumb { background: #f5f5f5; border-bottom: 1px solid #e0e0e0; padding: 12px 0; }
+.wf-breadcrumb-inner { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #757575; }
+.wf-breadcrumb-link { color: #757575; }
+.wf-breadcrumb-link:hover { color: #212121; }
+.wf-breadcrumb-current { color: #212121; }
+.wf-breadcrumb-sep { color: #bdbdbd; font-size: 8px; }
+
+/* ===================== 02 ARTICLE HERO ===================== */
+.wf-art-hero { padding: 48px 0 24px; }
+.wf-art-hero .wf-art-tag { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+.wf-art-hero h1 { font-size: 36px; font-weight: 700; color: #212121; line-height: 1.2; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
+.wf-art-hero .wf-art-lead { font-size: 15px; color: #757575; line-height: 1.6; margin-bottom: 24px; }
+
+/* ===================== TWO COLUMN LAYOUT ===================== */
+.wf-art-layout { display: flex; flex-direction: column; gap: 48px; padding: 24px 0 64px; }
+@media (min-width: 1024px) { .wf-art-layout { flex-direction: row; gap: 48px; } }
+.wf-art-main { flex: 0 0 auto; }
+.wf-art-sidebar { flex: 0 0 auto; }
+@media (min-width: 1024px) {
+  .wf-art-main { width: 66.6666%; }
+  .wf-art-sidebar { width: 33.3333%; }
+}
+
+/* ===================== ARTICLE HEADER (tags + date) ===================== */
+.wf-art-header { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+.wf-art-tag-red { display: inline-block; padding: 4px 12px; background: #212121; color: #ffffff; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; }
+.wf-art-date-mono { font-size: 11px; color: #757575; font-family: 'Courier New', monospace; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+
+/* ===================== RATING SECTION ===================== */
+.wf-art-rating { background: #f5f5f5; border-left: 4px solid #212121; padding: 20px 24px; margin: 24px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
+.wf-art-rating-score .label { font-size: 10px; color: #757575; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 4px; }
+.wf-art-rating-score .value { font-size: 32px; color: #212121; font-weight: 700; }
+.wf-art-rating-stars { color: #757575; font-size: 18px; margin-left: 8px; }
+.wf-art-rating-breakdown { display: grid; grid-template-columns: auto auto; gap: 4px 16px; font-size: 11px; }
+.wf-art-rating-breakdown .lbl { color: #757575; }
+.wf-art-rating-breakdown .val { font-weight: 700; color: #212121; }
+
+/* ===================== COVER IMAGE ===================== */
+.wf-art-cover { margin: 24px 0; }
+.wf-art-cover .wf-img { width: 100%; min-height: 360px; }
+.wf-art-cover-caption { margin-top: 12px; padding: 12px 16px; background: #f5f5f5; border: 1px solid #e0e0e0; font-family: 'Courier New', monospace; font-size: 10px; }
+.wf-art-cover-caption .accent { color: #212121; font-weight: 700; text-transform: uppercase; }
+
+/* ===================== ARTICLE BODY ===================== */
+.wf-art-body { font-size: 14px; color: #424242; line-height: 1.7; }
+.wf-art-body p { margin-bottom: 16px; }
+.wf-art-body p .wf-line { display: block; width: 100%; height: 12px; margin: 4px 0; }
+.wf-art-body h2 { font-size: 22px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1px; margin: 32px 0 16px; display: flex; align-items: center; gap: 12px; }
+.wf-art-body h2 .bar { width: 4px; height: 26px; background: #212121; }
+.wf-art-body ul { margin: 16px 0 24px 24px; }
+.wf-art-body li { margin-bottom: 8px; }
+
+.wf-art-image { margin: 32px 0; }
+.wf-art-image .wf-img { width: 100%; min-height: 280px; }
+.wf-art-image-cap { text-align: center; font-size: 11px; color: #757575; margin-top: 8px; font-style: italic; }
+
+/* ===================== CALLOUT (TIPS PRO) ===================== */
+.wf-art-callout { margin: 24px 0; padding: 20px 24px; background: #f5f5f5; border-left: 4px solid #212121; }
+.wf-art-callout-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #212121; }
+.wf-art-callout-head .icon { width: 18px; height: 18px; border-radius: 999px; background: #212121; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; }
+.wf-art-callout p { font-size: 12px; color: #424242; line-height: 1.6; margin: 0; }
+.wf-art-callout p .wf-line { display: block; width: 100%; height: 12px; margin-bottom: 6px; }
+
+/* ===================== FEATURE GRID (3 cards) ===================== */
+.wf-art-feature-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 24px 0; }
+@media (min-width: 640px) { .wf-art-feature-grid { grid-template-columns: repeat(3, 1fr); } }
+.wf-art-feature { background: #ffffff; border: 1px solid #e0e0e0; padding: 16px; text-align: center; }
+.wf-art-feature .ic { display: none; }
+.wf-art-feature .ttl { font-size: 12px; font-weight: 700; color: #212121; }
+.wf-art-feature .desc { font-size: 10px; color: #757575; margin-top: 4px; }
+
+/* ===================== PROS / CONS ===================== */
+.wf-art-procons { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 24px 0; }
+@media (min-width: 640px) { .wf-art-procons { grid-template-columns: 1fr 1fr; } }
+.wf-art-pro { background: #f5f5f5; border: 1px solid #e0e0e0; padding: 20px; }
+.wf-art-con { background: #f5f5f5; border: 1px solid #bdbdbd; padding: 20px; }
+.wf-art-pro h3 { font-size: 12px; font-weight: 700; color: #424242; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+.wf-art-con h3 { font-size: 12px; font-weight: 700; color: #212121; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+.wf-art-procons ul { margin: 0; padding-left: 0; list-style: none; }
+.wf-art-procons li { font-size: 11px; color: #424242; padding: 4px 0; display: flex; gap: 8px; }
+.wf-art-procons li::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 999px; background: #424242; flex-shrink: 0; margin-top: 6px; }
+.wf-art-con ul li::before { background: #212121; }
+
+/* ===================== VERDICT BOX ===================== */
+.wf-art-verdict { background: #212121; color: #ffffff; padding: 24px; margin: 24px 0; text-align: center; }
+.wf-art-verdict .lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 4px; color: #9e9e9e; margin-bottom: 8px; }
+.wf-art-verdict .ttl { font-size: 22px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+.wf-art-verdict .sub { font-size: 11px; color: #bdbdbd; margin-top: 6px; }
+
+/* ===================== TAGS ===================== */
+.wf-art-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 24px 0; border-top: 1px solid #e0e0e0; margin-top: 32px; }
+.wf-art-tags-label { font-size: 11px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1.5px; margin-right: 4px; }
+.wf-art-tag-chip { display: inline-block; padding: 5px 12px; background: #f5f5f5; font-size: 9px; font-weight: 700; color: #424242; text-transform: uppercase; letter-spacing: 1px; border: 1px solid #e0e0e0; }
+
+/* ===================== SHARE ===================== */
+.wf-art-share { display: flex; align-items: center; gap: 12px; padding: 24px 0; margin: 24px 0; border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; }
+.wf-art-share-label { font-size: 11px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1.5px; }
+.wf-art-share-buttons { display: flex; gap: 8px; }
+.wf-share-btn { width: 40px; height: 40px; border-radius: 999px; background: #f5f5f5; border: 1px solid #bdbdbd; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #424242; }
+.wf-share-btn.fb { background: #424242; color: #fff; border-color: #424242; }
+.wf-share-btn.tw { background: #616161; color: #fff; border-color: #616161; }
+.wf-share-btn.ig { background: #757575; color: #fff; border-color: #757575; }
+.wf-share-btn.yt { background: #212121; color: #fff; border-color: #212121; }
+.wf-art-bookmark { width: 40px; height: 40px; border-radius: 999px; background: transparent; border: 1px solid transparent; font-size: 18px; color: #9e9e9e; cursor: pointer; margin-left: auto; }
+
+/* ===================== AUTHOR CARD ===================== */
+.wf-author-card { display: flex; gap: 20px; padding: 20px; background: #f5f5f5; border: 1px solid #e0e0e0; border-radius: 8px; margin: 24px 0; }
+.wf-author-card .wf-img.avatar.lg { flex-shrink: 0; background: #212121; color: #fff; font-size: 20px; }
+.wf-author-info { flex: 1; }
+.wf-author-name { font-size: 15px; font-weight: 700; color: #212121; margin-bottom: 8px; }
+.wf-author-bio { font-size: 12px; color: #757575; line-height: 1.6; margin-bottom: 12px; }
+.wf-author-bio .wf-line { display: block; width: 100%; height: 10px; margin-bottom: 4px; }
+.wf-author-link { display: inline-block; font-size: 11px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1px; }
+
+/* ===================== RELATED ARTICLES (inside main column) ===================== */
+.wf-related-title { font-size: 22px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1px; margin: 48px 0 24px; display: flex; align-items: center; gap: 12px; }
+.wf-related-title .bar { width: 4px; height: 26px; background: #212121; }
+.wf-related-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+@media (min-width: 640px) { .wf-related-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.wf-related-card { background: #ffffff; border: 1px solid #e0e0e0; overflow: hidden; display: flex; flex-direction: column; }
+.wf-related-card-img { position: relative; aspect-ratio: 16 / 10; background: #f5f5f5; }
+.wf-related-card-img .wf-img { height: 100%; min-height: 0; border: none; border-radius: 0; background: transparent; }
+.wf-related-tag { position: absolute; top: 12px; left: 12px; display: inline-block; padding: 3px 8px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #ffffff; }
+.wf-related-tag.red { background: #212121; }
+.wf-related-tag.dark { background: #212121; }
+.wf-related-card-body { padding: 16px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.wf-related-card-title { font-size: 14px; font-weight: 700; color: #212121; line-height: 1.3; }
+.wf-related-card-desc { font-size: 11px; color: #757575; line-height: 1.5; }
+.wf-related-card-date { font-size: 10px; color: #bdbdbd; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-top: auto; padding-top: 8px; font-family: 'Courier New', monospace; }
+
+/* ===================== SIDEBAR ===================== */
+.wf-sidebar-block { background: #ffffff; border: 1px solid #e0e0e0; padding: 20px; margin-bottom: 24px; }
+.wf-sidebar-title { font-size: 14px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #e0e0e0; display: flex; align-items: center; gap: 8px; }
+.wf-sidebar-title .ic { display: none; }
+.wf-sidebar-list { display: flex; flex-direction: column; gap: 12px; }
+.wf-sidebar-item { display: flex; gap: 12px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #f5f5f5; }
+.wf-sidebar-item:last-child { border-bottom: none; }
+.wf-sidebar-thumb { width: 80px; height: 80px; flex-shrink: 0; overflow: hidden; background: #f5f5f5; }
+.wf-sidebar-thumb .wf-img { height: 100%; min-height: 0; border: none; border-radius: 0; background: transparent; }
+.wf-sidebar-text { flex: 1; }
+.wf-sidebar-text h4 { font-size: 12px; font-weight: 700; color: #212121; line-height: 1.3; margin-bottom: 4px; }
+.wf-sidebar-date { font-size: 10px; color: #bdbdbd; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; font-family: 'Courier New', monospace; }
+
+/* ===================== SIDEBAR SPECS ===================== */
+.wf-specs-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f5f5f5; font-size: 12px; }
+.wf-specs-row:last-child { border-bottom: none; }
+.wf-specs-row .lbl { color: #757575; }
+.wf-specs-row .val { font-weight: 700; color: #212121; }
+.wf-specs-row .val.danger { color: #212121; }
+
+/* ===================== 10 FOOTER (match home-wireframe) ===================== */
+.wf-footer { background: #212121; color: #bdbdbd; padding: 64px 0 32px; }
+.wf-footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 32px; margin-bottom: 48px; }
+@media (max-width: 768px) { .wf-footer-grid { grid-template-columns: 1fr; } }
+.wf-footer-brand { font-size: 18px; font-weight: 700; color: #ffffff; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+.wf-footer-desc { font-size: 12px; line-height: 1.6; margin-bottom: 24px; color: #9e9e9e; }
+.wf-socials { display: flex; gap: 12px; }
+.wf-social { width: 36px; height: 36px; border-radius: 999px; border: 1px solid #616161; background: #424242; }
+.wf-footer-col h4 { font-size: 11px; font-weight: 700; color: #ffffff; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; }
+.wf-footer-col .wf-line { background: #424242; margin-bottom: 8px; }
+.wf-footer-col .wf-line.dark { background: #616161; }
+.wf-footer-bottom { border-top: 1px solid #424242; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.wf-footer-meta { font-size: 10px; color: #757575; display: flex; gap: 16px; }
+
+/* ===================== Responsive ===================== */
+@media (max-width: 1024px) { .wf-navbar-links { display: none; } }
+@media (max-width: 768px) {
+  .wf-art-meta { flex-direction: column; gap: 12px; }
+  .wf-art-meta-sep { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== 01 NAVBAR ===================== -->
+<header class="wf-navbar">
+  <div class="container wf-navbar-inner">
+    <a class="wf-navbar-brand" href="home-wireframe.html">GUNPLA <span class="accent">ELITE</span></a>
+    <nav class="wf-navbar-links">
+      <a class="wf-navbar-link" href="home-wireframe.html">Home</a>
+      <a class="wf-navbar-link" href="katalog-wireframe.html">Katalog</a>
+      <a class="wf-navbar-link active">Artikel</a>
+    </nav>
+    <div class="wf-navbar-actions">
+      <div class="wf-img icon-sm" title="Cart" style="position:relative;">
+        <span style="position:absolute;top:-4px;right:-4px;width:14px;height:14px;border-radius:999px;background:#212121;border:2px solid #fff;"></span>
+      </div>
+      <div class="wf-img icon-sm" title="Menu">≡</div>
+      <a class="wf-cta filled sm">Login</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== 02 BREADCRUMB ===================== -->
+<div class="wf-breadcrumb">
+  <div class="container wf-breadcrumb-inner">
+    <a class="wf-breadcrumb-link" href="home-wireframe.html">Home</a>
+    <span class="wf-breadcrumb-sep">›</span>
+    <a class="wf-breadcrumb-link" href="artikel-list-wireframe.html">Artikel</a>
+    <span class="wf-breadcrumb-sep">›</span>
+    <span class="wf-breadcrumb-current">Detail</span>
+  </div>
+</div>
+
+<!-- ===================== 03 ARTICLE HERO ===================== -->
+<section class="wf-art-hero">
+  <div class="container">
+    <p class="wf-section-label">01 — Detail Artikel</p>
+    <div class="wf-art-header">
+      <span class="wf-art-tag-red">REVIEW</span>
+      <div class="wf-img icon-sm" style="flex-shrink:0;"></div>
+      <span class="wf-art-date-mono">05 OKT 2023</span>
+      <div class="wf-img icon-sm" style="flex-shrink:0;"></div>
+      <span class="wf-art-date-mono">10 MIN READ</span>
+    </div>
+    <h1>Review Eksklusif: MGSD Freedom Gundam</h1>
+    <p class="wf-art-lead">Membongkar detail luar biasa dari lini Master Grade Super Deformed terbaru. Apakah sepadan dengan harganya? Simak review lengkap dari tim Gunpla Elite.</p>
+  </div>
+</section>
+
+<!-- ===================== 04 TWO-COLUMN LAYOUT ===================== -->
+<section>
+  <div class="container wf-art-layout">
+
+    <!-- ===== MAIN COLUMN (2/3) ===== -->
+    <div class="wf-art-main">
+
+      <div class="wf-art-cover">
+        <div class="wf-img" style="min-height:380px;">
+          <div class="x-lines"><svg viewBox="0 0 100 56" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="56" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="56" stroke="#000" stroke-width="2"/></svg></div>
+          Featured IMG (MGSD Freedom)
+        </div>
+        <div class="wf-art-cover-caption">
+          <div class="accent">UNIT: ZGMF-X10A Freedom Gundam</div>
+          <div>GRADE: MGSD | SCALE: 1/1 SD | STATUS: DEPLOYED</div>
+        </div>
+      </div>
+
+      <div class="wf-art-rating">
+        <div class="wf-art-rating-score">
+          <div class="label">RATING KESELURUHAN</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="value">8.7</span>
+            <div style="display:flex;gap:2px;">
+              <div class="wf-img icon-sm" style="width:14px;height:14px;background:#212121;"></div>
+              <div class="wf-img icon-sm" style="width:14px;height:14px;background:#212121;"></div>
+              <div class="wf-img icon-sm" style="width:14px;height:14px;background:#212121;"></div>
+              <div class="wf-img icon-sm" style="width:14px;height:14px;background:#212121;"></div>
+              <div class="wf-img icon-sm" style="width:14px;height:14px;background:#e0e0e0;border-color:#bdbdbd;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="wf-art-rating-breakdown">
+          <span class="lbl">Detail:</span><span class="val">9.2/10</span>
+          <span class="lbl">Artikulasi:</span><span class="val">8.5/10</span>
+          <span class="lbl">Build Fun:</span><span class="val">9.0/10</span>
+          <span class="lbl">Value:</span><span class="val">7.8/10</span>
+        </div>
+      </div>
+
+      <article class="wf-art-body">
+
+        <h2><span class="bar"></span>First Impression</h2>
+        <p>
+          <span class="wf-line full"></span>
+          <span class="wf-line full"></span>
+          <span class="wf-line full"></span>
+          <span class="wf-line md"></span>
+        </p>
+        <p>
+          <span class="wf-line full"></span>
+          <span class="wf-line full"></span>
+          <span class="wf-line md"></span>
+        </p>
+
+        <div class="wf-art-image">
+          <div class="wf-img" style="min-height:280px;">
+            <div class="x-lines"><svg viewBox="0 0 100 56" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="56" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="56" stroke="#000" stroke-width="2"/></svg></div>
+            Runner parts MGSD
+          </div>
+          <p class="wf-art-image-cap">Runner parts MGSD Freedom — color separation excellent untuk kelas SD</p>
+        </div>
+
+        <h2><span class="bar"></span>Inner Frame &amp; Engineering</h2>
+        <p>
+          <span class="wf-line full"></span>
+          <span class="wf-line full"></span>
+        </p>
+        <ul>
+          <li><span class="wf-line lg" style="width:80%;"></span></li>
+          <li><span class="wf-line lg" style="width:75%;"></span></li>
+          <li><span class="wf-line lg" style="width:85%;"></span></li>
+          <li><span class="wf-line lg" style="width:70%;"></span></li>
+        </ul>
+
+        <div class="wf-art-callout">
+          <div class="wf-art-callout-head"><span class="icon">i</span><span>PRO TIP:</span></div>
+          <p>
+            <span class="wf-line full"></span>
+            <span class="wf-line md"></span>
+          </p>
+        </div>
+
+        <h2><span class="bar"></span>Articulation &amp; Poseability</h2>
+        <p>
+          <span class="wf-line full"></span>
+          <span class="wf-line full"></span>
+          <span class="wf-line md"></span>
+        </p>
+
+        <div class="wf-art-feature-grid">
+          <div class="wf-art-feature">
+            <div class="wf-img icon-sm" style="width:32px;height:32px;background:#212121;margin:0 auto 6px;"></div>
+            <div class="ttl">Dynamic Action</div>
+            <div class="desc">Action base compatible</div>
+          </div>
+          <div class="wf-art-feature">
+            <div class="wf-img icon-sm" style="width:32px;height:32px;background:#212121;margin:0 auto 6px;"></div>
+            <div class="ttl">Wings of Light</div>
+            <div class="desc">Effect parts included</div>
+          </div>
+          <div class="wf-art-feature">
+            <div class="wf-img icon-sm" style="width:32px;height:32px;background:#212121;margin:0 auto 6px;"></div>
+            <div class="ttl">Full Weaponry</div>
+            <div class="desc">Beam rifle, shield, sabers</div>
+          </div>
+        </div>
+
+        <h2><span class="bar"></span>Pro &amp; Kontra</h2>
+        <div class="wf-art-procons">
+          <div class="wf-art-pro">
+            <h3><span style="display:inline-block;width:8px;height:8px;border-radius:999px;background:#212121;margin-right:6px;vertical-align:middle;"></span>KELEBIHAN</h3>
+            <ul>
+              <li><span class="wf-line full" style="height:10px;"></span></li>
+              <li><span class="wf-line full" style="height:10px;"></span></li>
+              <li><span class="wf-line full" style="height:10px;"></span></li>
+              <li><span class="wf-line full" style="height:10px;"></span></li>
+              <li><span class="wf-line full" style="height:10px;"></span></li>
+            </ul>
+          </div>
+          <div class="wf-art-con">
+            <h3><span style="display:inline-block;width:8px;height:8px;border-radius:999px;background:#212121;margin-right:6px;vertical-align:middle;border:2px solid #212121;background:transparent;box-sizing:border-box;"></span>KEKURANGAN</h3>
+            <ul>
+              <li><span class="wf-line full" style="height:10px;"></span></li>
+              <li><span class="wf-line full" style="height:10px;"></span></li>
+              <li><span class="wf-line full" style="height:10px;"></span></li>
+              <li><span class="wf-line full" style="height:10px;"></span></li>
+            </ul>
+          </div>
+        </div>
+
+        <h2><span class="bar"></span>Verdict</h2>
+        <p>
+          <span class="wf-line full"></span>
+          <span class="wf-line full"></span>
+          <span class="wf-line md"></span>
+        </p>
+        <p>
+          <span class="wf-line full"></span>
+          <span class="wf-line full"></span>
+          <span class="wf-line md"></span>
+        </p>
+
+        <div class="wf-art-verdict">
+          <div class="lbl">FINAL VERDICT</div>
+          <div class="ttl">Recommended</div>
+          <div class="sub">Untuk SD enthusiast dan kolektor yang mengutamakan display piece</div>
+        </div>
+
+      </article>
+
+      <!-- Tags -->
+      <div class="wf-art-tags">
+        <span class="wf-art-tags-label">TAGS:</span>
+        <span class="wf-art-tag-chip">REVIEW</span>
+        <span class="wf-art-tag-chip">MGSD</span>
+        <span class="wf-art-tag-chip">FREEDOM GUNDAM</span>
+        <span class="wf-art-tag-chip">SUPER DEFORMED</span>
+        <span class="wf-art-tag-chip">GUNDAM SEED</span>
+      </div>
+
+      <!-- Share -->
+      <div class="wf-art-share">
+        <span class="wf-art-share-label">SHARE:</span>
+        <div class="wf-art-share-buttons">
+          <a class="wf-share-btn fb"></a>
+          <a class="wf-share-btn tw"></a>
+          <a class="wf-share-btn ig"></a>
+          <a class="wf-share-btn yt"></a>
+        </div>
+        <button class="wf-art-bookmark"></button>
+      </div>
+
+      <!-- Author Card -->
+      <div class="wf-author-card">
+        <div class="wf-img avatar lg"></div>
+        <div class="wf-author-info">
+          <h3 class="wf-author-name">Gunpla Elite Reviewer</h3>
+          <div class="wf-author-bio">
+            <span class="wf-line full"></span>
+            <span class="wf-line full"></span>
+            <span class="wf-line md"></span>
+          </div>
+          <a class="wf-author-link">Lihat Semua Review</a>
+        </div>
+      </div>
+
+      <!-- Related Articles -->
+      <h2 class="wf-related-title"><span class="bar"></span>Artikel Terkait</h2>
+      <div class="wf-related-grid">
+
+        <a class="wf-related-card" href="artikel-inner-frame.html">
+          <div class="wf-related-card-img">
+            <div class="wf-img">
+              <div class="x-lines"><svg viewBox="0 0 100 75" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="75" stroke="#000" stroke-width="1.5"/><line x1="100" y1="0" x2="0" y2="75" stroke="#000" stroke-width="1.5"/></svg></div>
+            </div>
+            <span class="wf-related-tag red">EDITOR'S CHOICE</span>
+          </div>
+          <div class="wf-related-card-body">
+            <h3 class="wf-related-card-title">Master Grade: Evolusi Inner Frame 2024</h3>
+            <div class="wf-related-card-desc">Menganalisis pergeseran paradigma dalam desain mecha skala 1/100.</div>
+            <span class="wf-related-card-date">15 OKT 2023</span>
+          </div>
+        </a>
+
+        <a class="wf-related-card" href="artikel-airbrushing.html">
+          <div class="wf-related-card-img">
+            <div class="wf-img">
+              <div class="x-lines"><svg viewBox="0 0 100 75" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="75" stroke="#000" stroke-width="1.5"/><line x1="100" y1="0" x2="0" y2="75" stroke="#000" stroke-width="1.5"/></svg></div>
+            </div>
+            <span class="wf-related-tag dark">TUTORIAL</span>
+          </div>
+          <div class="wf-related-card-body">
+            <h3 class="wf-related-card-title">Tips Airbrushing Untuk Pemula</h3>
+            <div class="wf-related-card-desc">Panduan komprehensif memilih kompresor dan pen brush pertama Anda.</div>
+            <span class="wf-related-card-date">12 OKT 2023</span>
+          </div>
+        </a>
+
+      </div>
+
+    </div>
+
+    <!-- ===== SIDEBAR (1/3) ===== -->
+    <aside class="wf-art-sidebar">
+
+      <div class="wf-sidebar-block">
+        <h3 class="wf-sidebar-title"><span class="wf-img icon-sm" style="width:18px;height:18px;background:#212121;border-color:#212121;"></span> SPESIFIKASI</h3>
+        <div class="wf-specs-row"><span class="lbl">Grade:</span><span class="val">MGSD</span></div>
+        <div class="wf-specs-row"><span class="lbl">Skala:</span><span class="val">1/1 SD (~12cm)</span></div>
+        <div class="wf-specs-row"><span class="lbl">Part Count:</span><span class="val">280+ parts</span></div>
+        <div class="wf-specs-row"><span class="lbl">Runner:</span><span class="val">8 plates</span></div>
+        <div class="wf-specs-row"><span class="lbl">Stickers:</span><span class="val">Yes (foil)</span></div>
+        <div class="wf-specs-row"><span class="lbl">Stand:</span><span class="val danger">Not included</span></div>
+        <div class="wf-specs-row"><span class="lbl">Tahun:</span><span class="val">2023</span></div>
+        <div class="wf-specs-row"><span class="lbl">Series:</span><span class="val">Gundam SEED</span></div>
+      </div>
+
+      <div class="wf-sidebar-block">
+        <h3 class="wf-sidebar-title"><span class="wf-img icon-sm" style="width:18px;height:18px;background:#212121;border-color:#212121;"></span> ARTIKEL POPULER</h3>
+        <div class="wf-sidebar-list">
+
+          <a class="wf-sidebar-item" href="artikel-inner-frame.html">
+            <div class="wf-sidebar-thumb">
+              <div class="wf-img">
+                <div class="x-lines"><svg viewBox="0 0 100 75" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="75" stroke="#000" stroke-width="1.5"/><line x1="100" y1="0" x2="0" y2="75" stroke="#000" stroke-width="1.5"/></svg></div>
+              </div>
+            </div>
+            <div class="wf-sidebar-text">
+              <h4>Master Grade: Evolusi Inner Frame 2024</h4>
+              <span class="wf-sidebar-date">15 OKT 2023</span>
+            </div>
+          </a>
+
+          <a class="wf-sidebar-item" href="artikel-airbrushing.html">
+            <div class="wf-sidebar-thumb">
+              <div class="wf-img">
+                <div class="x-lines"><svg viewBox="0 0 100 75" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="75" stroke="#000" stroke-width="1.5"/><line x1="100" y1="0" x2="0" y2="75" stroke="#000" stroke-width="1.5"/></svg></div>
+              </div>
+            </div>
+            <div class="wf-sidebar-text">
+              <h4>Tips Airbrushing Untuk Pemula</h4>
+              <span class="wf-sidebar-date">12 OKT 2023</span>
+            </div>
+          </a>
+
+          <a class="wf-sidebar-item" href="artikel-panel-lining.html">
+            <div class="wf-sidebar-thumb">
+              <div class="wf-img">
+                <div class="x-lines"><svg viewBox="0 0 100 75" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="75" stroke="#000" stroke-width="1.5"/><line x1="100" y1="0" x2="0" y2="75" stroke="#000" stroke-width="1.5"/></svg></div>
+              </div>
+            </div>
+            <div class="wf-sidebar-text">
+              <h4>Panduan Panel Lining Presisi</h4>
+              <span class="wf-sidebar-date">28 SEP 2023</span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+
+    </aside>
+
+  </div>
+</section>
+
+<!-- ===================== 10 FOOTER ===================== -->
+<footer class="wf-footer">
+  <div class="container">
+    <p class="wf-section-label" style="color:#757575;">07 — Footer</p>
+    <div class="wf-footer-grid">
+      <div>
+        <div class="wf-footer-brand">GUNPLA <span style="color:#9e9e9e;">ELITE</span></div>
+        <div class="wf-footer-desc">
+          <span class="wf-line full" style="background:#424242;"></span>
+          <span class="wf-line full" style="background:#424242;"></span>
+          <span class="wf-line md" style="background:#424242;"></span>
+        </div>
+        <div class="wf-socials">
+          <div class="wf-social"></div>
+          <div class="wf-social"></div>
+          <div class="wf-social"></div>
+        </div>
+      </div>
+      <div class="wf-footer-col">
+        <h4>Quick Links</h4>
+        <span class="wf-line full"></span>
+        <span class="wf-line full"></span>
+        <span class="wf-line full"></span>
+      </div>
+      <div class="wf-footer-col">
+        <h4>Hubungi Kami</h4>
+        <span class="wf-line sm" style="margin-bottom:12px;"></span>
+        <span class="wf-line full" style="margin-bottom:16px;"></span>
+        <span class="wf-line sm" style="margin-bottom:8px;"></span>
+        <span class="wf-line md"></span>
+      </div>
+    </div>
+    <div class="wf-footer-bottom">
+      <span class="wf-footer-meta">© 2024 Gunpla Elite. All Rights Reserved.</span>
+      <div class="wf-footer-meta">
+        <span>ENG_VER: 2.0.4</span>
+        <span>STATUS: ONLINE</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

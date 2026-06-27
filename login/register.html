@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Daftar Akun - Gunpla Elite</title>
+<link rel="stylesheet" href="../home.css"/>
+<link rel="stylesheet" href="login.css"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;500;600;700&display=swap');
+  body { font-family: 'Inter', sans-serif; }
+  h1, h2, h3, h4, .font-oswald { font-family: 'Oswald', sans-serif; }
+  .bg-primary-red { background-color: #d32f2f; }
+  .text-primary-red { color: #d32f2f; }
+  .border-primary-red { border-color: #d32f2f; }
+  .bg-primary-blue { background-color: #1e3a8a; }
+</style>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+<!-- BEGIN: MainHeader -->
+<div id="navbar-container"></div>
+<script src="../components/navbar.js"></script>
+<!-- END: MainHeader -->
+
+<!-- Breadcrumb -->
+<div class="bg-gray-50 border-b border-gray-200 py-3">
+<div class="container mx-auto px-4 text-xs text-gray-500">
+<a class="hover:text-primary-red transition-colors" href="../home.html">HOME</a>
+<span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span>
+<a class="hover:text-primary-red transition-colors" href="login.html">LOGIN</a>
+<span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span>
+<span class="text-gray-900 font-bold">DAFTAR</span>
+</div>
+</div>
+
+<!-- Register Section -->
+<section class="login-section py-16">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center max-w-6xl mx-auto">
+
+<!-- Left: Form -->
+<div>
+<div class="inline-block bg-primary-red text-white text-[10px] font-bold px-3 py-1 rounded-sm uppercase tracking-wider mb-4">Bergabung Sekarang</div>
+<h1 class="font-oswald text-4xl md:text-5xl font-bold uppercase mb-3 leading-tight">Buat Akun <span class="text-primary-red">Baru</span></h1>
+<p class="text-gray-500 mb-8">Daftar gratis dan dapatkan akses ke promo eksklusif, pelacakan pesanan, dan komunitas builder Indonesia.</p>
+
+<form id="registerForm" class="space-y-5">
+
+<div class="form-group">
+<label class="form-label" for="regName">Nama Lengkap</label>
+<div class="input-icon-wrap">
+<i class="fas fa-user input-icon"></i>
+<input class="form-input" id="regName" type="text" placeholder="Nama lengkap Anda" required/>
+</div>
+</div>
+
+<div class="form-group">
+<label class="form-label" for="regEmail">Email</label>
+<div class="input-icon-wrap">
+<i class="fas fa-envelope input-icon"></i>
+<input class="form-input" id="regEmail" type="email" placeholder="nama@email.com" required/>
+</div>
+</div>
+
+<div class="form-group">
+<label class="form-label" for="regPhone">No. HP (opsional)</label>
+<div class="input-icon-wrap">
+<i class="fas fa-phone input-icon"></i>
+<input class="form-input" id="regPhone" type="tel" placeholder="08xxxxxxxxxx"/>
+</div>
+</div>
+
+<div class="form-group">
+<label class="form-label" for="regPassword">Password</label>
+<div class="input-icon-wrap">
+<i class="fas fa-lock input-icon"></i>
+<input class="form-input" id="regPassword" type="password" placeholder="Minimal 8 karakter" required minlength="8"/>
+<button type="button" class="toggle-password" id="togglePwd1" tabindex="-1">
+<i class="fas fa-eye"></i>
+</button>
+</div>
+<p class="text-[11px] text-gray-500 mt-2">Minimal 8 karakter, kombinasi huruf &amp; angka disarankan.</p>
+</div>
+
+<div class="form-group">
+<label class="form-label" for="regConfirm">Konfirmasi Password</label>
+<div class="input-icon-wrap">
+<i class="fas fa-lock input-icon"></i>
+<input class="form-input" id="regConfirm" type="password" placeholder="Ulangi password" required minlength="8"/>
+<button type="button" class="toggle-password" id="togglePwd2" tabindex="-1">
+<i class="fas fa-eye"></i>
+</button>
+</div>
+</div>
+
+<label class="flex items-start gap-2 text-sm text-gray-600 cursor-pointer">
+<input type="checkbox" class="accent-primary-red mt-1" id="agreeTerms" required/>
+<span>Saya menyetujui <a href="#" class="text-primary-red font-semibold hover:underline">Syarat &amp; Ketentuan</a> serta <a href="#" class="text-primary-red font-semibold hover:underline">Kebijakan Privasi</a> Gunpla Elite.</span>
+</label>
+
+<button type="submit" class="btn-primary w-full">
+DAFTAR <i class="fas fa-arrow-right ml-2"></i>
+</button>
+
+<p class="text-center text-sm text-gray-600 mt-6">
+Sudah punya akun?
+<a href="login.html" class="text-primary-red font-bold hover:underline">Masuk di sini</a>
+</p>
+
+</form>
+</div>
+
+<!-- Right: Visual -->
+<div class="login-visual-wrap hidden lg:block">
+<div class="login-visual-card">
+<img alt="Gundam Register Visual" src="../images/gundam-barbatos.png" class="login-visual-img"/>
+<div class="login-visual-overlay">
+<h3 class="font-oswald text-2xl font-bold uppercase mb-2">Bergabung dengan <span class="text-primary-red">Elite</span></h3>
+<p class="text-sm text-gray-200">"Setiap master pernah menjadi pemula. Mulai perjalanan Gunpla-mu hari ini."</p>
+</div>
+</div>
+<div class="login-feature-list mt-6 space-y-3">
+<div class="login-feature-item">
+<i class="fas fa-gift text-primary-red"></i>
+<span>Welcome bonus poin reward</span>
+</div>
+<div class="login-feature-item">
+<i class="fas fa-percent text-primary-red"></i>
+<span>Diskon 10% untuk pembelian pertama</span>
+</div>
+<div class="login-feature-item">
+<i class="fas fa-users text-primary-red"></i>
+<span>Akses komunitas builder Indonesia</span>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- Toast -->
+<div id="toastSuccess" class="toast-success">
+<i class="fas fa-check-circle"></i>
+<span id="toastMessage">Pendaftaran berhasil!</span>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  function bindToggle(btnId, inputId) {
+    var btn = document.getElementById(btnId);
+    var input = document.getElementById(inputId);
+    btn.addEventListener('click', function() {
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+      } else {
+        input.type = 'password';
+        btn.innerHTML = '<i class="fas fa-eye"></i>';
+      }
+    });
+  }
+  bindToggle('togglePwd1', 'regPassword');
+  bindToggle('togglePwd2', 'regConfirm');
+
+  var form = document.getElementById('registerForm');
+  var toast = document.getElementById('toastSuccess');
+  var toastMsg = document.getElementById('toastMessage');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var name = document.getElementById('regName').value.trim();
+    var email = document.getElementById('regEmail').value.trim();
+    var pwd = document.getElementById('regPassword').value;
+    var confirm = document.getElementById('regConfirm').value;
+
+    if (!name || !email || !pwd) return;
+    if (pwd !== confirm) {
+      toastMsg.textContent = 'Password tidak cocok!';
+      toast.style.backgroundColor = '#dc2626';
+      toast.classList.add('show');
+      setTimeout(function() { toast.classList.remove('show'); }, 2000);
+      return;
+    }
+    if (!document.getElementById('agreeTerms').checked) {
+      toastMsg.textContent = 'Harap setujui Syarat & Ketentuan.';
+      toast.style.backgroundColor = '#dc2626';
+      toast.classList.add('show');
+      setTimeout(function() { toast.classList.remove('show'); }, 2000);
+      return;
+    }
+
+    try {
+      localStorage.setItem('gunpla_user', JSON.stringify({
+        name: name, email: email, loggedInAt: new Date().toISOString()
+      }));
+    } catch (err) {}
+
+    toast.style.backgroundColor = '#16a34a';
+    toastMsg.textContent = 'Pendaftaran berhasil! Mengarahkan ke login...';
+    toast.classList.add('show');
+    setTimeout(function() { window.location.href = 'login.html'; }, 1200);
+  });
+});
+</script>
+
+<!-- BEGIN: MainFooter -->
+<div id="footer"></div>
+<script src="../components/footer.js"></script>
+<!-- END: MainFooter -->
+
+</body>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>RX-78-2 Gundam — Detail Produk (Wireframe)</title>
+<style>
+/* ===================== Reset & Base ===================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #ffffff; color: #424242; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.4; }
+a { text-decoration: none; color: inherit; }
+img, svg { display: block; max-width: 100%; }
+
+.container { max-width: 1280px; margin: 0 auto; padding: 0 16px; width: 100%; }
+.container-narrow { max-width: 896px; margin: 0 auto; padding: 0 16px; width: 100%; }
+.wireframe-section { padding: 64px 0; border-bottom: 1px solid #f0f0f0; }
+.wireframe-section.tight { padding: 48px 0; }
+.wireframe-section.alt-bg { background: #f5f5f5; }
+.wireframe-section.dark-bg { background: #424242; color: #e0e0e0; }
+
+.wf-section-label { font-size: 10px; font-weight: 700; color: #9e9e9e; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; }
+.wf-section-eyebrow { font-size: 11px; font-weight: 700; color: #757575; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
+.wf-section-title { font-size: 24px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.wf-section-title.lg { font-size: 30px; }
+.wf-section-sub { font-size: 13px; color: #757575; margin-bottom: 24px; max-width: 600px; }
+
+/* ===================== Wireframe Utilities ===================== */
+.wf-img {
+  background: #e0e0e0;
+  border: 1px solid #bdbdbd;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  overflow: hidden;
+  color: #757575; font-size: 11px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+}
+.wf-img .x-lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.wf-img .x-lines svg { width: 100%; height: 100%; display: block; }
+.wf-img .x-lines line { stroke: #000; stroke-width: 2; }
+.wf-img.icon-sm { width: 24px; height: 24px; border-radius: 999px; aspect-ratio: 1; min-height: 0; font-size: 12px; }
+.wf-img.tall { aspect-ratio: 3 / 4; min-height: 200px; }
+.wf-img.lg { aspect-ratio: 4 / 3; }
+
+.wf-line { display: block; height: 12px; background: #e0e0e0; border-radius: 2px; margin-bottom: 8px; }
+.wf-line.sm { width: 40%; }
+.wf-line.md { width: 70%; }
+.wf-line.lg { width: 90%; }
+.wf-line.full { width: 100%; }
+.wf-line.tall { height: 18px; }
+.wf-line.huge { height: 28px; }
+.wf-line.dark { background: #bdbdbd; }
+.wf-line.darkest { background: #757575; }
+
+.wf-cta {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 12px 24px; border: 2px solid #212121; color: #212121;
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+  background: transparent;
+}
+.wf-cta.filled { background: #212121; color: #ffffff; }
+.wf-cta.sm { padding: 8px 16px; font-size: 10px; }
+.wf-cta.block { display: flex; width: 100%; }
+
+.wf-tag {
+  display: inline-block; padding: 3px 8px;
+  background: #212121; color: #ffffff;
+  font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+}
+.wf-tag.outline { background: transparent; color: #212121; border: 1px solid #212121; }
+.wf-tag.gray { background: #bdbdbd; color: #212121; }
+.wf-tag.light { background: #e0e0e0; color: #212121; }
+
+.wf-stars { display: inline-flex; gap: 3px; align-items: center; }
+.wf-star { width: 12px; height: 12px; border: 1px solid #757575; transform: rotate(45deg); display: inline-block; }
+.wf-stars-count { font-size: 10px; color: #757575; margin-left: 6px; font-weight: 700; }
+
+/* ===================== 01 NAVBAR (match home-wireframe style) ===================== */
+.wf-navbar { background: #ffffff; border-bottom: 1px solid #bdbdbd; padding: 16px 0; position: sticky; top: 0; z-index: 100; }
+.wf-navbar-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.wf-navbar-brand { font-size: 18px; font-weight: 700; color: #212121; letter-spacing: 2px; text-transform: uppercase; min-width: 140px; }
+.wf-navbar-brand .accent { color: #757575; }
+.wf-navbar-links { display: flex; gap: 8px; flex: 1; justify-content: center; }
+.wf-navbar-link { display: inline-flex; align-items: center; justify-content: center; padding: 10px 18px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #424242; min-width: 80px; }
+.wf-navbar-link.active { background: #212121; color: #ffffff; }
+.wf-navbar-actions { display: flex; align-items: center; gap: 12px; }
+
+/* ===================== Breadcrumb (match katalog-rx-78 line 24-32) ===================== */
+.wf-breadcrumb { background: #f5f5f5; border-bottom: 1px solid #e0e0e0; padding: 12px 0; }
+.wf-breadcrumb-inner { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #757575; }
+.wf-breadcrumb-link { color: #757575; }
+.wf-breadcrumb-link:hover { color: #212121; }
+.wf-breadcrumb-current { color: #212121; }
+.wf-breadcrumb-sep { color: #bdbdbd; font-size: 8px; }
+
+/* ===================== Product Detail (match katalog-rx-78 line 35-127: py-12) ===================== */
+.wf-pd-section { padding: 48px 0; }
+.wf-pd-grid { display: grid; grid-template-columns: 1fr; gap: 48px; }
+@media (min-width: 1024px) { .wf-pd-grid { grid-template-columns: 1fr 1fr; gap: 48px; } }
+
+.wf-pd-img { background: #f5f5f5; border-radius: 8px; padding: 48px; display: flex; align-items: center; justify-content: center; min-height: 500px; position: relative; }
+.wf-pd-img .wf-img { position: absolute; inset: 0; background: transparent; border: 0; }
+
+.wf-pd-info { display: flex; flex-direction: column; }
+
+.wf-pd-badges { display: flex; gap: 8px; margin-bottom: 16px; }
+.wf-pd-badge { background: #424242; color: #fff; font-size: 10px; font-weight: 700; padding: 4px 12px; text-transform: uppercase; letter-spacing: 1.5px; align-self: flex-start; }
+
+.wf-pd-title { font-size: 30px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1px; line-height: 1.1; margin-bottom: 8px; }
+.wf-pd-sub { font-size: 13px; color: #757575; margin-bottom: 24px; }
+
+.wf-pd-prices { display: flex; align-items: baseline; gap: 12px; margin-bottom: 24px; }
+.wf-pd-price { font-size: 24px; font-weight: 700; color: #212121; }
+.wf-pd-price-old { font-size: 16px; color: #bdbdbd; text-decoration: line-through; }
+
+.wf-pd-rating { display: flex; align-items: center; gap: 4px; margin-bottom: 24px; }
+
+.wf-pd-desc { font-size: 13px; color: #424242; line-height: 1.6; margin-bottom: 32px; }
+
+/* Specs table */
+.wf-specs { border: 1px solid #e0e0e0; border-radius: 4px; overflow: hidden; margin-bottom: 32px; }
+.wf-specs-row { display: grid; grid-template-columns: 1fr 2fr; border-bottom: 1px solid #e0e0e0; }
+.wf-specs-row:last-child { border-bottom: 0; }
+.wf-specs-row.zebra { background: #f5f5f5; }
+.wf-specs-label { padding: 12px 16px; font-size: 12px; font-weight: 700; color: #757575; text-transform: uppercase; }
+.wf-specs-value { padding: 12px 16px; font-size: 13px; color: #212121; display: flex; align-items: center; }
+.wf-specs-green { color: #212121; font-weight: 700; }
+
+/* Actions */
+.wf-pd-actions { display: flex; gap: 16px; margin-bottom: 32px; }
+.wf-pd-actions .wf-cta { flex: 1; }
+
+/* Trust badges */
+.wf-trust { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: center; }
+.wf-trust-cell { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.wf-trust-icon { width: 28px; height: 28px; border: 1px solid #212121; background: #e0e0e0; border-radius: 4px; }
+.wf-trust-text { font-size: 10px; color: #757575; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+
+/* ===================== Related Products (match katalog-rx-78 line 130-185) ===================== */
+.wf-related-section { background: #f5f5f5; border-top: 1px solid #e0e0e0; padding: 64px 0; }
+.wf-related-title { font-size: 24px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 32px; }
+.wf-related-title .accent { color: #9e9e9e; }
+.wf-related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+@media (min-width: 768px) { .wf-related-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.wf-related-card { display: flex; flex-direction: column; background: #fff; border: 1px solid #e0e0e0; border-radius: 4px; overflow: hidden; }
+.wf-related-img { background: #f5f5f5; padding: 24px; display: flex; align-items: center; justify-content: center; height: 192px; position: relative; }
+.wf-related-img .wf-img { position: absolute; inset: 0; background: transparent; border: 0; max-width: 100%; max-height: 128px; }
+.wf-related-body { padding: 16px; display: flex; flex-direction: column; gap: 6px; }
+.wf-related-grade { font-size: 11px; font-weight: 700; color: #bdbdbd; text-transform: uppercase; }
+.wf-related-name { font-size: 13px; font-weight: 700; color: #212121; }
+.wf-related-price { font-size: 14px; font-weight: 700; color: #212121; }
+
+/* ===================== Footer (match home-wireframe) ===================== */
+.wf-footer { background: #212121; color: #bdbdbd; padding: 64px 0 32px; }
+.wf-footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 32px; margin-bottom: 48px; }
+@media (max-width: 768px) { .wf-footer-grid { grid-template-columns: 1fr; } }
+.wf-footer-brand { font-size: 18px; font-weight: 700; color: #ffffff; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+.wf-footer-desc { font-size: 12px; line-height: 1.6; margin-bottom: 24px; color: #9e9e9e; }
+.wf-socials { display: flex; gap: 12px; }
+.wf-social { width: 36px; height: 36px; border-radius: 999px; border: 1px solid #616161; background: #424242; }
+.wf-footer-col h4 { font-size: 11px; font-weight: 700; color: #ffffff; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; }
+.wf-footer-col .wf-line { background: #424242; margin-bottom: 8px; }
+.wf-footer-bottom { border-top: 1px solid #424242; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.wf-footer-meta { font-size: 10px; color: #757575; display: flex; gap: 16px; }
+
+/* ===================== Responsive ===================== */
+@media (max-width: 1024px) { .wf-navbar-links { display: none; } }
+@media (max-width: 640px) { .wf-pd-actions { flex-direction: column; } }
+</style>
+</head>
+<body>
+
+<!-- ===================== 01 NAVBAR ===================== -->
+<header class="wf-navbar">
+  <div class="container wf-navbar-inner">
+    <a class="wf-navbar-brand" href="../home.html">GUNPLA <span class="accent">ELITE</span></a>
+    <nav class="wf-navbar-links">
+      <a class="wf-navbar-link" href="../home.html">Home</a>
+      <a class="wf-navbar-link active" href="katalog.html">Katalog</a>
+      <a class="wf-navbar-link" href="../artikel/artikel.html">Artikel</a>
+    </nav>
+    <div class="wf-navbar-actions">
+      <div class="wf-img icon-sm" title="Cart" style="position:relative;">
+        <span style="position:absolute;top:-4px;right:-4px;width:14px;height:14px;border-radius:999px;background:#212121;border:2px solid #fff;"></span>
+      </div>
+      <div class="wf-img icon-sm" title="Menu">≡</div>
+      <a class="wf-cta filled sm" href="../login/login.html">Login</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== 02 BREADCRUMB ===================== -->
+<div class="wf-breadcrumb">
+  <div class="container wf-breadcrumb-inner">
+    <a class="wf-breadcrumb-link" href="../home.html">Home</a>
+    <span class="wf-breadcrumb-sep">›</span>
+    <a class="wf-breadcrumb-link" href="katalog.html">Katalog</a>
+    <span class="wf-breadcrumb-sep">›</span>
+    <span class="wf-breadcrumb-current">RX-78-2 Gundam</span>
+  </div>
+</div>
+
+<main>
+
+<!-- ===================== 03 PRODUCT DETAIL ===================== -->
+<section class="wireframe-section">
+  <div class="container">
+    <p class="wf-section-label">01 — Product Detail</p>
+    <div class="wf-pd-grid">
+
+      <!-- Left: Image -->
+      <div class="wf-pd-img">
+        <div class="wf-img">
+          <div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div>
+          X
+        </div>
+      </div>
+
+      <!-- Right: Info -->
+      <div class="wf-pd-info">
+        <div class="wf-pd-badges">
+          <span class="wf-pd-badge">High Grade</span>
+        </div>
+        <h1 class="wf-pd-title">RX-78-2 Gundam</h1>
+        <p class="wf-pd-sub">Bandai Spirits — High Grade Series</p>
+
+        <div class="wf-pd-prices">
+          <span class="wf-pd-price">Rp 350.000</span>
+        </div>
+
+        <div class="wf-pd-rating">
+          <div class="wf-stars">
+            <span class="wf-star"></span>
+            <span class="wf-star"></span>
+            <span class="wf-star"></span>
+            <span class="wf-star"></span>
+            <span class="wf-star"></span>
+          </div>
+          <span class="wf-stars-count">(124 ulasan)</span>
+        </div>
+
+        <div class="wf-pd-desc">
+          <span class="wf-line full dark"></span>
+          <span class="wf-line full dark"></span>
+          <span class="wf-line full dark"></span>
+          <span class="wf-line md dark"></span>
+        </div>
+
+        <!-- Specs -->
+        <div class="wf-specs">
+          <div class="wf-specs-row zebra">
+            <div class="wf-specs-label">Grade</div>
+            <div class="wf-specs-value">High Grade (HG)</div>
+          </div>
+          <div class="wf-specs-row">
+            <div class="wf-specs-label">Skala</div>
+            <div class="wf-specs-value">1/144</div>
+          </div>
+          <div class="wf-specs-row zebra">
+            <div class="wf-specs-label">Durasi Rakit</div>
+            <div class="wf-specs-value">± 3-4 jam</div>
+          </div>
+          <div class="wf-specs-row">
+            <div class="wf-specs-label">Jumlah Parts</div>
+            <div class="wf-specs-value">150 pcs</div>
+          </div>
+          <div class="wf-specs-row zebra">
+            <div class="wf-specs-label">Seri</div>
+            <div class="wf-specs-value">Mobile Suit Gundam (UC 0079)</div>
+          </div>
+          <div class="wf-specs-row">
+            <div class="wf-specs-label">Status</div>
+            <div class="wf-specs-value"><span class="wf-specs-green">Tersedia</span></div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="wf-pd-actions">
+          <a class="wf-cta filled block" href="shipping-wireframe.html">Bayar Sekarang</a>
+          <button class="wf-cta block">+ Keranjang</button>
+        </div>
+
+        <!-- Trust badges -->
+        <div class="wf-trust">
+          <div class="wf-trust-cell">
+            <div class="wf-trust-icon"></div>
+            <span class="wf-trust-text">100% Original</span>
+          </div>
+          <div class="wf-trust-cell">
+            <div class="wf-trust-icon"></div>
+            <span class="wf-trust-text">Same Day Delivery</span>
+          </div>
+          <div class="wf-trust-cell">
+            <div class="wf-trust-icon"></div>
+            <span class="wf-trust-text">Garansi Retur</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 04 RELATED PRODUCTS ===================== -->
+<section class="wireframe-section alt-bg">
+  <div class="container">
+    <p class="wf-section-label">02 — Related Products</p>
+    <h2 class="wf-related-title">Produk <span class="accent">Serupa</span></h2>
+    <div class="wf-related-grid">
+
+      <a class="wf-related-card" href="katalog-wing.html">
+        <div class="wf-related-img">
+          <div class="wf-img">
+            <div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div>
+            X
+          </div>
+        </div>
+        <div class="wf-related-body">
+          <span class="wf-related-grade">Master Grade</span>
+          <span class="wf-related-name">Wing Gundam Zero EW</span>
+          <span class="wf-related-price">Rp 580.000</span>
+        </div>
+      </a>
+
+      <a class="wf-related-card" href="katalog-freedom.html">
+        <div class="wf-related-img">
+          <div class="wf-img">
+            <div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div>
+            X
+          </div>
+        </div>
+        <div class="wf-related-body">
+          <span class="wf-related-grade">Master Grade</span>
+          <span class="wf-related-name">ZGMF-X10A Freedom</span>
+          <span class="wf-related-price">Rp 720.000</span>
+        </div>
+      </a>
+
+      <a class="wf-related-card" href="katalog-justice.html">
+        <div class="wf-related-img">
+          <div class="wf-img">
+            <div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div>
+            X
+          </div>
+        </div>
+        <div class="wf-related-body">
+          <span class="wf-related-grade">High Grade</span>
+          <span class="wf-related-name">ZGMF-1000 Justice</span>
+          <span class="wf-related-price">Rp 380.000</span>
+        </div>
+      </a>
+
+      <a class="wf-related-card" href="katalog-sazabi.html">
+        <div class="wf-related-img">
+          <div class="wf-img">
+            <div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div>
+            X
+          </div>
+        </div>
+        <div class="wf-related-body">
+          <span class="wf-related-grade">High Grade</span>
+          <span class="wf-related-name">MSN-04 Sazabi</span>
+          <span class="wf-related-price">Rp 890.000</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===================== 05 FOOTER ===================== -->
+<footer class="wf-footer">
+  <div class="container">
+    <p class="wf-section-label">03 — Footer</p>
+    <div class="wf-footer-grid">
+      <div>
+        <div class="wf-footer-brand">GUNPLA <span style="color:#9e9e9e;">ELITE</span></div>
+        <div class="wf-footer-desc">
+          <span class="wf-line full" style="background:#424242;"></span>
+          <span class="wf-line full" style="background:#424242;"></span>
+          <span class="wf-line md" style="background:#424242;"></span>
+        </div>
+        <div class="wf-socials">
+          <div class="wf-social"></div>
+          <div class="wf-social"></div>
+          <div class="wf-social"></div>
+        </div>
+      </div>
+      <div class="wf-footer-col">
+        <h4>Quick Links</h4>
+        <span class="wf-line full"></span>
+        <span class="wf-line full"></span>
+        <span class="wf-line full"></span>
+      </div>
+      <div class="wf-footer-col">
+        <h4>Hubungi Kami</h4>
+        <span class="wf-line sm" style="margin-bottom:12px;"></span>
+        <span class="wf-line full" style="margin-bottom:16px;"></span>
+        <span class="wf-line sm" style="margin-bottom:8px;"></span>
+        <span class="wf-line md"></span>
+      </div>
+    </div>
+    <div class="wf-footer-bottom">
+      <span class="wf-footer-meta">© 2024 Gunpla Elite. All Rights Reserved.</span>
+      <div class="wf-footer-meta">
+        <span>ENG_VER: 2.0.4</span>
+        <span>STATUS: ONLINE</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

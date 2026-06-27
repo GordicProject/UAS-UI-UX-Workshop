@@ -1,0 +1,68 @@
+/* Dashboard — Gunpla Elite Admin (Brand Color) */
+
+/* Activity dot */
+.activity-dot {
+  width: 8px;
+  height: 8px;
+  background: #d32f2f;
+  display: inline-block;
+  margin-right: 8px;
+  vertical-align: middle;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+/* Quick links */
+.quick-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  background: #fafafa;
+  border: 1px solid #e5e7eb;
+  text-decoration: none;
+  color: inherit;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+.quick-link:hover {
+  background: #fef2f2;
+  border-color: #d32f2f;
+}
+.quick-link-icon {
+  width: 40px;
+  height: 40px;
+  background: #d32f2f;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  letter-spacing: 1px;
+  flex-shrink: 0;
+  border-radius: 4px;
+}
+.quick-link-text {
+  flex: 1;
+}
+.quick-link-text strong {
+  display: block;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #1e293b;
+}
+.quick-link-text small {
+  color: #6b7280;
+  font-size: 11px;
+}
+
+/* Dashboard 2-col grid */
+.admin-content > div[style*="grid-template-columns:1fr 1fr"] {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 32px;
+}
+.admin-content > div[style*="grid-template-columns:1fr 1fr"] > .admin-panel:first-child {
+  grid-column: span 2;
+}

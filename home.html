@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gunpla Elite - Landing Page</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="home.css"/>
+<style>
+    .hero-bg-shape { position: absolute; top: 0; right: 0; bottom: 0; width: 50%; background-color: #d32f2f; transform: skewX(12deg) translateX(8rem); z-index: 0; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .gallery-large { grid-column: span 2; grid-row: span 2; overflow: hidden; }
+    .gallery-wide { grid-column: span 2; overflow: hidden; }
+    .gallery-item { overflow: hidden; }
+    .gallery-item img, .gallery-large img, .gallery-wide img { transition: transform 0.5s ease; }
+    .gallery-item:hover img, .gallery-large:hover img, .gallery-wide:hover img { transform: scale(1.05); }
+    .newsletter-input { padding: 12px 16px; background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; flex-grow: 1; }
+    .newsletter-input::placeholder { color: #9ca3af; }
+    .newsletter-input:focus { outline: none; border-color: #fff; }
+    .article-card:hover h3 { color: #d32f2f; }
+    .article-img-tag { position: absolute; top: 16px; left: 16px; color: #fff; font-size: 10px; font-weight: 700; padding: 4px 8px; text-transform: uppercase; border-radius: 2px; }
+    .product-card-pos { position: relative; }
+    .product-card-badge { position: absolute; top: 12px; left: 12px; background-color: #1e293b; color: #fff; font-size: 10px; font-weight: 700; padding: 4px 8px; z-index: 10; }
+    .product-img-box { background-color: #f3f4f6; padding: 16px; height: 192px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .product-img-box img { transition: transform 0.3s ease; }
+    .product-card-pos:hover .product-img-box img { transform: scale(1.1); }
+    .article-img-box { position: relative; height: 192px; overflow: hidden; }
+    .article-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+    .article-card:hover .article-img-box img { transform: scale(1.05); }
+    .contact-icon-circle { width: 40px; height: 40px; border-radius: 9999px; background-color: #fee2e2; color: #d32f2f; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .map-pin-icon { position: absolute; font-size: 30px; color: #d32f2f; filter: drop-shadow(0 4px 3px rgba(0,0,0,0.07)); }
+    .social-circle { width: 32px; height: 32px; border-radius: 9999px; background-color: #374151; display: flex; align-items: center; justify-content: center; }
+    .social-circle:hover { background-color: #d32f2f; }
+    .review-avatar { width: 40px; height: 40px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; }
+    .grade-card { border: 1px solid #e5e7eb; padding: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; transition: box-shadow 0.15s ease; width: 100%; }
+    .grade-card:hover { box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .grade-card:hover .grade-title { color: #d32f2f; }
+    .trust-icon-circle { width: 48px; height: 48px; border-radius: 9999px; border: 2px solid #d32f2f; color: #d32f2f; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 16px; }
+
+    @media (min-width: 768px) {
+      .gallery-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+<!-- BEGIN: MainHeader -->
+<div id="navbar-container"></div>
+<script src="components/navbar.js"></script>
+<!-- END: MainHeader -->
+<!-- BEGIN: HeroSection -->
+<section class="relative bg-primary-blue overflow-hidden" style="min-height: 600px;">
+<!-- Abstract Background Shape -->
+<div class="hero-bg-shape"></div>
+<div class="container mx-auto px-4 h-full flex flex-col md:flex-row items-center justify-between relative z-10 py-20">
+<!-- Hero Text -->
+<div class="w-full md:w-1/2 text-white pr-8">
+<h1 class="text-5xl md:text-7xl font-bold leading-tight mb-6 uppercase">
+          Rakit Mimpimu,<br/>Mulai Dari Sini
+        </h1>
+<p class="text-lg text-gray-200 mb-8 max-w-md">
+          Pusat model kit profesional untuk para builder. Menyediakan koleksi lengkap dari Bandai Spirits dengan jaminan kualitas dan presisi tinggi untuk pengalaman merakit terbaik.
+        </p>
+<a class="inline-block bg-primary-red text-white font-bold py-3 px-8 rounded hover:bg-red-700 transition-colors" href="katalog/katalog.html">
+          BELANJA SEKARANG <i class="fas fa-arrow-right ml-2"></i>
+</a>
+</div>
+<!-- Hero Image -->
+<div class="w-full md:w-1/2 mt-12 md:mt-0 flex justify-center md:justify-end relative">
+<div class="relative z-10 max-w-md w-full">
+<img alt="Gundam Model" class="w-full h-auto object-cover" src="images/Community build 1.jpg"/>
+</div>
+</div>
+</div>
+</section>
+<!-- END: HeroSection -->
+<!-- BEGIN: TrustBar -->
+<section class="border-b border-gray-200 py-8 bg-gray-50">
+<div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+<div class="flex flex-col items-center">
+<div class="trust-icon-circle">
+<i class="fas fa-check-circle"></i>
+</div>
+<h3 class="font-bold text-gray-900 mb-2">100% BARANG ORIGINAL</h3>
+<p class="text-sm text-gray-500">Jaminan produk asli dari distributor resmi.</p>
+</div>
+<div class="flex flex-col items-center">
+<div class="trust-icon-circle">
+<i class="fas fa-shipping-fast"></i>
+</div>
+<h3 class="font-bold text-gray-900 mb-2">SAMEDAY DELIVERY</h3>
+<p class="text-sm text-gray-500">Pengiriman cepat untuk area Surabaya &amp; sekitarnya.</p>
+</div>
+<div class="flex flex-col items-center">
+<div class="trust-icon-circle">
+<i class="fas fa-box"></i>
+</div>
+<h3 class="font-bold text-gray-900 mb-2">GARANSI BOX AMAN</h3>
+<p class="text-sm text-gray-500">Packing ekstra tebal, box mulus sampai tujuan.</p>
+</div>
+</div>
+</section>
+<!-- END: TrustBar -->
+<!-- BEGIN: Partners -->
+<section class="py-6 border-b border-gray-200">
+<div class="container mx-auto px-4 flex flex-col items-center">
+<p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-4">Mitra Resmi</p>
+<div class="flex gap-8 items-center justify-center">
+<img alt="Bandai" class="h-8" src="images/Logo_Bandai.svg.png"/>
+<img alt="Bandai Namco" class="h-8" src="images/Bandai_Spirits_logo.svg.png"/>
+</div>
+</div>
+</section>
+<!-- END: Partners -->
+<!-- BEGIN: ExploreGrades -->
+<section class="py-16 container mx-auto px-4">
+<div class="mb-8 border-l-4 border-gray-300 pl-4">
+<p class="text-sm text-primary-red font-bold tracking-wider mb-1">KATEGORI TEPAT</p>
+<h2 class="text-3xl font-oswald font-bold text-gray-900 uppercase">JELAJAHI GRADE</h2>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-5 gap-4 place-items-center">
+<a class="grade-card" href="katalog/katalog.html?type=SD">
+<span class="grade-title text-xl font-bold text-gray-900 mb-1">SD</span>
+<span class="text-xs text-gray-500 uppercase">Super Deformed</span>
+</a>
+<a class="grade-card" href="katalog/katalog.html?type=HG">
+<span class="grade-title text-xl font-bold text-gray-900 mb-1">HG</span>
+<span class="text-xs text-gray-500 uppercase">High Grade</span>
+</a>
+<a class="grade-card" href="katalog/katalog.html?type=RG">
+<span class="grade-title text-xl font-bold text-gray-900 mb-1">RG</span>
+<span class="text-xs text-gray-500 uppercase">Real Grade</span>
+</a>
+<a class="grade-card" href="katalog/katalog.html?type=MG">
+<span class="grade-title text-xl font-bold text-gray-900 mb-1">MG</span>
+<span class="text-xs text-gray-500 uppercase">Master Grade</span>
+</a>
+<a class="grade-card" href="katalog/katalog.html?type=PG">
+<span class="grade-title text-xl font-bold text-gray-900 mb-1">PG</span>
+<span class="text-xs text-gray-500 uppercase">Perfect Grade</span>
+</a>
+</div>
+</section>
+<!-- END: ExploreGrades -->
+<!-- BEGIN: FlashSale -->
+<section class="bg-dark-blue py-16 text-white">
+<div class="container mx-auto px-4 flex flex-col lg:flex-row items-center gap-12">
+<!-- Flash Sale Info -->
+<div class="w-full lg:w-1/3">
+<div class="inline-block bg-primary-red text-white text-xs font-bold px-3 py-1 mb-4 rounded-sm">
+          BERAKHIR DALAM 02:45:10
+        </div>
+<h2 class="text-5xl font-oswald font-bold uppercase mb-2">Flash</h2>
+<h2 class="text-5xl font-oswald font-bold uppercase text-primary-red mb-6">Sale</h2>
+<p class="text-gray-400 text-sm">Penawaran waktu terbatas untuk kit pilihan.<br/>Jangan sampai kehabisan!</p>
+</div>
+<!-- Flash Sale Products -->
+<div class="w-full lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Product Card 1 -->
+<div class="bg-white text-gray-900 flex rounded shadow overflow-hidden">
+<div class="w-1/3 p-4 bg-gray-100 flex items-center justify-center">
+<img alt="MG Barbatos" class="max-w-full h-auto mix-blend-multiply" src="images/gundam-barbatos.png"/>
+</div>
+<div class="w-2/3 p-6 flex flex-col justify-center">
+<h3 class="font-bold text-lg mb-1">MG BARBATOS</h3>
+<div class="flex items-center gap-2 mb-4">
+<span class="text-primary-red font-bold text-xl">Rp 650.000</span>
+<span class="text-gray-400 text-sm line-through">Rp 750.000</span>
+</div>
+<button class="bg-primary-red text-white text-sm font-bold py-2 px-4 rounded w-full hover:bg-red-700 transition-colors" onclick="window.location.href='katalog/katalog-barbatos.html'">
+              BELI
+            </button>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-white text-gray-900 flex rounded shadow overflow-hidden">
+<div class="w-1/3 p-4 bg-gray-100 flex items-center justify-center">
+<img alt="HG Aerial" class="max-w-full h-auto mix-blend-multiply" src="images/gundam-exia.png"/>
+</div>
+<div class="w-2/3 p-6 flex flex-col justify-center">
+<h3 class="font-bold text-lg mb-1">GN-000 EXIA</h3>
+<div class="flex items-center gap-2 mb-4">
+<span class="text-primary-red font-bold text-xl">Rp 480.000</span>
+<span class="text-gray-400 text-sm line-through">Rp 550.000</span>
+</div>
+<button class="bg-primary-red text-white text-sm font-bold py-2 px-4 rounded w-full hover:bg-red-700 transition-colors" onclick="window.location.href='katalog/katalog-exia.html'">
+              BELI
+            </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: FlashSale -->
+<!-- BEGIN: NewArrivals -->
+<section class="py-16 bg-gray-50">
+<div class="container mx-auto px-4">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h2 class="text-3xl font-oswald font-bold text-gray-900 uppercase">Kedatangan <span class="text-primary-red">Baru</span></h2>
+<p class="text-gray-500 text-sm mt-2">Spesifikasi teknis terbaru dari jalur perakitan. Mahakarya rekayasa miniatur<br/>untuk koleksi Anda.</p>
+</div>
+
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Large Card -->
+<div class="md:col-span-2 bg-white border border-gray-200 flex flex-col md:flex-row relative">
+<div class="absolute top-4 left-4 flex gap-2 z-10">
+<span class="bg-dark-blue text-white text-xs px-2 py-1">BARU</span>
+<span class="bg-primary-red text-white text-xs px-2 py-1">PG</span>
+</div>
+<div class="w-full md:w-1/2 bg-gray-100 p-8 flex items-center justify-center">
+<img alt="RX-0 Unicorn Gundam" class="max-w-full h-auto mix-blend-multiply" src="images/gundam-unicorn.png"/>
+</div>
+<div class="w-full md:w-1/2 p-8 flex flex-col justify-center">
+<h3 class="text-2xl font-bold mb-2">RX-0 UNICORN<br/>GUNDAM</h3>
+<p class="text-primary-red font-bold text-xl mb-6">Rp 450.000</p>
+<div class="space-y-3 mb-8 text-sm">
+<div class="flex justify-between border-b border-gray-100 pb-2">
+<span class="text-gray-500">Skala</span>
+<span class="font-bold text-gray-900">1/60</span>
+</div>
+<div class="flex justify-between border-b border-gray-100 pb-2">
+<span class="text-gray-500">Seri</span>
+<span class="font-bold text-gray-900">Mobile Suit Gundam UC</span>
+</div>
+<div class="flex justify-between border-b border-gray-100 pb-2">
+<span class="text-gray-500">Status</span>
+<span class="font-bold text-green-600">Tersedia</span>
+</div>
+</div>
+<button class="bg-primary-red text-white font-bold py-3 px-6 rounded hover:bg-red-700 transition-colors w-full flex items-center justify-center gap-2" onclick="window.location.href='katalog/katalog-unicorn.html'">
+              BELI SEKARANG
+            </button>
+</div>
+</div>
+<!-- Right Side Small Card -->
+<div class="bg-white border border-gray-200 flex flex-col relative">
+<div class="absolute top-4 left-4 flex gap-2 z-10">
+<span class="bg-dark-blue text-white text-xs px-2 py-1">BARU</span>
+<span class="bg-gray-300 text-gray-800 text-xs px-2 py-1 font-bold">MG</span>
+</div>
+<div class="bg-gray-100 p-6 flex-grow flex items-center justify-center">
+<img alt="Gundam X" class="h-80 object-contain mix-blend-multiply" src="images/X.png"/>
+</div>
+<div class="p-4 border-t border-gray-100">
+<h4 class="font-bold text-sm mb-1 line-clamp-1">GUNDAM X</h4>
+<p class="text-primary-red font-bold mb-4">Rp 1.650.000</p>
+<button class="w-full border border-gray-300 text-gray-700 text-xs font-bold py-2 rounded hover:bg-gray-50 transition-colors" onclick="window.location.href='katalog/katalog-x1.html'">
+              LIHAT DETAIL
+            </button>
+</div>
+</div>
+</div>
+<!-- Bottom Small Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+<!-- Small Card 1 -->
+<div class="bg-white border border-gray-200 flex flex-col relative">
+<div class="absolute top-4 left-4 flex gap-2 z-10">
+<span class="bg-dark-blue text-white text-xs px-2 py-1">BARU</span>
+<span class="bg-gray-300 text-gray-800 text-xs px-2 py-1 font-bold">RG</span>
+</div>
+<div class="bg-gray-100 p-6 h-48 flex items-center justify-center">
+<img alt="Sazabi" class="max-h-full object-contain mix-blend-multiply" src="images/sazabi.png"/>
+</div>
+<div class="p-4 border-t border-gray-100">
+<h4 class="font-bold text-sm mb-1">SAZABI</h4>
+<p class="text-primary-red font-bold mb-4">Rp 890.000</p>
+<button class="w-full border border-gray-300 text-gray-700 text-xs font-bold py-2 rounded hover:bg-gray-50 transition-colors" onclick="window.location.href='katalog/katalog-sazabi.html'">
+              LIHAT DETAIL
+            </button>
+</div>
+</div>
+<!-- Small Card 2 -->
+<div class="bg-white border border-gray-200 flex flex-col relative">
+<div class="absolute top-4 left-4 flex gap-2 z-10">
+<span class="bg-dark-blue text-white text-xs px-2 py-1">BARU</span>
+<span class="bg-gray-300 text-gray-800 text-xs px-2 py-1 font-bold">HG</span>
+</div>
+<div class="bg-gray-100 p-6 h-48 flex items-center justify-center">
+<img alt="HG Aerial" class="max-h-full object-contain mix-blend-multiply" src="images/gundam-exia.png"/>
+</div>
+<div class="p-4 border-t border-gray-100">
+<h4 class="font-bold text-sm mb-1">HG AERIAL</h4>
+<p class="text-primary-red font-bold mb-4">Rp 480.000</p>
+<button class="w-full border border-gray-300 text-gray-700 text-xs font-bold py-2 rounded hover:bg-gray-50 transition-colors">
+              LIHAT DETAIL
+            </button>
+</div>
+</div>
+<!-- Empty slots to match layout if needed, or just let them wrap -->
+<div class="hidden lg:block"></div>
+<div class="hidden lg:block"></div>
+</div>
+</div>
+</section>
+<!-- END: NewArrivals -->
+<!-- BEGIN: PreOrderHub -->
+<section class="py-16 bg-white border-y border-gray-200">
+<div class="container mx-auto px-4 max-w-4xl">
+<div class="flex justify-between items-end border-b-2 border-gray-200 pb-4 mb-8">
+<div>
+<p class="text-primary-red text-xs font-bold uppercase tracking-widest mb-1"><i class="fas fa-circle text-[8px] mr-1"></i> SEGERA DATANG</p>
+<h2 class="text-3xl font-oswald font-bold text-gray-900 uppercase">Pre-Order Hub</h2>
+</div>
+<p class="text-xs text-gray-500 uppercase text-right max-w-xs">Amankan unit anda sebelum produksi massal dimulai. Stok terbatas.</p>
+</div>
+<div class="space-y-4">
+<!-- PreOrder Item 1 -->
+<div class="border border-gray-200 p-4 flex flex-col sm:flex-row items-center gap-6 hover:shadow-md transition-shadow">
+<div class="w-24 h-24 bg-gray-100 flex-shrink-0 flex items-center justify-center p-2">
+<img alt="God Gundam" class="max-w-full max-h-full mix-blend-multiply" src="images/god .png"/>
+</div>
+<div class="flex-grow text-center sm:text-left">
+<span class="inline-block bg-primary-red text-white text-[10px] font-bold px-2 py-0.5 rounded-sm mb-2 uppercase">PG</span>
+<h3 class="font-bold text-lg mb-1">GOD GUNDAM</h3>
+<p class="text-gray-500 text-sm">Mobile Suit legendaris dengan kemampuan luar biasa dan Power of Destruction yang dahsyat.</p>
+</div>
+<div class="flex flex-col items-center sm:items-end flex-shrink-0 w-full sm:w-auto">
+<p class="text-primary-red font-bold text-lg">Rp 2.450.000</p>
+<p class="text-xs text-gray-400 mb-3">Estimasi: Nov 2024</p>
+<button class="bg-dark-blue text-white text-xs font-bold py-2 px-6 rounded w-full sm:w-auto hover:bg-gray-800 transition-colors">
+              PRE-ORDER SEKARANG <i class="fas fa-arrow-right ml-1"></i>
+</button>
+</div>
+</div>
+<!-- PreOrder Item 2 -->
+<div class="border border-gray-200 p-4 flex flex-col sm:flex-row items-center gap-6 hover:shadow-md transition-shadow">
+<div class="w-24 h-24 bg-gray-100 flex-shrink-0 flex items-center justify-center p-2">
+<img alt="Epyon Gundam" class="max-w-full max-h-full mix-blend-multiply" src="images/epyon.png"/>
+</div>
+<div class="flex-grow text-center sm:text-left">
+<span class="inline-block bg-blue-400 text-white text-[10px] font-bold px-2 py-0.5 rounded-sm mb-2 uppercase">RG</span>
+<h3 class="font-bold text-lg mb-1">EPYON GUNDAM (EW)</h3>
+<p class="text-gray-500 text-sm">Desain ulang mekanis dengan artikulasi cambuk penuh.</p>
+</div>
+<div class="flex flex-col items-center sm:items-end flex-shrink-0 w-full sm:w-auto">
+<p class="text-primary-red font-bold text-lg">Rp 520.000</p>
+<p class="text-xs text-gray-400 mb-3">Estimasi: Des 2024</p>
+<button class="bg-dark-blue text-white text-xs font-bold py-2 px-6 rounded w-full sm:w-auto hover:bg-gray-800 transition-colors" onclick="window.location.href='katalog/katalog-epyon.html'">
+              PRE-ORDER SEKARANG <i class="fas fa-arrow-right ml-1"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: PreOrderHub -->
+<!-- BEGIN: TopRated -->
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<div class="flex justify-between items-end border-b border-gray-200 pb-4 mb-8">
+<div>
+<p class="text-primary-red text-xs font-bold uppercase tracking-widest mb-1">TOP TIER KITS</p>
+<h2 class="text-3xl font-oswald font-bold text-gray-900 uppercase">Rating Tertinggi</h2>
+</div>
+
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Product Card 1 -->
+<div class="border border-gray-200 flex flex-col relative group">
+<span class="product-card-badge">MG</span>
+<div class="product-img-box">
+<img alt="MGEX Strike Freedom" class="max-h-full mix-blend-multiply" src="images/gundam-freedom.png"/>
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<div class="flex text-yellow-400 text-[10px] mb-2">
+<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+<span class="text-gray-400 ml-1">(124)</span>
+</div>
+<h3 class="font-bold text-sm mb-4 flex-grow">MGEX Strike Freedom Gundam</h3>
+<p class="text-xl font-bold text-gray-900 mb-4">Rp 2.500.000</p>
+<button class="bg-primary-red text-white text-xs font-bold py-2 rounded hover:bg-red-700 transition-colors w-full" onclick="window.location.href='katalog/katalog-freedom.html'">
+              BELI SEKARANG
+            </button>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="border border-gray-200 flex flex-col relative group">
+<span class="product-card-badge">PG</span>
+<div class="product-img-box">
+<img alt="PG Unleashed" class="max-h-full mix-blend-multiply" src="images/gundam-rx78.png"/>
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<div class="flex text-yellow-400 text-[10px] mb-2">
+<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+<span class="text-gray-400 ml-1">(89)</span>
+</div>
+<h3 class="font-bold text-sm mb-4 flex-grow">PG Unleashed RX-78-2</h3>
+<p class="text-xl font-bold text-gray-900 mb-4">Rp 4.200.000</p>
+<button class="bg-primary-red text-white text-xs font-bold py-2 rounded hover:bg-red-700 transition-colors w-full" onclick="window.location.href='katalog/katalog-rx-78.html'">
+              BELI SEKARANG
+            </button>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="border border-gray-200 flex flex-col relative group">
+<span class="product-card-badge">RG</span>
+<div class="product-img-box">
+<img alt="RG Hi-Nu" class="max-h-full mix-blend-multiply" src="images/HI-NU .png"/>
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<div class="flex text-yellow-400 text-[10px] mb-2">
+<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+<span class="text-gray-400 ml-1">(215)</span>
+</div>
+<h3 class="font-bold text-sm mb-4 flex-grow">RG Hi-Nu Gundam</h3>
+<p class="text-xl font-bold text-gray-900 mb-4">Rp 1.850.000</p>
+<button class="bg-primary-red text-white text-xs font-bold py-2 rounded hover:bg-red-700 transition-colors w-full" onclick="window.location.href='katalog/katalog-hi-nu.html'">
+              BELI SEKARANG
+            </button>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="border border-gray-200 flex flex-col relative group">
+<span class="product-card-badge">MG</span>
+<div class="product-img-box">
+<img alt="MG Justice" class="max-h-full mix-blend-multiply" src="images/justice.png"/>
+</div>
+<div class="p-4 flex flex-col flex-grow">
+<div class="flex text-yellow-400 text-[10px] mb-2">
+<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+<span class="text-gray-400 ml-1">(156)</span>
+</div>
+<h3 class="font-bold text-sm mb-4 flex-grow">MG Justice Gundam</h3>
+<p class="text-xl font-bold text-gray-900 mb-4">Rp 380.000</p>
+<button class="bg-primary-red text-white text-xs font-bold py-2 rounded hover:bg-red-700 transition-colors w-full" onclick="window.location.href='katalog/katalog-justice.html'">
+              BELI SEKARANG
+            </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: TopRated -->
+<!-- BEGIN: CommunityGallery -->
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4 text-center mb-10">
+<p class="text-primary-red text-xs font-bold uppercase tracking-widest mb-2">GALERI KOMUNITAS</p>
+<h2 class="text-3xl font-oswald font-bold text-gray-900 uppercase mb-4">Karya Builder</h2>
+<p class="text-gray-500 text-sm max-w-xl mx-auto">Lihat mahakarya dari komunitas Gunpla Elite. Bagikan rakitan Anda dengan tagar #GunplaBuilds.</p>
+</div>
+<!-- Masonry-ish Grid -->
+<div class="container mx-auto px-4">
+<div class="gallery-grid">
+<!-- Large Item -->
+<div class="gallery-large">
+<img alt="Builder Showcase" class="w-full h-full object-cover" src="images/karya-builder/1.png"/>
+</div>
+<!-- Smaller Items -->
+<div class="gallery-item">
+<img alt="Detail 1" class="w-full h-full object-cover" src="images/karya-builder/2.png"/>
+</div>
+<div class="gallery-item">
+<img alt="Detail 2" class="w-full h-full object-cover" src="images/karya-builder/3.png"/>
+</div>
+<div class="gallery-item">
+<img alt="Detail 3" class="w-full h-full object-cover" src="images/karya-builder/4.png"/>
+</div>
+<div class="gallery-item">
+<img alt="Detail 4" class="w-full h-full object-cover" src="images/karya-builder/5.png"/>
+</div>
+<!-- Bottom Row -->
+<div class="gallery-wide">
+<img alt="Wide Shot" class="w-full h-full object-cover" src="images/karya-builder/6.png"/>
+</div>
+<div class="gallery-item">
+<img alt="Detail 5" class="w-full h-full object-cover" src="images/karya-builder/7.png"/>
+</div>
+<div class="gallery-item">
+<img alt="Detail 6" class="w-full h-full object-cover" src="images/karya-builder/8.png"/>
+</div>
+</div>
+</div>
+</section>
+<!-- END: CommunityGallery -->
+<!-- BEGIN: Reviews -->
+<section class="py-16 bg-gray-50">
+<div class="container mx-auto px-4 text-center mb-10">
+<h2 class="text-3xl font-oswald font-bold text-gray-900 uppercase mb-4">Ulasan Mereka</h2>
+<p class="text-gray-500 text-sm max-w-xl mx-auto">Pengalaman langsung dari para builder elit kami. Ketepatan pengiriman dan kualitas kit terjamin.</p>
+</div>
+<div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Review Card 1 -->
+<div class="bg-white p-6 border border-gray-200 rounded">
+<div class="flex text-primary-red text-xs mb-4">
+<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+</div>
+<p class="text-gray-600 text-sm mb-6 leading-relaxed italic">"Packing sangat aman dan pengiriman cepat. Kit PG Unleashed RX-78-2 mendarat dengan selamat tanpa cacat di box. Sangat merekomendasikan Gunpla Elite untuk kolektor serius."</p>
+<div class="flex items-center gap-3">
+<div class="review-avatar" style="background-color: #dbeafe; color: #2563eb;">AK</div>
+<div>
+<p class="font-bold text-sm text-gray-900">ANDI K.</p>
+<p class="text-xs text-gray-500">Verified Builder</p>
+</div>
+</div>
+</div>
+<!-- Review Card 2 -->
+<div class="bg-white p-6 border border-gray-200 rounded">
+<div class="flex text-primary-red text-xs mb-4">
+<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+</div>
+<p class="text-gray-600 text-sm mb-6 leading-relaxed italic">"Pilihan tool dan aksesoris di sini sangat lengkap. Baru saja mencoba nipper godhand dari mereka, kualitasnya luar biasa. CS juga sangat responsif saat ditanya stok."</p>
+<div class="flex items-center gap-3">
+<div class="review-avatar" style="background-color: #d1fae5; color: #059669;">BS</div>
+<div>
+<p class="font-bold text-sm text-gray-900">BIMA S.</p>
+<p class="text-xs text-gray-500">Pro Modeler</p>
+</div>
+</div>
+</div>
+<!-- Review Card 3 -->
+<div class="bg-white p-6 border border-gray-200 rounded">
+<div class="flex text-primary-red text-xs mb-4">
+<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+</div>
+<p class="text-gray-600 text-sm mb-6 leading-relaxed italic">"Pre-order MGEX Strike Freedom berjalan lancar. Harga kompetitif dan update status pesanan jelas. Sedikit delay dari ekspedisi, tapi secara keseluruhan memuaskan."</p>
+<div class="flex items-center gap-3">
+<div class="review-avatar" style="background-color: #ede9fe; color: #9333ea;">DR</div>
+<div>
+<p class="font-bold text-sm text-gray-900">DIANA R.</p>
+<p class="text-xs text-gray-500">Hobbyist</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: Reviews -->
+<!-- BEGIN: Articles -->
+<section class="py-16 bg-white">
+<div class="container mx-auto px-4">
+<div class="flex justify-between items-end border-b border-gray-200 pb-4 mb-8">
+<div>
+<h2 class="text-3xl font-oswald font-bold text-gray-900 uppercase">Artikel Builder</h2>
+<p class="text-gray-500 text-sm mt-1">Teknik, review, dan panduan untuk meningkatkan skill merakit Anda.</p>
+</div>
+<a class="text-primary-red text-sm font-bold hover:underline flex items-center gap-1 uppercase" href="artikel/artikel.html">
+          LIHAT ARTIKEL <i class="fas fa-arrow-right"></i>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Article Card 1 -->
+<div class="article-card border border-gray-200 rounded overflow-hidden group">
+<div class="article-img-box">
+<img alt="Airbrushing Tips" src="images/artikel-foto/brush/1.png"/>
+<span class="article-img-tag" style="background-color: #d32f2f;">TUTORIAL</span>
+</div>
+<div class="p-5">
+<h3 class="font-bold text-lg mb-2 line-clamp-2 transition-colors">Tips Airbrushing untuk Pemula: Peralatan Wajib</h3>
+<p class="text-gray-500 text-sm mb-4 line-clamp-2">Panduan komprehensif memilih kompresor dan pen brush pertama Anda untuk hasil cat yang mulus layaknya profesional.</p>
+<div class="flex justify-between items-center text-xs text-gray-400 font-bold border-t border-gray-100 pt-3">
+<span>12 OKT 2023</span>
+<a class="text-primary-red hover:underline" href="artikel/airbrushing.html">Baca Selengkapnya <i class="fas fa-caret-right"></i></a>
+</div>
+</div>
+</div>
+<!-- Article Card 2 -->
+<div class="article-card border border-gray-200 rounded overflow-hidden group">
+<div class="article-img-box">
+<img alt="MGSD Review" src="images/artikel-foto/mgsd/1.png"/>
+<span class="article-img-tag" style="background-color: #1e293b;">REVIEW</span>
+</div>
+<div class="p-5">
+<h3 class="font-bold text-lg mb-2 line-clamp-2 transition-colors">Review Eksklusif: MGSD Freedom Gundam</h3>
+<p class="text-gray-500 text-sm mb-4 line-clamp-2">Membongkar detail luar biasa dari lini Master Grade Super Deformed terbaru. Apakah sepadan dengan harganya?</p>
+<div class="flex justify-between items-center text-xs text-gray-400 font-bold border-t border-gray-100 pt-3">
+<span>08 OKT 2023</span>
+<a class="text-primary-red hover:underline" href="artikel/artikel-mgsd-freedom.html">Baca Selengkapnya <i class="fas fa-caret-right"></i></a>
+</div>
+</div>
+</div>
+<!-- Article Card 3 -->
+<div class="article-card border border-gray-200 rounded overflow-hidden group">
+<div class="article-img-box">
+<img alt="Panel Lining Guide" src="images/artikel-foto/lining/professional_studio_shot_of_high_end_airbrushing_equipment_for_model_kits.png"/>
+<span class="article-img-tag" style="background-color: #3b82f6;">TEKNIK</span>
+</div>
+<div class="p-5">
+<h3 class="font-bold text-lg mb-2 line-clamp-2 transition-colors">Panduan Panel Lining: Teknik Mencapai Dimensi Sempurna</h3>
+<p class="text-gray-500 text-sm mb-4 line-clamp-2">Tingkatkan realisme kit Anda dengan teknik panel lining yang presisi menggunakan marker dan enamel wash.</p>
+<div class="flex justify-between items-center text-xs text-gray-400 font-bold border-t border-gray-100 pt-3">
+<span>28 SEP 2023</span>
+<a class="text-primary-red hover:underline" href="artikel/artikel-panel-lining.html">Baca Selengkapnya <i class="fas fa-caret-right"></i></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: Articles -->
+<!-- BEGIN: Newsletter -->
+<section class="bg-primary-blue py-12">
+<div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6">
+<div class="text-white w-full md:w-1/2">
+<h2 class="text-2xl font-oswald font-bold uppercase mb-2">GABUNG <span class="text-primary-red">ELITE CLUB</span></h2>
+<p class="text-sm text-gray-300">Dapatkan diskon eksklusif, info PO terbaru, dan tips merakit langsung ke inbox Anda.</p>
+</div>
+<div class="w-full md:w-1/2 flex">
+<input class="newsletter-input" placeholder="Alamat Email Anda" type="email"/>
+<button class="bg-primary-red text-white font-bold px-6 py-3 rounded-r hover:bg-red-700 transition-colors uppercase text-sm">
+          Daftar
+        </button>
+</div>
+</div>
+</section>
+<!-- END: Newsletter -->
+<!-- BEGIN: PreFooterLocation -->
+<section class="bg-gray-50 py-12 border-b border-gray-200">
+<div class="container mx-auto px-4 flex flex-col md:flex-row items-center gap-12">
+<!-- Map Placeholder -->
+<div class="w-full md:w-1/2 bg-white p-2 border border-gray-200 shadow-sm rounded">
+<div class="bg-blue-100 h-64 relative flex items-center justify-center overflow-hidden">
+<img alt="Map" class="w-full h-full object-cover opacity-70" src="images/Map Surabaya Timur.jpg"/>
+<div class="absolute bg-white px-3 py-1 text-xs font-bold shadow-md top-4 left-4 rounded-sm">Surabaya Timur</div>
+<i class="fas fa-map-marker-alt map-pin-icon"></i>
+</div>
+</div>
+<!-- Store Info -->
+<div class="w-full md:w-1/2">
+<h2 class="text-2xl font-oswald font-bold text-gray-900 uppercase mb-6">Kunjungi Toko Kami</h2>
+<div class="space-y-6">
+<div class="flex items-start gap-4">
+<div class="contact-icon-circle">
+<i class="fas fa-map-pin"></i>
+</div>
+<div>
+<h4 class="font-bold text-gray-900 text-sm mb-1">Alamat</h4>
+<p class="text-gray-500 text-sm">Jl. Raya Mulyosari No. 123, Surabaya Timur, Jawa Timur</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="contact-icon-circle">
+<i class="fas fa-clock"></i>
+</div>
+<div>
+<h4 class="font-bold text-gray-900 text-sm mb-1">Jam Buka</h4>
+<p class="text-gray-500 text-sm">Senin - Minggu: 10:00 - 21:00 WIB</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="contact-icon-circle">
+<i class="fas fa-phone-alt"></i>
+</div>
+<div>
+<h4 class="font-bold text-gray-900 text-sm mb-1">Telepon</h4>
+<p class="text-gray-500 text-sm">(031) 123-4567</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: PreFooterLocation -->
+<!-- BEGIN: MainFooter -->
+<div id="footer"></div>
+<script src="components/footer.js"></script>
+<!-- END: MainFooter -->
+</body></html>

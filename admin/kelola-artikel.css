@@ -1,0 +1,17 @@
+/* Kelola Artikel — Gunpla Elite Admin Wireframe */
+
+/* Article row */
+.article-row {
+  display: block;
+}
+.article-row-title {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #1e293b;
+}
+.article-row-meta {
+  font-size: 11px;
+  color: #6b7280;
+  margin-top: 2px;
+}

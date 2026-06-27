@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pengiriman — Gunpla Elite (Wireframe)</title>
+<style>
+/* ===================== Reset & Base ===================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #ffffff; color: #424242; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.4; }
+a { text-decoration: none; color: inherit; }
+img, svg { display: block; max-width: 100%; }
+
+.container { max-width: 1280px; margin: 0 auto; padding: 0 16px; width: 100%; }
+.wireframe-section { padding: 64px 0; border-bottom: 1px solid #f0f0f0; }
+.wireframe-section.tight { padding: 48px 0; }
+.wireframe-section.alt-bg { background: #f5f5f5; }
+.wireframe-section.dark-bg { background: #424242; color: #e0e0e0; }
+.wireframe-section.dark-bg .wf-section-label,
+.wireframe-section.dark-bg .wf-section-title { color: #bdbdbd; }
+.wf-section-label { font-size: 10px; font-weight: 700; color: #9e9e9e; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; }
+
+/* ===================== Wireframe Utilities ===================== */
+.wf-img {
+  background: #e0e0e0;
+  border: 1px solid #bdbdbd;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  color: #757575; font-size: 11px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+}
+.wf-img .x-lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.wf-img .x-lines svg { width: 100%; height: 100%; display: block; }
+.wf-img.icon-sm { width: 24px; height: 24px; border-radius: 999px; aspect-ratio: 1; min-height: 0; font-size: 12px; }
+.wf-img.thumb { aspect-ratio: 1 / 1; min-height: 60px; }
+
+.wf-line { display: block; height: 12px; background: #e0e0e0; border-radius: 2px; margin-bottom: 8px; }
+.wf-line.sm { width: 40%; }
+.wf-line.md { width: 70%; }
+.wf-line.lg { width: 90%; }
+.wf-line.full { width: 100%; }
+.wf-line.tall { height: 18px; }
+.wf-line.huge { height: 28px; }
+.wf-line.dark { background: #bdbdbd; }
+.wf-line.darkest { background: #757575; }
+.wf-line.input { height: 44px; margin-bottom: 16px; background: #ffffff; border: 1px solid #bdbdbd; }
+.wf-line.input.short { width: 100%; }
+.wf-line.input.icon-left { position: relative; }
+.wf-line.textarea { height: 88px; margin-bottom: 16px; }
+
+.wf-cta {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 12px 24px; border: 2px solid #212121; color: #212121;
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+  background: transparent;
+}
+.wf-cta.filled { background: #212121; color: #ffffff; }
+.wf-cta.sm { padding: 8px 16px; font-size: 10px; }
+.wf-cta.lg { padding: 14px 28px; font-size: 13px; }
+.wf-cta.block { display: flex; width: 100%; }
+
+.wf-tag {
+  display: inline-block; padding: 3px 8px;
+  background: #212121; color: #ffffff;
+  font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+}
+.wf-tag.outline { background: transparent; color: #212121; border: 1px solid #212121; }
+.wf-tag.gray { background: #bdbdbd; color: #212121; }
+.wf-tag.light { background: #e0e0e0; color: #212121; }
+
+/* ===================== 01 NAVBAR ===================== */
+.wf-navbar { background: #ffffff; border-bottom: 1px solid #bdbdbd; padding: 16px 0; position: sticky; top: 0; z-index: 100; }
+.wf-navbar-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.wf-navbar-brand { font-size: 18px; font-weight: 700; color: #212121; letter-spacing: 2px; text-transform: uppercase; min-width: 140px; }
+.wf-navbar-brand .accent { color: #757575; }
+.wf-navbar-links { display: flex; gap: 8px; flex: 1; justify-content: center; }
+.wf-navbar-link { display: inline-flex; align-items: center; justify-content: center; padding: 10px 18px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #424242; min-width: 80px; }
+.wf-navbar-link.active { background: #212121; color: #ffffff; }
+.wf-navbar-actions { display: flex; align-items: center; gap: 12px; }
+
+/* ===================== Breadcrumb ===================== */
+.wf-breadcrumb { background: #f5f5f5; border-bottom: 1px solid #e0e0e0; padding: 12px 0; }
+.wf-breadcrumb-inner { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #757575; }
+.wf-breadcrumb-link { color: #757575; }
+.wf-breadcrumb-link:hover { color: #212121; }
+.wf-breadcrumb-current { color: #212121; }
+.wf-breadcrumb-sep { color: #bdbdbd; font-size: 8px; }
+
+/* ===================== 02 PAGE TITLE ===================== */
+.wf-page-title { font-size: 30px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 32px; }
+.wf-section-eyebrow { font-size: 11px; font-weight: 700; color: #757575; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
+.wf-section-title { font-size: 24px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.wf-section-sub { font-size: 13px; color: #757575; margin-bottom: 24px; max-width: 600px; }
+
+/* ===================== 03 CHECKOUT GRID ===================== */
+/* Asli: grid-cols-1 lg:grid-cols-3, left=lg:col-span-2, right=lg:col-span-1, gap-12 */
+.wf-checkout-grid { display: grid; grid-template-columns: 1fr; gap: 48px; }
+@media (min-width: 1024px) { .wf-checkout-grid { grid-template-columns: 2fr 1fr; gap: 48px; } }
+
+/* ===================== 04 STEP BLOCK ===================== */
+.wf-step { margin-bottom: 40px; }
+.wf-step:last-child { margin-bottom: 0; }
+.wf-step-head { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.wf-step-num { width: 32px; height: 32px; border-radius: 999px; background: #212121; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+.wf-step-title { font-size: 18px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1px; }
+
+/* ===================== 05 FORM GRID ===================== */
+.wf-form-row { display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 16px; }
+@media (min-width: 768px) { .wf-form-row.two-col { grid-template-columns: 1fr 1fr; } }
+.wf-field { display: flex; flex-direction: column; }
+.wf-label { font-size: 10px; font-weight: 700; color: #757575; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+
+/* ===================== 06 RADIO OPTION (asli style) ===================== */
+.wf-radio-option {
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px; border: 1px solid #e0e0e0; border-radius: 8px;
+  cursor: pointer; transition: border-color 0.15s;
+}
+.wf-radio-option:hover { border-color: #212121; }
+.wf-radio-option input { display: none; } /* we style manually for wireframe */
+.wf-radio-circle {
+  width: 16px; height: 16px; border-radius: 999px;
+  border: 2px solid #bdbdbd; flex-shrink: 0;
+  position: relative;
+}
+.wf-radio-option.selected .wf-radio-circle { border-color: #212121; }
+.wf-radio-option.selected .wf-radio-circle::after {
+  content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 8px; height: 8px; border-radius: 999px; background: #212121;
+}
+.wf-radio-body { flex: 1; }
+.wf-radio-name { font-size: 14px; font-weight: 700; color: #212121; margin-bottom: 2px; }
+.wf-radio-desc { font-size: 11px; color: #757575; }
+.wf-radio-price { font-size: 14px; font-weight: 700; color: #212121; flex-shrink: 0; }
+
+/* ===================== 07 BUTTON ROW ===================== */
+.wf-btn-row { display: flex; gap: 12px; margin-top: 24px; }
+.wf-btn-row .wf-cta { flex: 1; text-align: center; }
+
+/* ===================== 08 ORDER SUMMARY (sticky) ===================== */
+.wf-summary { position: sticky; top: 96px; background: #f5f5f5; border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; }
+.wf-summary-title { font-size: 18px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #e0e0e0; }
+
+.wf-summary-item {
+  display: flex; gap: 16px; padding: 16px;
+  background: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; margin-bottom: 16px;
+}
+.wf-summary-item-img { width: 80px; height: 80px; flex-shrink: 0; }
+.wf-summary-item-img .wf-img { height: 100%; aspect-ratio: auto; }
+.wf-summary-item-body { flex: 1; min-width: 0; }
+.wf-summary-item-name { font-size: 13px; font-weight: 700; color: #212121; margin-bottom: 4px; }
+.wf-summary-item-grade { font-size: 10px; color: #757575; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.wf-summary-item-price { font-size: 12px; font-weight: 700; color: #212121; }
+.wf-summary-item-qty { font-size: 10px; color: #757575; text-transform: uppercase; letter-spacing: 1px; text-align: right; flex-shrink: 0; }
+
+.wf-summary-divider { margin-top: 24px; padding-top: 24px; border-top: 1px solid #e0e0e0; }
+.wf-summary-totals { margin-top: 16px; }
+.wf-summary-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; font-size: 14px; color: #424242; }
+.wf-summary-row.total { border-top: 1px solid #bdbdbd; padding-top: 12px; margin-top: 12px; font-size: 16px; font-weight: 700; color: #212121; }
+
+/* ===================== 09 FOOTER ===================== */
+.wf-footer { background: #212121; color: #bdbdbd; padding: 64px 0 32px; }
+.wf-footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 32px; margin-bottom: 48px; }
+.wf-footer-brand { font-size: 18px; font-weight: 700; color: #ffffff; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+.wf-footer-desc { font-size: 12px; line-height: 1.6; margin-bottom: 24px; color: #9e9e9e; }
+.wf-socials { display: flex; gap: 12px; }
+.wf-social { width: 36px; height: 36px; border-radius: 999px; border: 1px solid #616161; background: #424242; }
+.wf-footer-col h4 { font-size: 11px; font-weight: 700; color: #ffffff; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; }
+.wf-footer-col .wf-line { background: #424242; margin-bottom: 8px; }
+.wf-footer-col .wf-line.dark { background: #616161; }
+.wf-footer-bottom { border-top: 1px solid #424242; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.wf-footer-meta { font-size: 10px; color: #757575; display: flex; gap: 16px; }
+
+@media (max-width: 1024px) { .wf-navbar-links { display: none; } }
+@media (max-width: 768px) {
+  .wf-footer-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<header class="wf-navbar">
+  <div class="container wf-navbar-inner">
+    <a class="wf-navbar-brand" href="../home.html">GUNPLA <span class="accent">ELITE</span></a>
+    <nav class="wf-navbar-links">
+      <a class="wf-navbar-link" href="../home.html">Home</a>
+      <a class="wf-navbar-link" href="katalog-wireframe.html">Katalog</a>
+      <a class="wf-navbar-link" href="../artikel/artikel.html">Artikel</a>
+    </nav>
+    <div class="wf-navbar-actions">
+      <div class="wf-img icon-sm" title="Cart" style="position:relative;">
+        <span style="position:absolute;top:-4px;right:-4px;width:14px;height:14px;border-radius:999px;background:#212121;border:2px solid #fff;"></span>
+      </div>
+      <div class="wf-img icon-sm" title="Menu">≡</div>
+      <a class="wf-cta filled sm">Login</a>
+    </div>
+  </div>
+</header>
+
+<!-- Breadcrumb -->
+<div class="wf-breadcrumb">
+  <div class="container wf-breadcrumb-inner">
+    <a class="wf-breadcrumb-link" href="../home.html">Home</a>
+    <span class="wf-breadcrumb-sep">›</span>
+    <a class="wf-breadcrumb-link" href="katalog-wireframe.html">Katalog</a>
+    <span class="wf-breadcrumb-sep">›</span>
+    <a class="wf-breadcrumb-link" href="katalog-rx-78-wireframe.html">RX-78-2 Gundam</a>
+    <span class="wf-breadcrumb-sep">›</span>
+    <span class="wf-breadcrumb-current">PENGIRIMAN</span>
+  </div>
+</div>
+
+<!-- Checkout -->
+<section class="wireframe-section">
+  <div class="container">
+    <p class="wf-section-label">01 — Shipping & Payment</p>
+    <!-- Grid -->
+    <div class="wf-checkout-grid">
+
+      <!-- Left: Form -->
+      <div>
+        <h1 class="wf-page-title">Pengiriman</h1>
+
+        <!-- Step 1 -->
+        <div class="wf-step">
+          <div class="wf-step-head">
+            <div class="wf-step-num">1</div>
+            <h2 class="wf-step-title">Nama Penerima</h2>
+          </div>
+          <!-- Two column row -->
+          <div class="wf-form-row two-col">
+            <div class="wf-field">
+              <span class="wf-label">Nama Lengkap</span>
+              <span class="wf-line input"></span>
+            </div>
+            <div class="wf-field">
+              <span class="wf-label">Nomor Telepon</span>
+              <span class="wf-line input"></span>
+            </div>
+          </div>
+          <div class="wf-form-row">
+            <div class="wf-field">
+              <span class="wf-label">Email</span>
+              <span class="wf-line input"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="wf-step">
+          <div class="wf-step-head">
+            <div class="wf-step-num">2</div>
+            <h2 class="wf-step-title">Alamat Pengiriman</h2>
+          </div>
+          <div class="wf-form-row">
+            <div class="wf-field">
+              <span class="wf-label">Kota / Kabupaten</span>
+              <span class="wf-line input short"></span>
+            </div>
+          </div>
+          <div class="wf-form-row two-col">
+            <div class="wf-field">
+              <span class="wf-label">Kecamatan</span>
+              <span class="wf-line input"></span>
+            </div>
+            <div class="wf-field">
+              <span class="wf-label">Kode Pos</span>
+              <span class="wf-line input"></span>
+            </div>
+          </div>
+          <div class="wf-form-row">
+            <div class="wf-field">
+              <span class="wf-label">Alamat Lengkap</span>
+              <span class="wf-line input textarea"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="wf-step">
+          <div class="wf-step-head">
+            <div class="wf-step-num">3</div>
+            <h2 class="wf-step-title">Metode Pengiriman</h2>
+          </div>
+          <div class="wf-radio-list">
+            <label class="wf-radio-option selected">
+              <div class="wf-radio-circle"></div>
+              <div class="wf-radio-body">
+                <div class="wf-radio-name">Reguler (2-3 hari kerja)</div>
+                <div class="wf-radio-desc">Surabaya &amp; sekitarnya</div>
+              </div>
+              <div class="wf-radio-price">Rp 15.000</div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="wf-step">
+          <div class="wf-step-head">
+            <div class="wf-step-num">4</div>
+            <h2 class="wf-step-title">Metode Pembayaran</h2>
+          </div>
+          <div class="wf-radio-list">
+            <label class="wf-radio-option selected">
+              <div class="wf-radio-circle"></div>
+              <div class="wf-radio-body">
+                <div class="wf-radio-name">QRIS</div>
+                <div class="wf-radio-desc">Scan QR Code</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="wf-btn-row">
+          <a class="wf-cta" href="katalog-rx-78-wireframe.html">← KEMBALI</a>
+          <a class="wf-cta filled lg" href="../pembayaran/pembayaran-rx-78.html">KONFIRMASI PESANAN →</a>
+        </div>
+      </div>
+
+      <!-- Right: Summary -->
+      <div>
+        <div class="wf-summary">
+          <h3 class="wf-summary-title">Ringkasan Pesanan</h3>
+
+          <!-- Order item -->
+          <div class="wf-summary-item">
+            <div class="wf-summary-item-img">
+              <div class="wf-img">
+                <div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div>
+              </div>
+            </div>
+            <div class="wf-summary-item-body">
+              <div class="wf-summary-item-name">RX-78-2 GUNDAM</div>
+              <div class="wf-summary-item-grade">HIGH GRADE</div>
+              <div class="wf-summary-item-price">Rp 350.000</div>
+            </div>
+            <div class="wf-summary-item-qty">Qty: 1</div>
+          </div>
+
+          <!-- Totals -->
+          <div class="wf-summary-divider"></div>
+          <div class="wf-summary-totals">
+            <div class="wf-summary-row">
+              <span>Subtotal</span>
+              <span>Rp 350.000</span>
+            </div>
+            <div class="wf-summary-row">
+              <span>Pengiriman</span>
+              <span>Rp 15.000</span>
+            </div>
+            <div class="wf-summary-row">
+              <span>Pajak (PPN 11%)</span>
+              <span>Rp 38.500</span>
+            </div>
+            <div class="wf-summary-row total">
+              <span>Total</span>
+              <span>Rp 403.500</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="wf-footer">
+  <div class="container">
+    <p class="wf-section-label" style="color:#757575;">02 — Footer</p>
+    <div class="wf-footer-grid">
+      <div>
+        <div class="wf-footer-brand">GUNPLA <span style="color:#9e9e9e;">ELITE</span></div>
+        <div class="wf-footer-desc">
+          <span class="wf-line full" style="background:#424242;"></span>
+          <span class="wf-line full" style="background:#424242;"></span>
+          <span class="wf-line md" style="background:#424242;"></span>
+        </div>
+        <div class="wf-socials">
+          <div class="wf-social"></div>
+          <div class="wf-social"></div>
+          <div class="wf-social"></div>
+        </div>
+      </div>
+      <div class="wf-footer-col">
+        <h4>Quick Links</h4>
+        <span class="wf-line full"></span>
+        <span class="wf-line full"></span>
+        <span class="wf-line full"></span>
+      </div>
+      <div class="wf-footer-col">
+        <h4>Hubungi Kami</h4>
+        <span class="wf-line sm" style="margin-bottom:12px;"></span>
+        <span class="wf-line full" style="margin-bottom:16px;"></span>
+        <span class="wf-line sm" style="margin-bottom:8px;"></span>
+        <span class="wf-line md"></span>
+      </div>
+    </div>
+    <div class="wf-footer-bottom">
+      <span class="wf-footer-meta">© 2024 Gunpla Elite. All Rights Reserved.</span>
+      <div class="wf-footer-meta">
+        <span>ENG_VER: 2.0.4</span>
+        <span>STATUS: ONLINE</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

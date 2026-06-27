@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pesanan Berhasil — Gunpla Elite (Wireframe)</title>
+<style>
+/* ===================== Reset & Base ===================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #f5f5f5; color: #424242; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.4; }
+a { text-decoration: none; color: inherit; }
+img, svg { display: block; max-width: 100%; }
+
+.container { max-width: 1280px; margin: 0 auto; padding: 0 16px; width: 100%; }
+.wireframe-section { padding: 64px 0; border-bottom: 1px solid #f0f0f0; }
+.wireframe-section.tight { padding: 48px 0; }
+.wireframe-section.alt-bg { background: #f5f5f5; }
+.wireframe-section.dark-bg { background: #424242; color: #e0e0e0; }
+.wireframe-section.dark-bg .wf-section-label,
+.wireframe-section.dark-bg .wf-section-title { color: #bdbdbd; }
+.wf-section-label { font-size: 10px; font-weight: 700; color: #9e9e9e; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; }
+
+/* ===================== Wireframe Utilities ===================== */
+.wf-img {
+  background: #e0e0e0;
+  border: 1px solid #bdbdbd;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  color: #757575; font-size: 11px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+}
+.wf-img .x-lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.wf-img .x-lines svg { width: 100%; height: 100%; display: block; }
+.wf-img .x-lines line { stroke: #000; stroke-width: 2; }
+.wf-img.icon-sm { width: 24px; height: 24px; border-radius: 999px; aspect-ratio: 1; min-height: 0; font-size: 12px; }
+.wf-img.thumb { aspect-ratio: 1 / 1; min-height: 60px; }
+
+.wf-line { display: block; height: 12px; background: #e0e0e0; border-radius: 2px; margin-bottom: 8px; }
+.wf-line.sm { width: 40%; }
+.wf-line.md { width: 70%; }
+.wf-line.lg { width: 90%; }
+.wf-line.full { width: 100%; }
+.wf-line.tall { height: 18px; }
+.wf-line.huge { height: 28px; }
+.wf-line.dark { background: #bdbdbd; }
+.wf-line.darkest { background: #757575; }
+
+.wf-cta {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 12px 24px; border: 2px solid #212121; color: #212121;
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+  background: transparent;
+}
+.wf-cta.filled { background: #212121; color: #ffffff; }
+.wf-cta.sm { padding: 8px 16px; font-size: 10px; }
+.wf-cta.lg { padding: 14px 28px; font-size: 13px; }
+.wf-cta.block { display: flex; width: 100%; }
+
+.wf-tag {
+  display: inline-block; padding: 3px 8px;
+  background: #212121; color: #ffffff;
+  font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+}
+.wf-tag.outline { background: transparent; color: #212121; border: 1px solid #212121; }
+.wf-tag.gray { background: #bdbdbd; color: #212121; }
+.wf-tag.light { background: #e0e0e0; color: #212121; }
+
+/* ===================== Section Title / Eyebrow ===================== */
+.wf-section-eyebrow { font-size: 11px; font-weight: 700; color: #757575; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
+.wf-section-title { font-size: 24px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.wf-section-title.lg { font-size: 30px; }
+.wf-section-sub { font-size: 13px; color: #757575; margin-bottom: 24px; max-width: 600px; }
+
+/* ===================== 01 NAVBAR ===================== */
+.wf-navbar { background: #ffffff; border-bottom: 1px solid #bdbdbd; padding: 16px 0; position: sticky; top: 0; z-index: 100; }
+.wf-navbar-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.wf-navbar-brand { font-size: 18px; font-weight: 700; color: #212121; letter-spacing: 2px; text-transform: uppercase; min-width: 140px; }
+.wf-navbar-brand .accent { color: #757575; }
+.wf-navbar-links { display: flex; gap: 8px; flex: 1; justify-content: center; }
+.wf-navbar-link { display: inline-flex; align-items: center; justify-content: center; padding: 10px 18px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #424242; min-width: 80px; }
+.wf-navbar-link.active { background: #212121; color: #ffffff; }
+.wf-navbar-actions { display: flex; align-items: center; gap: 12px; }
+
+/* ===================== Breadcrumb ===================== */
+.wf-breadcrumb { background: #f5f5f5; border-bottom: 1px solid #e0e0e0; padding: 12px 0; }
+.wf-breadcrumb-inner { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #757575; }
+.wf-breadcrumb-link { color: #757575; }
+.wf-breadcrumb-link:hover { color: #212121; }
+.wf-breadcrumb-current { color: #212121; }
+.wf-breadcrumb-sep { color: #bdbdbd; font-size: 8px; }
+
+/* ===================== 03 SUCCESS CARD ===================== */
+.wf-success-wrapper { max-width: 560px; margin: 0 auto; }
+.wf-success-card { background: #ffffff; border: 1px solid #bdbdbd; border-radius: 8px; padding: 32px; text-align: center; }
+
+.wf-success-icon { width: 80px; height: 80px; border-radius: 999px; background: #f5f5f5; color: #212121; border: 2px solid #bdbdbd; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 700; margin: 0 auto 24px; }
+
+.wf-success-title { font-size: 28px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.wf-success-sub { font-size: 13px; color: #757575; margin-bottom: 24px; }
+
+/* ===================== 04 ORDER BOX ===================== */
+.wf-order-box { background: #f5f5f5; border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; text-align: left; margin-bottom: 16px; }
+
+.wf-order-product { display: flex; gap: 16px; padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid #e0e0e0; }
+.wf-order-img { width: 80px; height: 80px; flex-shrink: 0; }
+.wf-order-info { flex: 1; min-width: 0; }
+.wf-order-name { font-size: 13px; font-weight: 700; color: #212121; margin-bottom: 4px; }
+.wf-order-grade { font-size: 10px; color: #757575; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.wf-order-price { font-size: 12px; font-weight: 700; color: #212121; }
+
+.wf-order-totals { display: flex; flex-direction: column; gap: 6px; }
+.wf-order-row { display: flex; justify-content: space-between; font-size: 13px; color: #424242; }
+.wf-order-row .lbl { color: #757575; }
+.wf-order-row .val { font-weight: 700; color: #212121; }
+.wf-order-row.total { padding-top: 12px; margin-top: 12px; border-top: 1px solid #bdbdbd; font-size: 18px; }
+.wf-order-row.total .val { color: #212121; }
+
+/* ===================== 05 ORDER META ===================== */
+.wf-order-meta { padding: 16px 0; margin-bottom: 16px; border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; text-align: left; }
+.wf-order-meta-item { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 12px; color: #757575; }
+.wf-order-meta-item .icon { width: 16px; height: 16px; border-radius: 999px; background: #e0e0e0; flex-shrink: 0; }
+.wf-order-meta-item strong { color: #212121; font-weight: 700; }
+
+/* ===================== 06 INFO NOTE ===================== */
+.wf-info-note { background: #f5f5f5; border: 1px solid #e0e0e0; border-left: 4px solid #212121; border-radius: 8px; padding: 16px; display: flex; gap: 12px; text-align: left; margin-bottom: 24px; }
+.wf-info-note-icon { width: 20px; height: 20px; border-radius: 999px; background: #212121; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
+.wf-info-note-text { font-size: 12px; color: #424242; line-height: 1.6; }
+
+/* ===================== 07 BUTTON ROW ===================== */
+.wf-btn-row { display: flex; gap: 12px; }
+.wf-btn-row .wf-cta { flex: 1; text-align: center; }
+.wf-btn-row .wf-cta.filled { background: #212121; color: #ffffff; border-color: #212121; }
+
+/* ===================== 08 FOOTER ===================== */
+.wf-footer { background: #212121; color: #bdbdbd; padding: 64px 0 32px; }
+.wf-footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 32px; margin-bottom: 48px; }
+@media (max-width: 768px) { .wf-footer-grid { grid-template-columns: 1fr; } }
+.wf-footer-brand { font-size: 18px; font-weight: 700; color: #ffffff; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+.wf-footer-desc { font-size: 12px; line-height: 1.6; margin-bottom: 24px; color: #9e9e9e; }
+.wf-socials { display: flex; gap: 12px; }
+.wf-social { width: 36px; height: 36px; border-radius: 999px; border: 1px solid #616161; background: #424242; }
+.wf-footer-col h4 { font-size: 11px; font-weight: 700; color: #ffffff; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; }
+.wf-footer-col .wf-line { background: #424242; margin-bottom: 8px; }
+.wf-footer-col .wf-line.dark { background: #616161; }
+.wf-footer-bottom { border-top: 1px solid #424242; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.wf-footer-meta { font-size: 10px; color: #757575; display: flex; gap: 16px; }
+@media (max-width: 1024px) { .wf-navbar-links { display: none; } }
+</style>
+</head>
+<body>
+
+<!-- ===================== 01 NAVBAR ===================== -->
+<header class="wf-navbar">
+  <div class="container wf-navbar-inner">
+    <a class="wf-navbar-brand" href="home-wireframe.html">GUNPLA <span class="accent">ELITE</span></a>
+    <nav class="wf-navbar-links">
+      <a class="wf-navbar-link" href="home-wireframe.html">Home</a>
+      <a class="wf-navbar-link active" href="katalog-wireframe.html">Katalog</a>
+      <a class="wf-navbar-link" href="katalog-wireframe.html">Artikel</a>
+    </nav>
+    <div class="wf-navbar-actions">
+      <div class="wf-img icon-sm" title="Cart">
+        <span style="position:absolute;top:-4px;right:-4px;width:14px;height:14px;border-radius:999px;background:#212121;border:2px solid #fff;"></span>
+      </div>
+      <div class="wf-img icon-sm" title="Menu">≡</div>
+      <a class="wf-cta filled sm">Login</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== Breadcrumb ===================== -->
+<div class="wf-breadcrumb">
+  <div class="container wf-breadcrumb-inner">
+    <a class="wf-breadcrumb-link" href="home-wireframe.html">Home</a>
+    <span class="wf-breadcrumb-sep">›</span>
+    <a class="wf-breadcrumb-link" href="katalog-wireframe.html">Katalog</a>
+    <span class="wf-breadcrumb-sep">›</span>
+    <a class="wf-breadcrumb-link" href="katalog-rx-78-wireframe.html">Detail</a>
+    <span class="wf-breadcrumb-sep">›</span>
+    <a class="wf-breadcrumb-link" href="shipping-wireframe.html">Pengiriman</a>
+    <span class="wf-breadcrumb-sep">›</span>
+    <a class="wf-breadcrumb-link" href="pembayaran-wireframe.html">Pembayaran</a>
+    <span class="wf-breadcrumb-sep">›</span>
+    <span class="wf-breadcrumb-current">Berhasil</span>
+  </div>
+</div>
+
+<!-- ===================== 02 SUCCESS ===================== -->
+<section class="wireframe-section">
+  <div class="container wf-success-wrapper">
+    <p class="wf-section-label">01 — Order Confirmation</p>
+    <p class="wf-section-eyebrow">Order Confirmation</p>
+
+    <div class="wf-success-card">
+      <div class="wf-success-icon">✓</div>
+      <h1 class="wf-success-title">Pesanan Berhasil!</h1>
+      <p class="wf-success-sub">Terima kasih, pesananmu sudah terkonfirmasi. Kami akan segera memprosesnya.</p>
+
+      <!-- Order Box -->
+      <div class="wf-order-box">
+        <div class="wf-order-product">
+          <div class="wf-order-img">
+            <div class="wf-img" style="width:100%;height:100%;">
+              <div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div>
+              IMG
+            </div>
+          </div>
+          <div class="wf-order-info">
+            <div class="wf-order-name"><span class="wf-line full darkest" style="height:14px;"></span></div>
+            <div class="wf-order-grade"><span class="wf-line sm" style="height:10px;"></span></div>
+            <div class="wf-order-price"><span class="wf-line md" style="height:14px;"></span></div>
+          </div>
+        </div>
+
+        <div class="wf-order-totals">
+          <div class="wf-order-row">
+            <span class="lbl">Subtotal</span>
+            <span class="val">Rp 350.000</span>
+          </div>
+          <div class="wf-order-row">
+            <span class="lbl">Pengiriman (Reguler)</span>
+            <span class="val">Rp 15.000</span>
+          </div>
+          <div class="wf-order-row">
+            <span class="lbl">PPN (11%)</span>
+            <span class="val">Rp 38.500</span>
+          </div>
+          <div class="wf-order-row total">
+            <span class="lbl">Total</span>
+            <span class="val">Rp 403.500</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Meta -->
+      <div class="wf-order-meta">
+        <div class="wf-order-meta-item">
+          <span class="icon"></span>
+          <span>Order ID: <strong>GE-20240616-GX001</strong></span>
+        </div>
+        <div class="wf-order-meta-item">
+          <span class="icon"></span>
+          <span>Estimasi Dikirim: <strong>19 - 20 Juni 2024</strong></span>
+        </div>
+        <div class="wf-order-meta-item">
+          <span class="icon"></span>
+          <span>Metode Kirim: <strong>Reguler (2-3 hari kerja)</strong></span>
+        </div>
+      </div>
+
+      <!-- Info Note -->
+      <div class="wf-info-note">
+        <div class="wf-info-note-icon">i</div>
+        <p class="wf-info-note-text">Kamu bisa melacak status pesanan dan mengunduh invoice melalui halaman riwayat pesanan. Konfirmasi pembayaran juga akan dikirim ke email yang terdaftar.</p>
+      </div>
+
+      <!-- Buttons -->
+      <div class="wf-btn-row">
+        <a class="wf-cta" href="katalog-wireframe.html">Beli Lagi</a>
+        <a class="wf-cta filled lg" href="home-wireframe.html">Kembali ke Home</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 09 FOOTER ===================== -->
+<footer class="wf-footer">
+  <div class="container">
+    <p class="wf-section-label" style="color:#757575;">02 — Footer</p>
+    <div class="wf-footer-grid">
+      <div>
+        <div class="wf-footer-brand">GUNPLA <span style="color:#9e9e9e;">ELITE</span></div>
+        <div class="wf-footer-desc">
+          <span class="wf-line full" style="background:#424242;"></span>
+          <span class="wf-line full" style="background:#424242;"></span>
+          <span class="wf-line md" style="background:#424242;"></span>
+        </div>
+        <div class="wf-socials">
+          <div class="wf-social"></div>
+          <div class="wf-social"></div>
+          <div class="wf-social"></div>
+        </div>
+      </div>
+      <div class="wf-footer-col">
+        <h4>Quick Links</h4>
+        <span class="wf-line full"></span>
+        <span class="wf-line full"></span>
+        <span class="wf-line full"></span>
+      </div>
+      <div class="wf-footer-col">
+        <h4>Hubungi Kami</h4>
+        <span class="wf-line sm" style="margin-bottom:12px;"></span>
+        <span class="wf-line full" style="margin-bottom:16px;"></span>
+        <span class="wf-line sm" style="margin-bottom:8px;"></span>
+        <span class="wf-line md"></span>
+      </div>
+    </div>
+    <div class="wf-footer-bottom">
+      <span class="wf-footer-meta">© 2024 Gunpla Elite. All Rights Reserved.</span>
+      <div class="wf-footer-meta">
+        <span>ENG_VER: 2.0.4</span>
+        <span>STATUS: ONLINE</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

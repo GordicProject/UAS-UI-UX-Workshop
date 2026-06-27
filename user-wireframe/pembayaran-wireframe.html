@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pembayaran — Gunpla Elite (Wireframe)</title>
+<style>
+/* ===================== Reset & Base ===================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #ffffff; color: #424242; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.4; }
+a { text-decoration: none; color: inherit; }
+img, svg { display: block; max-width: 100%; }
+
+.container { max-width: 1280px; margin: 0 auto; padding: 0 16px; width: 100%; }
+.wireframe-section { padding: 64px 0; border-bottom: 1px solid #f0f0f0; }
+.wireframe-section.tight { padding: 48px 0; }
+.wireframe-section.alt-bg { background: #f5f5f5; }
+.wireframe-section.dark-bg { background: #424242; color: #e0e0e0; }
+.wireframe-section.dark-bg .wf-section-label,
+.wireframe-section.dark-bg .wf-section-title { color: #bdbdbd; }
+.wf-section-label { font-size: 10px; font-weight: 700; color: #9e9e9e; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; }
+
+/* ===================== Wireframe Utilities ===================== */
+.wf-img {
+  background: #e0e0e0;
+  border: 1px solid #bdbdbd;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  color: #757575; font-size: 11px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+}
+.wf-img .x-lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.wf-img .x-lines svg { width: 100%; height: 100%; display: block; }
+.wf-img .x-lines line { stroke: #000; stroke-width: 2; }
+.wf-img.icon-sm { width: 24px; height: 24px; border-radius: 999px; aspect-ratio: 1; min-height: 0; font-size: 12px; }
+.wf-img.thumb { aspect-ratio: 1 / 1; min-height: 60px; }
+
+.wf-line { display: block; height: 12px; background: #e0e0e0; border-radius: 2px; margin-bottom: 8px; }
+.wf-line.sm { width: 40%; }
+.wf-line.md { width: 70%; }
+.wf-line.lg { width: 90%; }
+.wf-line.full { width: 100%; }
+.wf-line.tall { height: 18px; }
+.wf-line.huge { height: 28px; }
+.wf-line.dark { background: #bdbdbd; }
+.wf-line.darkest { background: #757575; }
+.wf-line.input { height: 44px; margin-bottom: 16px; background: #ffffff; border: 1px solid #bdbdbd; }
+.wf-line.input.short { width: 100%; }
+.wf-line.input.icon-left { position: relative; }
+.wf-line.textarea { height: 88px; margin-bottom: 16px; }
+
+.wf-cta {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 12px 24px; border: 2px solid #212121; color: #212121;
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+  background: transparent;
+}
+.wf-cta.filled { background: #212121; color: #ffffff; }
+.wf-cta.sm { padding: 8px 16px; font-size: 10px; }
+.wf-cta.lg { padding: 14px 28px; font-size: 13px; }
+.wf-cta.block { display: flex; width: 100%; }
+
+.wf-tag {
+  display: inline-block; padding: 3px 8px;
+  background: #212121; color: #ffffff;
+  font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+}
+.wf-tag.outline { background: transparent; color: #212121; border: 1px solid #212121; }
+.wf-tag.gray { background: #bdbdbd; color: #212121; }
+.wf-tag.light { background: #e0e0e0; color: #212121; }
+
+/* ===================== Section Title / Eyebrow ===================== */
+.wf-section-eyebrow { font-size: 11px; font-weight: 700; color: #757575; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
+.wf-section-title { font-size: 24px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.wf-section-title.lg { font-size: 30px; }
+.wf-section-sub { font-size: 13px; color: #757575; margin-bottom: 24px; max-width: 600px; }
+
+/* ===================== 01 NAVBAR ===================== */
+.wf-navbar { background: #ffffff; border-bottom: 1px solid #bdbdbd; padding: 16px 0; position: sticky; top: 0; z-index: 100; }
+.wf-navbar-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.wf-navbar-brand { font-size: 18px; font-weight: 700; color: #212121; letter-spacing: 2px; text-transform: uppercase; min-width: 140px; }
+.wf-navbar-brand .accent { color: #757575; }
+.wf-navbar-links { display: flex; gap: 8px; flex: 1; justify-content: center; }
+.wf-navbar-link { display: inline-flex; align-items: center; justify-content: center; padding: 10px 18px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #424242; min-width: 80px; }
+.wf-navbar-link.active { background: #212121; color: #ffffff; }
+.wf-navbar-actions { display: flex; align-items: center; gap: 12px; }
+
+/* ===================== Breadcrumb ===================== */
+.wf-breadcrumb { background: #f5f5f5; border-bottom: 1px solid #e0e0e0; padding: 12px 0; }
+.wf-breadcrumb-inner { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #757575; }
+.wf-breadcrumb-link { color: #757575; }
+.wf-breadcrumb-link:hover { color: #212121; }
+.wf-breadcrumb-current { color: #212121; }
+.wf-breadcrumb-sep { color: #bdbdbd; font-size: 8px; }
+
+/* ===================== 02 PAGE TITLE ===================== */
+.wf-page-title { font-size: 30px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 32px; }
+
+/* ===================== 03 PAYMENT GRID ===================== */
+.wf-pay-grid { display: grid; grid-template-columns: 1fr; gap: 48px; }
+@media (min-width: 1024px) { .wf-pay-grid { grid-template-columns: 1fr 1fr; gap: 48px; } }
+
+/* ===================== 04 PAY BLOCK ===================== */
+.wf-pay-block { background: #ffffff; border: 2px solid #212121; border-radius: 8px; padding: 32px; text-align: center; }
+.wf-pay-block.outline { border: 1px solid #e0e0e0; }
+
+.wf-pay-step { width: 48px; height: 48px; border-radius: 999px; background: #212121; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; margin: 0 auto 16px; }
+
+.wf-pay-title { font-size: 18px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+
+.wf-pay-amount { font-size: 40px; font-weight: 700; color: #212121; margin: 8px 0 4px; letter-spacing: 1px; }
+.wf-pay-orderid { font-size: 11px; color: #757575; margin-bottom: 24px; }
+
+.wf-pay-divider { height: 1px; background: #e0e0e0; margin: 16px 0; }
+
+.wf-pay-row { display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; color: #424242; }
+.wf-pay-row .lbl { color: #757575; }
+.wf-pay-row .val { font-weight: 700; color: #212121; }
+
+/* ===================== 05 QR BLOCK ===================== */
+.wf-qr-frame { background: #ffffff; border: 2px solid #e0e0e0; border-radius: 8px; padding: 24px; display: inline-block; margin-bottom: 16px; }
+.wf-qr-img { width: 200px; height: 200px; background: #ffffff; display: flex; align-items: center; justify-content: center; }
+
+.wf-pay-hint { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #212121; margin-bottom: 6px; }
+.wf-pay-apps { font-size: 10px; color: #757575; line-height: 1.6; }
+
+/* ===================== 06 INFO BOX ===================== */
+.wf-info-box { margin-top: 24px; background: #f5f5f5; border: 1px solid #e0e0e0; border-left: 4px solid #212121; border-radius: 8px; padding: 20px; display: flex; gap: 16px; }
+.wf-info-icon { width: 32px; height: 32px; border-radius: 999px; background: #212121; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.wf-info-body { flex: 1; }
+.wf-info-title { font-size: 12px; font-weight: 700; color: #212121; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.wf-info-list { padding-left: 20px; }
+.wf-info-list li { font-size: 12px; color: #757575; margin-bottom: 4px; list-style: disc; }
+
+/* ===================== 07 BUTTON ROW ===================== */
+.wf-btn-row { display: flex; gap: 12px; margin-top: 24px; }
+.wf-btn-row .wf-cta.filled { background: #212121; color: #ffffff; border-color: #212121; }
+.wf-btn-row .wf-cta { flex: 1; text-align: center; }
+
+/* ===================== 05 FOOTER (skeleton) ===================== */
+.wf-footer { background: #212121; color: #bdbdbd; padding: 64px 0 32px; }
+.wf-footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 32px; margin-bottom: 48px; }
+@media (max-width: 768px) { .wf-footer-grid { grid-template-columns: 1fr; } }
+.wf-footer-brand { font-size: 18px; font-weight: 700; color: #ffffff; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+.wf-footer-desc { font-size: 12px; line-height: 1.6; margin-bottom: 24px; color: #9e9e9e; }
+.wf-socials { display: flex; gap: 12px; }
+.wf-social { width: 36px; height: 36px; border-radius: 999px; border: 1px solid #616161; background: #424242; }
+.wf-footer-col h4 { font-size: 11px; font-weight: 700; color: #ffffff; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; }
+.wf-footer-col .wf-line { background: #424242; margin-bottom: 8px; }
+.wf-footer-col .wf-line.dark { background: #616161; }
+.wf-footer-bottom { border-top: 1px solid #424242; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.wf-footer-meta { font-size: 10px; color: #757575; display: flex; gap: 16px; }
+@media (max-width: 1024px) { .wf-navbar-links { display: none; } }
+</style>
+</head>
+<body>
+
+<!-- ===================== 01 NAVBAR ===================== -->
+<header class="wf-navbar">
+  <div class="container wf-navbar-inner">
+    <div class="wf-navbar-brand">GUNPLA <span class="accent">ELITE</span></div>
+    <nav class="wf-navbar-links">
+      <a class="wf-navbar-link">Home</a>
+      <a class="wf-navbar-link active">Katalog</a>
+      <a class="wf-navbar-link">Artikel</a>
+    </nav>
+    <div class="wf-navbar-actions">
+      <div class="wf-img icon-sm" title="Cart">
+        <span style="position:absolute;top:-4px;right:-4px;width:14px;height:14px;border-radius:999px;background:#212121;border:2px solid #fff;"></span>
+      </div>
+      <div class="wf-img icon-sm" title="Menu">≡</div>
+      <a class="wf-cta filled sm">Login</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== Breadcrumb ===================== -->
+<div class="wf-breadcrumb">
+  <div class="container wf-breadcrumb-inner">
+    <a class="wf-breadcrumb-link" href="home-wireframe.html">Home</a>
+    <span class="wf-breadcrumb-sep">›</span>
+    <a class="wf-breadcrumb-link" href="katalog-wireframe.html">Katalog</a>
+    <span class="wf-breadcrumb-sep">›</span>
+    <a class="wf-breadcrumb-link" href="katalog-rx-78-wireframe.html">Detail</a>
+    <span class="wf-breadcrumb-sep">›</span>
+    <a class="wf-breadcrumb-link" href="shipping-wireframe.html">Pengiriman</a>
+    <span class="wf-breadcrumb-sep">›</span>
+    <span class="wf-breadcrumb-current">Pembayaran</span>
+  </div>
+</div>
+
+<!-- ===================== 02 PEMBAYARAN ===================== -->
+<section class="wireframe-section">
+  <div class="container">
+    <p class="wf-section-label">01 — Pembayaran</p>
+    <p class="wf-section-eyebrow">Checkout Page</p>
+    <h1 class="wf-section-title lg" style="text-align:center;">Pembayaran QRIS</h1>
+    <p class="wf-section-sub" style="text-align:center;">Selesaikan pembayaran dengan scan QR Code di bawah ini menggunakan e-wallet atau mobile banking kamu.</p>
+
+    <div class="wf-pay-grid">
+
+      <!-- Block 1: Total -->
+      <div class="wf-pay-block">
+        <div class="wf-pay-step">1</div>
+        <h2 class="wf-pay-title">Ringkasan Pesanan</h2>
+        <p class="wf-pay-amount">Rp 403.500</p>
+        <p class="wf-pay-orderid">Order ID: GE-20240616-RX001</p>
+
+        <div class="wf-pay-divider"></div>
+
+        <div class="wf-pay-row">
+          <span class="lbl">Subtotal</span>
+          <span class="val">Rp 350.000</span>
+        </div>
+        <div class="wf-pay-row">
+          <span class="lbl">Pengiriman (Reguler)</span>
+          <span class="val">Rp 15.000</span>
+        </div>
+        <div class="wf-pay-row">
+          <span class="lbl">PPN 11%</span>
+          <span class="val">Rp 38.500</span>
+        </div>
+      </div>
+
+      <!-- Block 2: QR -->
+      <div class="wf-pay-block outline">
+        <div class="wf-pay-step">2</div>
+        <h2 class="wf-pay-title">Scan QRIS</h2>
+
+        <div class="wf-qr-frame">
+          <div class="wf-qr-img">
+            <div class="wf-img" style="width:200px;height:200px;">
+              <div class="x-lines"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="0" x2="100" y2="100" stroke="#000" stroke-width="2"/><line x1="100" y1="0" x2="0" y2="100" stroke="#000" stroke-width="2"/></svg></div>
+              QR
+            </div>
+          </div>
+        </div>
+
+        <p class="wf-pay-hint">Buka aplikasi e-wallet / m-banking</p>
+        <p class="wf-pay-apps">GoPay • OVO • DANA • ShopeePay • BCA Mobile • Mandiri Online • BNI Mobile</p>
+      </div>
+
+    </div>
+
+    <!-- Info Box -->
+    <div class="wf-info-box">
+      <div class="wf-info-icon">i</div>
+      <div class="wf-info-body">
+        <p class="wf-info-title">Penting</p>
+        <ul class="wf-info-list">
+          <li>Pembayaran akan diverifikasi otomatis dalam 1-5 menit setelah scan berhasil.</li>
+          <li>QR Code ini berlaku hingga 24 jam sejak halaman ini dibuka.</li>
+          <li>Jika ada kendala, hubungi CS kami di support@gunplaelite.com.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="wf-btn-row">
+      <a class="wf-cta" href="shipping-wireframe.html">← KEMBALI</a>
+      <a class="wf-cta filled lg" href="pembayaran-berhasil-wireframe.html">SAYA SUDAH BAYAR →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 05 FOOTER (skeleton) ===================== -->
+<footer class="wf-footer">
+  <div class="container">
+    <p class="wf-section-label" style="color:#757575;">02 — Footer</p>
+    <div class="wf-footer-grid">
+      <div>
+        <div class="wf-footer-brand">GUNPLA <span style="color:#9e9e9e;">ELITE</span></div>
+        <div class="wf-footer-desc">
+          <span class="wf-line full" style="background:#424242;"></span>
+          <span class="wf-line full" style="background:#424242;"></span>
+          <span class="wf-line md" style="background:#424242;"></span>
+        </div>
+        <div class="wf-socials">
+          <div class="wf-social"></div>
+          <div class="wf-social"></div>
+          <div class="wf-social"></div>
+        </div>
+      </div>
+      <div class="wf-footer-col">
+        <h4>Quick Links</h4>
+        <span class="wf-line full"></span>
+        <span class="wf-line full"></span>
+        <span class="wf-line full"></span>
+      </div>
+      <div class="wf-footer-col">
+        <h4>Hubungi Kami</h4>
+        <span class="wf-line sm" style="margin-bottom:12px;"></span>
+        <span class="wf-line full" style="margin-bottom:16px;"></span>
+        <span class="wf-line sm" style="margin-bottom:8px;"></span>
+        <span class="wf-line md"></span>
+      </div>
+    </div>
+    <div class="wf-footer-bottom">
+      <span class="wf-footer-meta">© 2024 Gunpla Elite. All Rights Reserved.</span>
+      <div class="wf-footer-meta">
+        <span>ENG_VER: 2.0.4</span>
+        <span>STATUS: ONLINE</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

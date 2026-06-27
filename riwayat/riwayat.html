@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Riwayat Transaksi - MechaMarket</title>
+<link rel="stylesheet" href="../home.css"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;500;600;700&display=swap');
+  body { font-family: 'Inter', sans-serif; }
+  h1, h2, h3, .font-oswald { font-family: 'Oswald', sans-serif; }
+
+  /* ── Tabs ── */
+  .rx-tabs { display: flex; gap: 0; border-bottom: 2px solid #f3f4f6; }
+  .rx-tab {
+    padding: 12px 20px; font-size: 14px; font-weight: 600; color: #6b7280;
+    border-bottom: 2px solid transparent; margin-bottom: -2px; cursor: pointer; transition: all 0.15s;
+  }
+  .rx-tab:hover { color: #d32f2f; }
+  .rx-tab.active { color: #d32f2f; border-bottom-color: #d32f2f; }
+
+  /* ── Transaction Card ── */
+  .tx-card {
+    border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; margin-bottom: 20px;
+    position: relative;
+  }
+  .tx-card-header {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;
+  }
+  .tx-card-left { display: flex; align-items: center; gap: 10px; }
+  .tx-check {
+    width: 24px; height: 24px; border-radius: 50%; background: #dcfce7; color: #16a34a;
+    display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0;
+  }
+  .tx-check.cancelled { background: #fee2e2; color: #dc2626; }
+  .tx-inv { font-size: 13px; font-weight: 600; color: #d32f2f; }
+  .tx-date { font-size: 12px; color: #9ca3af; margin-left: 12px; }
+  .tx-badge {
+    font-size: 11px; font-weight: 700; color: #fff; background: #1f2937; padding: 4px 10px;
+    border-radius: 4px; letter-spacing: 0.5px;
+  }
+  .tx-badge.cancelled { background: #dc2626; }
+
+  /* ── Product Row ── */
+  .tx-product { display: flex; gap: 16px; align-items: flex-start; }
+  .tx-product-img {
+    width: 88px; height: 88px; background: #f9fafb; border: 1px solid #e5e7eb;
+    border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .tx-product-img img { max-width: 76px; max-height: 76px; object-fit: contain; }
+  .tx-product-img i { color: #d1d5db; font-size: 32px; }
+  .tx-product-body { flex: 1; }
+  .tx-product-grade { font-size: 11px; font-weight: 700; color: #d32f2f; text-transform: uppercase; margin-bottom: 2px; }
+  .tx-product-name { font-size: 15px; font-weight: 700; color: #1f2937; margin-bottom: 4px; }
+
+  /* ── Actions ── */
+  .tx-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; padding-top: 16px; border-top: 1px solid #f3f4f6; flex-wrap: wrap; }
+  .tx-action-btn {
+    font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 4px; border: 1px solid #d1d5db;
+    background: #fff; color: #6b7280; cursor: pointer; transition: all 0.15s;
+  }
+  .tx-action-btn:hover { border-color: #9ca3af; color: #1f2937; }
+  .tx-action-btn.primary { background: #d32f2f; color: #fff; border-color: #d32f2f; }
+  .tx-action-btn.primary:hover { background: #b71c1c; }
+  .tx-action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+</style>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+<div id="navbar-container"></div>
+<script src="../components/navbar.js"></script>
+
+
+
+<main class="container mx-auto px-4 py-8">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+    <!-- Sidebar -->
+    <aside class="lg:col-span-1">
+      <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-6 text-center">
+        <div id="avatar" class="w-24 h-24 rounded-full bg-primary-red text-white text-3xl font-bold flex items-center justify-center mx-auto font-oswald">U</div>
+        <h2 id="displayName" class="font-oswald text-2xl font-bold mt-4">User</h2>
+        <p id="displayEmail" class="text-sm text-gray-500 mt-1">user@email.com</p>
+        <span class="inline-block mt-3 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">
+          <i class="fas fa-check-circle mr-1"></i> Member Aktif
+        </span>
+      </div>
+
+      <nav class="bg-white border border-gray-200 rounded-lg shadow-sm mt-6 overflow-hidden">
+        <a class="flex items-center gap-3 px-5 py-3 font-semibold text-gray-700 hover:bg-gray-50" href="../pesanan/pesanan.html">
+          <i class="fas fa-shopping-bag text-primary-red w-5"></i> Pesanan Saya
+        </a>
+        <a class="flex items-center gap-3 px-5 py-3 font-semibold text-primary-red bg-red-50 border-t border-gray-100" href="riwayat.html">
+          <i class="fas fa-history text-primary-red w-5"></i> Riwayat Transaksi
+        </a>
+        <a class="flex items-center gap-3 px-5 py-3 font-semibold text-gray-700 hover:bg-gray-50 border-t border-gray-100" href="../profile/profile.html">
+          <i class="fas fa-user text-primary-red w-5"></i> Profile
+        </a>
+        <a id="logoutBtn" class="flex items-center gap-3 px-5 py-3 font-semibold text-red-600 hover:bg-red-50 border-t border-gray-100 cursor-pointer" href="#">
+          <i class="fas fa-sign-out-alt w-5"></i> Keluar
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <section class="lg:col-span-2">
+      <!-- Tabs -->
+      <div class="rx-tabs">
+        <div class="rx-tab active" data-filter="selesai">Selesai</div>
+        <div class="rx-tab" data-filter="batal">Dibatalkan</div>
+      </div>
+
+      <div id="historyList" style="margin-top: 24px;"></div>
+    </section>
+
+  </div>
+</main>
+
+<script>
+function getUser() {
+  try { var raw = localStorage.getItem('gunpla_user'); if (raw) { var u = JSON.parse(raw); return { name: u.name || u.display_name || 'Guest User', email: u.email || 'guest@email.com' }; } } catch (e) {}
+  return { name: 'Guest User', email: 'guest@email.com' };
+}
+
+function getOrders() {
+  try { var raw = localStorage.getItem('gunpla_orders'); if (raw) return JSON.parse(raw); } catch (e) {}
+  return [];
+}
+
+function formatRp(n) { return 'Rp ' + (n || 0).toLocaleString('id-ID'); }
+
+function formatDateFull(iso) {
+  if (!iso) return '-';
+  try {
+    var d = new Date(iso);
+    var months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+    return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+  } catch (e) { return iso; }
+}
+
+// ── Sample Data (disesuaikan dengan pesanan.html) ──
+var sampleOrders = [
+  // Order selesai — Unicorn (satunya yang selesai di pesanan.html)
+  {
+    id: 'GE-2024-003',
+    date: '2024-06-01T10:00:00',
+    status: 'selesai',
+    items: [
+      { name: 'RX-0 UNICORN HOPE', qty: 1, price: 450000, grade: 'Real Grade', scale: '1/144', series: 'Mobile Suit Gundam UC', img: '../images/gundam-unicorn.png' }
+    ],
+    total: 450000
+  },
+  // Order batal — Barbatos
+  {
+    id: 'GE-2024-005',
+    date: '2024-06-05T10:00:00',
+    status: 'batal',
+    items: [
+      { name: 'ASW-G-08 BARBATOS', qty: 1, price: 280000, grade: 'Real Grade', scale: '1/144', series: 'Mobile Suit Gundam IRON-BLOODED ORPHANS', img: '../images/gundam-barbatos.png' }
+    ],
+    total: 280000
+  }
+];
+
+// Use sample orders directly
+var allOrders = sampleOrders;
+console.log('Riwayat - allOrders:', allOrders);
+
+// Filter only selesai & batal
+var currentFilter = 'selesai';
+
+function renderHistory(filter) {
+  currentFilter = filter;
+  var list = allOrders.filter(function(o) {
+    return o.status === filter;
+  });
+  list.sort(function(a, b) {
+    return new Date(b.date || 0) - new Date(a.date || 0);
+  });
+
+  console.log('[Riwayat] allOrders count:', allOrders.length);
+  console.log('[Riwayat] Filter:', filter, '| Matched:', list.length);
+  console.log('[Riwayat] container exists:', !!document.getElementById('historyList'));
+  console.log('[Riwayat] allOrders:', JSON.parse(JSON.stringify(allOrders)));
+
+  var container = document.getElementById('historyList');
+
+  if (!list.length) {
+    container.innerHTML = ''
+      + '<div style="text-align:center; padding: 60px 20px; color: #9ca3af;">'
+      + '  <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 12px; display: block;"></i>'
+      + '  <p style="font-weight: 600; color: #6b7280;">Belum ada transaksi</p>'
+      + '</div>';
+    return;
+  }
+
+  var html = '';
+  list.forEach(function(o) {
+    (o.items || []).forEach(function(it) {
+      var checkColor = (o.status === 'selesai') ? '#16a34a' : '#dc2626';
+      var badgeClass = (o.status === 'batal') ? 'cancelled' : '';
+      var imgSrc = it.img || '';
+      var imgEl = imgSrc
+        ? '<img src="' + imgSrc + '" alt="' + (it.name || '') + '"/>'
+        : '<i class="fas fa-box-open"></i>';
+
+      html += ''
+        + '<div class="tx-card">'
+        + '  <div class="tx-card-header">'
+        + '    <div class="tx-card-left">'
+        + '      <div class="tx-check" style="color: ' + checkColor + ';">'
+        + '        <i class="fas fa-' + (o.status === 'selesai' ? 'check' : 'times') + '"></i>'
+        + '      </div>'
+        + '      <span class="tx-inv">' + (o.id || '-') + '</span>'
+        + '      <span class="tx-date">Selesai pada ' + formatDateFull(o.date) + '</span>'
+        + '    </div>'
+        + '    <span class="tx-badge ' + badgeClass + '">' + (o.status === 'selesai' ? 'COMPLETE' : 'CANCELLED') + '</span>'
+        + '  </div>'
+        + '  <div class="tx-product">'
+        + '    <div class="tx-product-img">' + imgEl + '</div>'
+        + '    <div class="tx-product-body">'
+        + '      <div class="tx-product-grade">' + (it.grade || '-') + '</div>'
+        + '      <div class="tx-product-name">' + (it.name || '-') + '</div>'
+        + '      <div class="tx-product-qty">' + (it.qty || 1) + 'x &middot; ' + formatRp(it.price || o.total || 0) + '</div>'
+        + '    </div>'
+        + '  </div>'
+        + '  <div class="tx-actions">';
+
+      if (o.status === 'selesai') {
+        var reviewedKey = 'reviewed_' + o.id;
+        var isReviewed = localStorage.getItem(reviewedKey) === 'true';
+        html += ''
+          + '    <button class="tx-action-btn"><i class="fas fa-file-invoice mr-1"></i> Lihat Invoice</button>'
+          + '    <button class="tx-action-btn primary" data-reorder="' + o.id + '"><i class="fas fa-shopping-cart mr-1"></i> Beli Lagi</button>'
+          + '    <button class="tx-action-btn' + (isReviewed ? ' primary" style="background:#e5e7eb;border-color:#d1d5db;color:#6b7280;" disabled' : ' primary"') + ' data-review="' + o.id + '">'
+          + '      <i class="fas fa-star mr-1"></i> ' + (isReviewed ? 'Sudah Diulas' : 'Beri Ulasan')
+          + '    </button>';
+      } else {
+        html += ''
+          + '    <button class="tx-action-btn"><i class="fas fa-file-invoice mr-1"></i> Lihat Invoice</button>'
+          + '    <button class="tx-action-btn primary" disabled style="opacity:0.5;"><i class="fas fa-shopping-cart mr-1"></i> Beli Lagi</button>';
+      }
+
+      html += '  </div></div>';
+    });
+  });
+
+  container.innerHTML = html;
+
+  // Bind events
+  container.querySelectorAll('[data-reorder]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var id = this.getAttribute('data-reorder');
+      var o = allOrders.find(function(x) { return x.id === id; });
+      if (o) {
+        try { localStorage.setItem('cart', JSON.stringify(o.items || [])); } catch (e) {}
+        window.location.href = '../keranjang/keranjang.html';
+      }
+    });
+  });
+
+  container.querySelectorAll('[data-review]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      if (this.disabled) return;
+      var id = this.getAttribute('data-review');
+      try { localStorage.setItem('reviewed_' + id, 'true'); } catch (e) {}
+      renderHistory(currentFilter);
+    });
+  });
+}
+
+// ── Tab Clicks ──
+document.querySelectorAll('.rx-tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.rx-tab').forEach(function(t) { t.classList.remove('active'); });
+    this.classList.add('active');
+    renderHistory(this.getAttribute('data-filter'));
+  });
+});
+
+// ── Init ──
+function init() {
+  var u = getUser();
+  var displayName = document.getElementById('displayName');
+  var displayEmail = document.getElementById('displayEmail');
+  var avatar = document.getElementById('avatar');
+  console.log('Riwayat - init called, elements:', displayName, displayEmail, avatar);
+  if (displayName) displayName.textContent = u.name || 'User';
+  if (displayEmail) displayEmail.textContent = u.email || '-';
+  if (avatar) avatar.textContent = (u.name || 'U').charAt(0).toUpperCase();
+  renderHistory('selesai');
+}
+
+document.getElementById('logoutBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  if (confirm('Yakin ingin keluar?')) {
+    try { localStorage.removeItem('gunpla_user'); } catch (err) {}
+    window.location.href = '../home.html';
+  }
+});
+
+window.addEventListener('DOMContentLoaded', function() {
+  setTimeout(init, 100);
+});
+</script>
+
+</body></html>

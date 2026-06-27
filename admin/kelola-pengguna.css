@@ -1,0 +1,79 @@
+/* Kelola Pengguna — Gunpla Elite Admin Wireframe */
+
+/* User avatar with initial */
+.user-initial {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #d32f2f;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* User row */
+.user-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.user-row-name strong {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.user-row-email {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* User-specific badge colors */
+.badge-admin {
+  display: inline-block;
+  padding: 3px 8px;
+  background: #d32f2f;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 3px;
+}
+.badge-customer {
+  display: inline-block;
+  padding: 3px 8px;
+  background: transparent;
+  color: #1e293b;
+  border: 1px solid #d1d5db;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 3px;
+}
+.badge-aktif {
+  display: inline-block;
+  padding: 3px 8px;
+  background: #16a34a;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 3px;
+}
+.badge-nonaktif {
+  display: inline-block;
+  padding: 3px 8px;
+  background: #6b7280;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 3px;
+}

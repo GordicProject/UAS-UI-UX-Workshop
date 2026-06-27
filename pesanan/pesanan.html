@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pesanan Saya - Gunpla Elite</title>
+<link rel="stylesheet" href="../home.css"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="pesanan.css"/>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+<div id="navbar-container"></div>
+<script src="../components/navbar.js"></script>
+
+
+
+<main class="container mx-auto px-4 py-12">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+    <aside class="lg:col-span-1">
+      <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-6 text-center">
+        <div id="avatar" class="w-24 h-24 rounded-full bg-primary-red text-white text-3xl font-bold flex items-center justify-center mx-auto font-oswald">U</div>
+        <h2 id="displayName" class="font-oswald text-2xl font-bold mt-4">User</h2>
+        <p id="displayEmail" class="text-sm text-gray-500 mt-1">user@email.com</p>
+        <span class="inline-block mt-3 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">
+          <i class="fas fa-check-circle mr-1"></i> Member Aktif
+        </span>
+      </div>
+
+      <nav class="bg-white border border-gray-200 rounded-lg shadow-sm mt-6 overflow-hidden">
+        <a class="flex items-center gap-3 px-5 py-3 font-semibold text-primary-red bg-red-50" href="./pesanan.html">
+          <i class="fas fa-shopping-bag text-primary-red w-5"></i> Pesanan Saya
+        </a>
+        <a class="flex items-center gap-3 px-5 py-3 font-semibold text-gray-700 hover:bg-gray-50 border-t border-gray-100" href="../riwayat/riwayat.html">
+          <i class="fas fa-history text-primary-red w-5"></i> Riwayat Transaksi
+        </a>
+        <a class="flex items-center gap-3 px-5 py-3 font-semibold text-gray-700 hover:bg-gray-50 border-t border-gray-100" href="../profile/profile.html">
+          <i class="fas fa-user text-primary-red w-5"></i> Profile
+        </a>
+        <a id="logoutBtn" class="flex items-center gap-3 px-5 py-3 font-semibold text-red-600 hover:bg-red-50 border-t border-gray-100 cursor-pointer" href="#">
+          <i class="fas fa-sign-out-alt w-5"></i> Keluar
+        </a>
+      </nav>
+    </aside>
+
+    <section class="lg:col-span-2">
+      <div class="bg-white border border-gray-200 rounded-lg shadow-sm">
+        <div class="px-6 pt-5">
+          <div class="filter-tabs" id="orderTabs">
+            <div class="filter-tab active" data-tab="Semua">Semua</div>
+            <div class="filter-tab" data-tab="Sedang Dikemas">Sedang Dikemas</div>
+            <div class="filter-tab" data-tab="Dikirim">Dikirim</div>
+            <div class="filter-tab" data-tab="Selesai">Selesai</div>
+            <div class="filter-tab" data-tab="Dibatalkan">Dibatalkan</div>
+          </div>
+        </div>
+
+        <div id="ordersContainer" class="px-6 pb-6">
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<script>
+function getUser() {
+  try { var raw = localStorage.getItem('gunpla_user'); if (raw) return JSON.parse(raw); } catch (e) {}
+  return { name: 'Guest User', email: 'guest@email.com' };
+}
+
+var currentTab = 'Semua';
+
+function formatRp(n) { return 'Rp ' + (n||0).toLocaleString('id-ID'); }
+
+// Build static HTML per status
+var ordersByStatus = {
+  'dikemas': '',
+  'dikirim': '',
+  'selesai': '',
+  'batal': ''
+};
+
+// Order dikemas — Freedom Gundam
+ordersByStatus['dikemas'] += '<div class="order-card">'
+  + '<div class="order-card-header">'
+  + '<span class="order-id">ORDER ID <strong>GE-2024-001</strong></span>'
+  + '<span class="order-date text-xs text-gray-500">15 Jun 2024</span>'
+  + '</div>'
+  + '<div class="order-product">'
+  + '<div class="order-product-img">'
+  + '<img src="../images/gundam-freedom.png" alt="Freedom Gundam"/>'
+  + '</div>'
+  + '<div class="order-product-info">'
+  + '<div class="order-product-grade">MASTER GRADE</div>'
+  + '<div class="order-product-name">ZGMF-X10A FREEDOM</div>'
+  + '<div class="order-product-status">1x &middot; Rp 720.000</div>'
+  + '</div></div>'
+  + renderTimeline('dikemas')
+  + '</div>';
+
+// Order dikirim — RX-78-2
+ordersByStatus['dikirim'] += '<div class="order-card">'
+  + '<div class="order-card-header">'
+  + '<span class="order-id">ORDER ID <strong>GE-2024-002</strong></span>'
+  + '<span class="order-date text-xs text-gray-500">12 Jun 2024</span>'
+  + '</div>'
+  + '<div class="order-product">'
+  + '<div class="order-product-img">'
+  + '<img src="../images/gundam-rx78.png" alt="RX-78-2"/>'
+  + '</div>'
+  + '<div class="order-product-info">'
+  + '<div class="order-product-grade">REAL GRADE</div>'
+  + '<div class="order-product-name">RX-78-2 GUNDAM</div>'
+  + '<div class="order-product-status">1x &middot; Rp 150.000</div>'
+  + '</div></div>'
+  + renderTimeline('dikirim')
+  + '</div>';
+
+// Order dikirim — Exia
+ordersByStatus['dikirim'] += '<div class="order-card">'
+  + '<div class="order-card-header">'
+  + '<span class="order-id">ORDER ID <strong>GE-2024-004</strong></span>'
+  + '<span class="order-date text-xs text-gray-500">10 Jun 2024</span>'
+  + '</div>'
+  + '<div class="order-product">'
+  + '<div class="order-product-img">'
+  + '<img src="../images/gundam-exia.png" alt="Exia"/>'
+  + '</div>'
+  + '<div class="order-product-info">'
+  + '<div class="order-product-grade">REAL GRADE</div>'
+  + '<div class="order-product-name">GN-001 EXIA</div>'
+  + '<div class="order-product-status">1x &middot; Rp 380.000</div>'
+  + '</div></div>'
+  + renderTimeline('dikirim')
+  + '</div>';
+
+// Order selesai — Unicorn
+ordersByStatus['selesai'] += '<div class="order-card">'
+  + '<div class="order-card-header">'
+  + '<span class="order-id">ORDER ID <strong>GE-2024-003</strong></span>'
+  + '<span class="order-date text-xs text-gray-500">1 Jun 2024</span>'
+  + '</div>'
+  + '<div class="order-product">'
+  + '<div class="order-product-img">'
+  + '<img src="../images/gundam-unicorn.png" alt="Unicorn Gundam"/>'
+  + '</div>'
+  + '<div class="order-product-info">'
+  + '<div class="order-product-grade">REAL GRADE</div>'
+  + '<div class="order-product-name">RX-0 UNICORN HOPE</div>'
+  + '<div class="order-product-status">1x &middot; Rp 450.000</div>'
+  + '</div></div>'
+  + renderTimeline('selesai')
+  + '</div>';
+
+// Order batal — Barbatos
+ordersByStatus['batal'] += '<div class="order-card">'
+  + '<div class="order-card-header">'
+  + '<span class="order-id">ORDER ID <strong>GE-2024-005</strong></span>'
+  + '<span class="order-date text-xs text-gray-500">5 Jun 2024</span>'
+  + '</div>'
+  + '<div class="order-product">'
+  + '<div class="order-product-img">'
+  + '<img src="../images/gundam-barbatos.png" alt="Barbatos"/>'
+  + '</div>'
+  + '<div class="order-product-info">'
+  + '<div class="order-product-grade">RG</div>'
+  + '<div class="order-product-name">ASW-G-08 BARBATOS</div>'
+  + '<div class="order-product-status">1x &middot; Rp 280.000</div>'
+  + '</div></div>'
+  + renderTimeline('batal')
+  + '</div>';
+
+function renderTimeline(status) {
+  var stepMap = { dikemas: 0, dikirim: 1, transit: 2, selesai: 3, batal: -1 };
+  var labels = ['Dikemas', 'Dikirim', 'Transit', 'Diterima'];
+  var icons  = ['fa-box', 'fa-truck', 'fa-shipping-fast', 'fa-check'];
+  var activeIdx = stepMap[status] !== undefined ? stepMap[status] : -1;
+
+  var fillWidth = 0;
+  if (activeIdx > 0) fillWidth = ((activeIdx) / (labels.length - 1)) * 100;
+
+  var stepsHtml = '';
+  for (var i = 0; i < labels.length; i++) {
+    var cls = '';
+    if (i < activeIdx) cls = 'completed';
+    else if (i === activeIdx) cls = 'current';
+
+    var checkIcon = (i <= activeIdx && activeIdx >= 0) ? '<i class="fas fa-check"></i>' : '<i class="fas ' + icons[i] + '"></i>';
+    stepsHtml += '<div class="timeline-step ' + cls + '">'
+      + '<div class="timeline-dot">' + checkIcon + '</div>'
+      + '<span class="timeline-label">' + labels[i] + '</span>'
+      + '</div>';
+  }
+
+  if (status === 'batal') {
+    return '<div class="tracking-header">'
+      + '<span class="tracking-title"><i class="fas fa-times-circle" style="color:#ef4444"></i> PESANAN DIBATALKAN</span>'
+      + '</div><div class="py-4 text-center"><p class="text-red-600 font-semibold text-sm">Pesanan ini telah dibatalkan.</p></div>';
+  }
+
+  return '<div class="tracking-header">'
+    + '<span class="tracking-title"><i class="fas fa-shipping-fast"></i> STATUS PENGIRIMAN</span>'
+    + '</div><div class="timeline">'
+    + '<div class="timeline-line"></div>'
+    + '<div class="timeline-line-fill" style="width:' + fillWidth + '%"></div>'
+    + stepsHtml + '</div>';
+}
+
+function renderOrders(filter) {
+  var container = document.getElementById('ordersContainer');
+  if (!filter || filter === 'Semua') {
+    container.innerHTML = ordersByStatus['dikemas']
+      + ordersByStatus['dikirim']
+      + ordersByStatus['selesai']
+      + ordersByStatus['batal'];
+    return;
+  }
+  var mapped = {
+    'Sedang Dikemas': 'dikemas',
+    'Dikirim': 'dikirim',
+    'Selesai': 'selesai',
+    'Dibatalkan': 'batal'
+  };
+  var key = mapped[filter];
+  container.innerHTML = (ordersByStatus[key] || '') + buildEmptyState();
+}
+
+function buildEmptyState() {
+  return '<div class="empty-state">'
+    + '<i class="fas fa-shopping-bag"></i>'
+    + '<p class="text-main">Belum ada pesanan</p>'
+    + '<p class="text-sub">Kategori ini kosong.</p>'
+    + '</div>';
+}
+
+function init() {
+  var u = getUser();
+  document.getElementById('displayName').textContent = u.name || 'User';
+  document.getElementById('displayEmail').textContent = u.email || '-';
+  document.getElementById('avatar').textContent = (u.name || 'U').charAt(0).toUpperCase();
+
+  document.querySelectorAll('.filter-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var filter = this.getAttribute('data-tab');
+      document.querySelectorAll('.filter-tab').forEach(function(t) { t.classList.remove('active'); });
+      this.classList.add('active');
+      renderOrders(filter);
+    });
+  });
+
+  renderOrders('Semua');
+}
+
+document.getElementById('logoutBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  if (confirm('Yakin ingin keluar?')) {
+    try { localStorage.removeItem('gunpla_user'); } catch (err) {}
+    window.location.href = '../home.html';
+  }
+});
+
+init();
+</script>
+
+</body></html>
