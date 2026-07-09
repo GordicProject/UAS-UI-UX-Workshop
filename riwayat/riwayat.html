@@ -359,14 +359,14 @@ function openReviewModal(orderId, editExisting) {
 
   selectedRating = reviewData.rating || 0;
 
-  var starsHtml = '';
+  var reviewStars = '';
   for (var s = 1; s <= 5; s++) {
-    starsHtml += '<i class="fas fa-star star' + s + '" data-star="' + s + '" style="font-size:28px;color:#d1d5db;cursor:pointer;transition:color 0.15s;"></i>';
+    reviewStars += '<i class="fas fa-star" data-star="' + s + '" style="font-size:28px;color:#d1d5db;cursor:pointer;transition:color 0.15s;"></i>';
   }
 
   var overlay = document.createElement('div');
   overlay.className = 'review-modal-overlay';
-  overlay.style.cssText = 'position:fixed;inset:0;z-index:99998;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);';
+  overlay.style.cssText = 'position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);';
   overlay.innerHTML = '<div class="review-modal-content" style="background:white;border-radius:16px;width:95%;max-width:440px;padding:28px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.3);max-height:85vh;overflow-y:auto;">'
     + '<button class="review-modal-close" onclick="this.closest(\'.review-modal-overlay\').remove()" style="position:absolute;top:12px;right:14px;background:#f3f4f6;border:none;font-size:22px;cursor:pointer;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#6b7280;">&times;</button>'
     + '<h3 style="font-size:18px;font-weight:700;margin:0 0 4px;font-family:\'Oswald\',sans-serif;">ULASAN PRODUK</h3>'
@@ -374,7 +374,7 @@ function openReviewModal(orderId, editExisting) {
     + '<div style="margin-bottom:16px;">'
     + '  <label style="font-size:13px;font-weight:600;color:#374151;display:block;margin-bottom:6px;">Rating</label>'
     + '  <div id="reviewStarContainer" style="display:flex;gap:6px;">'
-    + starsHtml
+    + reviewStars
     + '  </div>'
     + '  <p style="font-size:12px;color:#9ca3af;margin:4px 0 0;" id="ratingLabel">Pilih bintang</p>'
     + '</div>'
@@ -396,31 +396,36 @@ function openReviewModal(orderId, editExisting) {
   var ratingLabel = overlay.querySelector('#ratingLabel');
   var starLabels = ['', 'Buruk', 'Kurang', 'Biasa', 'Bagus', 'Luar Biasa'];
 
-  var stars = starContainer.querySelectorAll('.star');
-  stars.forEach(function(star) {
-    var val = parseInt(star.getAttribute('data-star'));
-
-    star.addEventListener('mouseenter', function() {
-      highlightStars(val);
-    });
-
-    star.addEventListener('click', function() {
-      selectedRating = val;
-      highlightStars(val);
-    });
-
-    star.addEventListener('mouseleave', function() {
-      highlightStars(selectedRating);
-    });
-  });
+  function getStars() { return starContainer.querySelectorAll('[data-star]'); }
 
   function highlightStars(count) {
-    stars.forEach(function(s) {
+    getStars().forEach(function(s) {
       var sv = parseInt(s.getAttribute('data-star'));
       s.style.color = (sv <= count) ? '#f59e0b' : '#d1d5db';
     });
     ratingLabel.textContent = count > 0 ? starLabels[count] : 'Pilih bintang';
+    ratingLabel.style.color = '#9ca3af';
   }
+
+  // Use event delegation so clicks on inner <svg> elements still work
+  starContainer.addEventListener('click', function(e) {
+    var t = e.target.closest('[data-star]');
+    if (!t) return;
+    selectedRating = parseInt(t.getAttribute('data-star'));
+    highlightStars(selectedRating);
+    e.stopPropagation();
+  });
+
+  starContainer.addEventListener('mousemove', function(e) {
+    var t = e.target.closest('[data-star]');
+    if (t) {
+      highlightStars(parseInt(t.getAttribute('data-star')));
+    }
+  });
+
+  starContainer.addEventListener('mouseleave', function() {
+    highlightStars(selectedRating);
+  });
 
   highlightStars(selectedRating);
 
