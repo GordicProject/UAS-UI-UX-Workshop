@@ -63,6 +63,12 @@
   .tx-action-btn.primary { background: #d32f2f; color: #fff; border-color: #d32f2f; }
   .tx-action-btn.primary:hover { background: #b71c1c; }
   .tx-action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* ── Review Modal ── */
+  .review-stars { display: flex; gap: 6px; font-size: 28px; cursor: pointer; user-select: none; }
+  .review-stars .star { color: #d1d5db; transition: color 0.15s; }
+  .review-stars .star.active, .review-stars .star:hover, .review-stars .star:hover ~ .star { color: #fbbf24; }
+  .review-stars .star.active { color: #f59e0b; }
 </style>
 </head>
 <body class="bg-white text-gray-800 antialiased">
@@ -231,13 +237,17 @@ function renderHistory(filter) {
         + '  <div class="tx-actions">';
 
       if (o.status === 'selesai') {
-        var reviewedKey = 'reviewed_' + o.id;
-        var isReviewed = localStorage.getItem(reviewedKey) === 'true';
+        var reviewedKey = 'review_' + o.id;
+        var reviewData = JSON.parse(localStorage.getItem(reviewedKey) || 'null');
+        var isReviewed = !!reviewData && reviewData.rating > 0;
         html += ''
-          + '    <button class="tx-action-btn primary" data-reorder="' + o.id + '"><i class="fas fa-shopping-cart mr-1"></i> Beli Lagi</button>'
-          + '    <button class="tx-action-btn' + (isReviewed ? ' primary" style="background:#e5e7eb;border-color:#d1d5db;color:#6b7280;" disabled' : ' primary"') + ' data-review="' + o.id + '">'
-          + '      <i class="fas fa-star mr-1"></i> ' + (isReviewed ? 'Sudah Diulas' : 'Beri Ulasan')
-          + '    </button>';
+          + '    <button class="tx-action-btn primary" data-reorder="' + o.id + '"><i class="fas fa-shopping-cart mr-1"></i> Beli Lagi</button>';
+        if (isReviewed) {
+          html += '    <button class="tx-action-btn primary" style="background:#16a34a;border-color:#16a34a;" data-view-review="' + o.id + '" title="Lihat ulasan Anda"><i class="fas fa-eye mr-1"></i> Lihat Ulasan</button>'
+            + '    <button class="tx-action-btn primary" style="background:#6b7280;border-color:#6b7280;" data-edit-review="' + o.id + '" title="Ubah ulasan"><i class="fas fa-edit mr-1"></i> Ubah Ulasan</button>';
+        } else {
+          html += '    <button class="tx-action-btn primary" data-review="' + o.id + '"><i class="fas fa-star mr-1"></i> Beri Ulasan</button>';
+        }
       } else {
         html += ''
           + '    <button class="tx-action-btn primary" disabled style="opacity:0.5;"><i class="fas fa-shopping-cart mr-1"></i> Beli Lagi</button>';
@@ -265,10 +275,25 @@ function renderHistory(filter) {
 
   container.querySelectorAll('[data-review]').forEach(function(btn) {
     btn.addEventListener('click', function() {
-      if (this.disabled) return;
       var id = this.getAttribute('data-review');
-      try { localStorage.setItem('reviewed_' + id, 'true'); } catch (e) {}
-      renderHistory(currentFilter);
+      openReviewModal(id, false);
+    });
+  });
+
+  container.querySelectorAll('[data-edit-review]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var id = this.getAttribute('data-edit-review');
+      openReviewModal(id, true);
+    });
+  });
+
+  container.querySelectorAll('[data-view-review]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var id = this.getAttribute('data-view-review');
+      var order = getOrderById(id);
+      var data = JSON.parse(localStorage.getItem('review_' + id) || 'null');
+      if (!data || !order) return;
+      showReviewSummary(order, data);
     });
   });
 }
@@ -320,7 +345,160 @@ window.addEventListener('DOMContentLoaded', function() {
   setTimeout(init, 100);
 });
 
-// ═══════════════ DETAIL MODAL (reused same logic) ═══════════════
+// ═══════════════ REVIEW MODAL ═══════════════
+var reviewStarsContainer = null;
+var selectedRating = 0;
+
+function openReviewModal(orderId, editExisting) {
+  // Remove any existing review overlay first
+  var old = document.querySelector('.review-modal-overlay');
+  if (old) old.remove();
+
+  var reviewData = editExisting ? JSON.parse(localStorage.getItem('review_' + orderId) || 'null') : null;
+  if (!reviewData) reviewData = { rating: 0, comment: '' };
+
+  selectedRating = reviewData.rating || 0;
+
+  var starsHtml = '';
+  for (var s = 1; s <= 5; s++) {
+    starsHtml += '<i class="fas fa-star star' + s + '" data-star="' + s + '" style="font-size:28px;color:#d1d5db;cursor:pointer;transition:color 0.15s;"></i>';
+  }
+
+  var overlay = document.createElement('div');
+  overlay.className = 'review-modal-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;z-index:99998;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);';
+  overlay.innerHTML = '<div class="review-modal-content" style="background:white;border-radius:16px;width:95%;max-width:440px;padding:28px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.3);max-height:85vh;overflow-y:auto;">'
+    + '<button class="review-modal-close" onclick="this.closest(\'.review-modal-overlay\').remove()" style="position:absolute;top:12px;right:14px;background:#f3f4f6;border:none;font-size:22px;cursor:pointer;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#6b7280;">&times;</button>'
+    + '<h3 style="font-size:18px;font-weight:700;margin:0 0 4px;font-family:\'Oswald\',sans-serif;">ULASAN PRODUK</h3>'
+    + '<p style="font-size:13px;color:#6b7280;margin:0 0 18px;" id="reviewOrderTitle">' + orderId + '</p>'
+    + '<div style="margin-bottom:16px;">'
+    + '  <label style="font-size:13px;font-weight:600;color:#374151;display:block;margin-bottom:6px;">Rating</label>'
+    + '  <div id="reviewStarContainer" style="display:flex;gap:6px;">'
+    + starsHtml
+    + '  </div>'
+    + '  <p style="font-size:12px;color:#9ca3af;margin:4px 0 0;" id="ratingLabel">Pilih bintang</p>'
+    + '</div>'
+    + '<div style="margin-bottom:20px;">'
+    + '  <label style="font-size:13px;font-weight:600;color:#374151;display:block;margin-bottom:6px;">Komentar</label>'
+    + '  <textarea id="reviewCommentBox" rows="3" style="width:100%;border:1px solid #d1d5db;border-radius:8px;padding:10px;font-size:14px;font-family:\'Inter\',sans-serif;resize:vertical;box-sizing:border-box;" placeholder="Bagaimana pengalaman Anda dengan produk ini?">' + (reviewData.comment || '') + '</textarea>'
+    + '  <p style="font-size:11px;color:#9ca3af;margin:4px 0 0;">Opsional — maksimal 500 karakter</p>'
+    + '</div>'
+    + '<div style="display:flex;gap:10px;">'
+    + '  <button id="reviewCancelBtn" onclick="this.closest(\'.review-modal-overlay\').remove()" style="flex:1;border:1px solid #d1d5db;background:white;padding:10px;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px;">Batal</button>'
+    + '  <button id="reviewSubmitBtn" style="flex:1;border:none;background:#d32f2f;color:white;padding:10px;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px;">Simpan Ulasan</button>'
+    + '</div>'
+    + '</div>';
+
+  document.body.appendChild(overlay);
+
+  // Star interaction
+  var starContainer = overlay.querySelector('#reviewStarContainer');
+  var ratingLabel = overlay.querySelector('#ratingLabel');
+  var starLabels = ['', 'Buruk', 'Kurang', 'Biasa', 'Bagus', 'Luar Biasa'];
+
+  var stars = starContainer.querySelectorAll('.star');
+  stars.forEach(function(star) {
+    var val = parseInt(star.getAttribute('data-star'));
+
+    star.addEventListener('mouseenter', function() {
+      highlightStars(val);
+    });
+
+    star.addEventListener('click', function() {
+      selectedRating = val;
+      highlightStars(val);
+    });
+
+    star.addEventListener('mouseleave', function() {
+      highlightStars(selectedRating);
+    });
+  });
+
+  function highlightStars(count) {
+    stars.forEach(function(s) {
+      var sv = parseInt(s.getAttribute('data-star'));
+      s.style.color = (sv <= count) ? '#f59e0b' : '#d1d5db';
+    });
+    ratingLabel.textContent = count > 0 ? starLabels[count] : 'Pilih bintang';
+  }
+
+  highlightStars(selectedRating);
+
+  // Submit
+  overlay.querySelector('#reviewSubmitBtn').addEventListener('click', function() {
+    if (selectedRating === 0) {
+      ratingLabel.textContent = 'Silakan pilih bintang terlebih dahulu';
+      ratingLabel.style.color = '#dc2626';
+      return;
+    }
+    var comment = overlay.querySelector('#reviewCommentBox').value.trim();
+    if (comment.length > 500) {
+      alert('Komentar terlalu panjang (maks 500 karakter).');
+      return;
+    }
+    var data = {
+      rating: selectedRating,
+      comment: comment,
+      date: new Date().toISOString(),
+      reviewer: (localStorage.getItem('gunpla_user') ? JSON.parse(localStorage.getItem('gunpla_user')).name : 'User')
+    };
+    try { localStorage.setItem('review_' + orderId, JSON.stringify(data)); } catch (e) {}
+    overlay.remove();
+    renderHistory(currentFilter);
+  });
+
+  // Close on overlay click
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) this.remove();
+  });
+}
+
+function showReviewSummary(order, data) {
+  // Remove any existing review overlay first
+  var old = document.querySelector('.review-modal-overlay');
+  if (old) old.remove();
+
+  var starsHtml = '';
+  for (var i = 1; i <= 5; i++) {
+    starsHtml += '<i class="fas fa-star' + (i <= data.rating ? '" style="color:#f59e0b;font-size:20px;"' : '" style="color:#d1d5db;font-size:20px;"') + '></i>';
+  }
+
+  var overlay = document.createElement('div');
+  overlay.className = 'review-modal-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;z-index:99998;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);';
+  overlay.innerHTML = '<div class="review-modal-content" style="background:white;border-radius:16px;width:95%;max-width:440px;padding:28px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.3);max-height:85vh;overflow-y:auto;">'
+    + '<button class="review-modal-close" onclick="this.closest(\'.review-modal-overlay\').remove()" style="position:absolute;top:12px;right:14px;background:#f3f4f6;border:none;font-size:22px;cursor:pointer;width:32px;height:32px;border-radius:50%;display:flex;align-items-center;justify-content:center;color:#6b7280;">&times;</button>'
+    + '<h3 style="font-size:18px;font-weight:700;margin:0 0 4px;font-family:\'Oswald\',sans-serif;">ULASAN ANDA</h3>'
+    + '<p style="font-size:13px;color:#6b7280;margin:0 0 18px;">' + (order.items ? order.items[0].name : order.id) + '</p>'
+    + '<div style="margin-bottom:16px;">'
+    + '  <label style="font-size:13px;font-weight:600;color:#374151;display:block;margin-bottom:6px;">Rating Anda</label>'
+    + '  <div style="display:flex;gap:4px;">' + starsHtml + '</div>'
+    + '</div>'
+    + '<div style="margin-bottom:16px;padding:14px;background:#f9fafb;border-radius:8px;">'
+    + '  <div style="font-size:13px;font-weight:600;margin-bottom:4px;">Komentar</div>'
+    + '  <p style="font-size:14px;color:#374151;line-height:1.5;">' + (data.comment || '<em style="color:#9ca3af;">Tidak ada komentar</em>') + '</p>'
+    + '</div>'
+    + '<div style="font-size:12px;color:#9ca38af;margin-bottom:16px;">Dikirim: ' + new Date(data.date).toLocaleDateString('id-ID', {day:'numeric',month:'long',year:'numeric'}) + '</div>'
+    + '<div style="display:flex;gap:10px;">'
+    + '  <button onclick="this.closest(\'.review-modal-overlay\').remove()" style="flex:1;border:1px solid #d1d5db;background:white;padding:10px;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px;">Tutup</button>'
+    + '  <button id="editFromView" style="flex:1;border:none;background:#d32f2f;color:white;padding:10px;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px;">Ubah Ulasan</button>'
+    + '</div>'
+    + '</div>';
+
+  document.body.appendChild(overlay);
+
+  overlay.querySelector('#editFromView').addEventListener('click', function() {
+    var existing = overlay;
+    overlay.addEventListener('click', function(e) {
+      if (e.target === this) existing.remove();
+    });
+    openReviewModal(order.id, true);
+  });
+
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) this.remove();
+  });
+}
 function getOrderById(id) {
   var stored = getOrders();
   if (stored.length > 0) { allOrders = stored; }
