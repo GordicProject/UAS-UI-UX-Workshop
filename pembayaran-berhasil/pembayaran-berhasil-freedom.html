@@ -20,7 +20,7 @@
 <div id="navbar-container"></div>
 <script src="../components/navbar.js"></script>
 
-<div class="bg-gray-50 border-b border-gray-200 py-3"><div class="container mx-auto px-4 text-xs text-gray-500"><a class="hover:text-primary-red transition-colors" href="../home.html">HOME</a><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><a class="hover:text-primary-red transition-colors" href="../katalog/katalog.html">KATALOG</a><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><span class="hover:text-primary-red transition-colors">PENGIRIMAN</span><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><span class="hover:text-primary-red transition-colors">PEMBAYARAN</span><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><span class="text-gray-900 font-bold">BERHASIL</span></div></div>
+<div class="bg-gray-50 border-b border-gray-200 py-3"><div class="container mx-auto px-4 text-xs text-gray-500"><a class="hover:text-primary-red transition-colors" href="../index.html">HOME</a><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><a class="hover:text-primary-red transition-colors" href="../katalog/katalog.html">KATALOG</a><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><span class="hover:text-primary-red transition-colors">PENGIRIMAN</span><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><span class="hover:text-primary-red transition-colors">PEMBAYARAN</span><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><span class="text-gray-900 font-bold">BERHASIL</span></div></div>
 
 <section class="py-16"><div class="container mx-auto px-4 max-w-lg">
 
@@ -59,9 +59,9 @@
 </div>
 </div>
 
-<div class="flex gap-4">
-<a href="../home.html" class="bg-primary-red text-white font-bold py-3 px-8 rounded hover:bg-red-700 transition-colors flex-1 text-center flex items-center justify-center gap-2"><i class="fas fa-home mr-1"></i> KEMBALI KE HOME</a>
-<a href="../katalog/katalog.html" class="border border-gray-300 text-gray-700 font-bold py-3 px-6 rounded hover:bg-gray-50 transition-colors flex-1 text-center"><i class="fas fa-shopping-bag mr-1"></i> BELI LAGI</a>
+<div class="flex flex-col items-center gap-3">
+<a href="../index.html" class="w-full max-w-sm bg-primary-red text-white font-bold py-3 px-8 rounded hover:bg-red-700 transition-colors text-center flex items-center justify-center gap-2"><i class="fas fa-home"></i> KEMBALI KE HOME</a>
+<div class="flex gap-3 mt-2"><a href="../pesanan/pesanan.html" class="flex-1 border border-gray-300 text-gray-700 font-bold py-3 px-6 rounded hover:bg-gray-50 transition-colors text-center flex items-center justify-center gap-1"><i class="fas fa-receipt"></i> LIHAT PESANAN</a><a href="../katalog/katalog.html" class="flex-1 border border-gray-300 text-gray-700 font-bold py-3 px-6 rounded hover:bg-gray-50 transition-colors text-center flex items-center justify-center gap-1"><i class="fas fa-shopping-bag"></i> BELI LAGI</a></div>
 </div>
 
 </div>
@@ -72,6 +72,32 @@
 <div id="footer"></div>
 <script src="../components/footer.js"></script>
 <!-- END: MainFooter -->
+
+<script>
+window.addEventListener('DOMContentLoaded', function() {
+  var orderData = {
+    id: 'GE-20240616-FR001',
+    date: new Date().toISOString(),
+    status: 'dibayar',
+    items: [{
+      name: 'ZGMF-X10A Freedom',
+      price: 720000,
+      qty: 1,
+      grade: 'Master Grade',
+      scale: '1/100',
+      img: '../images/gundam-freedom.png'
+    }],
+    total: 814200,
+    shipping: 'Reguler (2-3 hari kerja)',
+    estimatedDelivery: '19 - 20 Juni 2024'
+  };
+  try {
+    var orders = JSON.parse(localStorage.getItem('gunpla_orders') || '[]');
+    orders.unshift(orderData);
+    localStorage.setItem('gunpla_orders', JSON.stringify(orders));
+  } catch(e) {}
+});
+</script>
 
 </body>
 </html>

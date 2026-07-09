@@ -13,7 +13,7 @@
 
   function buildLinks(base) {
     return {
-      home: base + 'home.html',
+      home: base + 'index.html',
       katalog: base + 'katalog/katalog.html',
       artikel: base + 'artikel/artikel.html',
     };

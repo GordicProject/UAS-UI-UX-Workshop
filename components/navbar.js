@@ -14,7 +14,7 @@
 
   function currentPage() {
     var p = window.location.pathname.toLowerCase();
-    if (p.indexOf('home.html') !== -1 || p === '/' || p === '') return 'home';
+    if (p.indexOf('index.html') !== -1 || p === '/' || p === '') return 'home';
     if (p.indexOf('katalog') !== -1) return 'katalog';
     if (p.indexOf('artikel') !== -1) return 'artikel';
     if (p.indexOf('keranjang') !== -1) return 'keranjang';
@@ -58,7 +58,7 @@
     };
 
     var links = [
-      { page: 'home', label: 'HOME', href: base + 'home.html' },
+      { page: 'home', label: 'HOME', href: base + 'index.html' },
       { page: 'katalog', label: 'KATALOG', href: base + 'katalog/katalog.html' },
       { page: 'artikel', label: 'ARTIKEL', href: base + 'artikel/artikel.html' },
     ];
@@ -95,7 +95,7 @@
       '  <div class="nav-inner">',
 
       // Left: logo
-      '    <a href="' + base + 'home.html" class="nav-brand">',
+      '    <a href="' + base + 'index.html" class="nav-brand">',
       '      GUNPLA <span class="brand-accent">ELITE</span>',
       '    </a>',
 

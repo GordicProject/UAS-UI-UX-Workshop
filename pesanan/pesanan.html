@@ -81,95 +81,109 @@ var ordersByStatus = {
   'batal': ''
 };
 
+// Helper: build one order card. Footer with total + detail button is
+// emitted here so the button survives re-renders triggered by tab switches.
+function buildOrderCard(o) {
+  return '<div class="order-card">'
+    + '<div class="order-card-header">'
+    +   '<span class="order-id">ORDER ID <strong>' + o.id + '</strong></span>'
+    +   '<span class="order-date text-xs text-gray-500">' + o.date + '</span>'
+    + '</div>'
+    + '<div class="order-product">'
+    +   '<div class="order-product-img">'
+    +     '<img src="' + o.img + '" alt="' + o.alt + '"/>'
+    +   '</div>'
+    +   '<div class="order-product-info">'
+    +     '<div class="order-product-grade">' + o.grade + '</div>'
+    +     '<div class="order-product-name">' + o.name + '</div>'
+    +     '<div class="order-product-status">' + o.qtyPrice + '</div>'
+    +   '</div>'
+    + '</div>'
+    + renderTimeline(o.status)
+    + '<div style="padding: 12px 0 0; border-top: 1px solid #f3f4f6; margin-top: 8px; display: flex; justify-content: space-between; align-items: center; gap: 8px;">'
+    +   '<span style="font-size: 13px; color: #6b7280;">Total: <span style="color: #d32f2f; font-weight: 700;">' + o.total + '</span></span>'
+    +   '<button data-detail="' + o.id + '" style="background: #d32f2f; color: white; font-size: 12px; font-weight: 600; padding: 8px 16px; border-radius: 6px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;"><i class="fas fa-eye"></i> LIHAT DETAIL PESANAN</button>'
+    + '</div>'
+    + '</div>';
+}
+
 // Order dikemas — Freedom Gundam
-ordersByStatus['dikemas'] += '<div class="order-card">'
-  + '<div class="order-card-header">'
-  + '<span class="order-id">ORDER ID <strong>GE-2024-001</strong></span>'
-  + '<span class="order-date text-xs text-gray-500">15 Jun 2024</span>'
-  + '</div>'
-  + '<div class="order-product">'
-  + '<div class="order-product-img">'
-  + '<img src="../images/gundam-freedom.png" alt="Freedom Gundam"/>'
-  + '</div>'
-  + '<div class="order-product-info">'
-  + '<div class="order-product-grade">MASTER GRADE</div>'
-  + '<div class="order-product-name">ZGMF-X10A FREEDOM</div>'
-  + '<div class="order-product-status">1x &middot; Rp 720.000</div>'
-  + '</div></div>'
-  + renderTimeline('dikemas')
-  + '</div>';
+ordersByStatus['dikemas'] += buildOrderCard({
+  id: 'GE-2024-001',
+  date: '15 Jun 2024',
+  img: '../images/gundam-freedom.png',
+  alt: 'Freedom Gundam',
+  grade: 'MASTER GRADE',
+  name: 'ZGMF-X10A FREEDOM',
+  qtyPrice: '1x &middot; Rp 720.000',
+  total: 'Rp 799.200',
+  status: 'dikemas'
+});
 
 // Order dikirim — RX-78-2
-ordersByStatus['dikirim'] += '<div class="order-card">'
-  + '<div class="order-card-header">'
-  + '<span class="order-id">ORDER ID <strong>GE-2024-002</strong></span>'
-  + '<span class="order-date text-xs text-gray-500">12 Jun 2024</span>'
-  + '</div>'
-  + '<div class="order-product">'
-  + '<div class="order-product-img">'
-  + '<img src="../images/gundam-rx78.png" alt="RX-78-2"/>'
-  + '</div>'
-  + '<div class="order-product-info">'
-  + '<div class="order-product-grade">REAL GRADE</div>'
-  + '<div class="order-product-name">RX-78-2 GUNDAM</div>'
-  + '<div class="order-product-status">1x &middot; Rp 150.000</div>'
-  + '</div></div>'
-  + renderTimeline('dikirim')
-  + '</div>';
+ordersByStatus['dikirim'] += buildOrderCard({
+  id: 'GE-2024-002',
+  date: '12 Jun 2024',
+  img: '../images/gundam-rx78.png',
+  alt: 'RX-78-2',
+  grade: 'REAL GRADE',
+  name: 'RX-78-2 GUNDAM',
+  qtyPrice: '1x &middot; Rp 150.000',
+  total: 'Rp 166.500',
+  status: 'dikirim'
+});
 
 // Order dikirim — Exia
-ordersByStatus['dikirim'] += '<div class="order-card">'
-  + '<div class="order-card-header">'
-  + '<span class="order-id">ORDER ID <strong>GE-2024-004</strong></span>'
-  + '<span class="order-date text-xs text-gray-500">10 Jun 2024</span>'
-  + '</div>'
-  + '<div class="order-product">'
-  + '<div class="order-product-img">'
-  + '<img src="../images/gundam-exia.png" alt="Exia"/>'
-  + '</div>'
-  + '<div class="order-product-info">'
-  + '<div class="order-product-grade">REAL GRADE</div>'
-  + '<div class="order-product-name">GN-001 EXIA</div>'
-  + '<div class="order-product-status">1x &middot; Rp 380.000</div>'
-  + '</div></div>'
-  + renderTimeline('dikirim')
-  + '</div>';
+ordersByStatus['dikirim'] += buildOrderCard({
+  id: 'GE-2024-004',
+  date: '10 Jun 2024',
+  img: '../images/gundam-exia.png',
+  alt: 'Exia',
+  grade: 'REAL GRADE',
+  name: 'GN-001 EXIA',
+  qtyPrice: '1x &middot; Rp 380.000',
+  total: 'Rp 421.800',
+  status: 'dikirim'
+});
 
 // Order selesai — Unicorn
-ordersByStatus['selesai'] += '<div class="order-card">'
-  + '<div class="order-card-header">'
-  + '<span class="order-id">ORDER ID <strong>GE-2024-003</strong></span>'
-  + '<span class="order-date text-xs text-gray-500">1 Jun 2024</span>'
-  + '</div>'
-  + '<div class="order-product">'
-  + '<div class="order-product-img">'
-  + '<img src="../images/gundam-unicorn.png" alt="Unicorn Gundam"/>'
-  + '</div>'
-  + '<div class="order-product-info">'
-  + '<div class="order-product-grade">REAL GRADE</div>'
-  + '<div class="order-product-name">RX-0 UNICORN HOPE</div>'
-  + '<div class="order-product-status">1x &middot; Rp 450.000</div>'
-  + '</div></div>'
-  + renderTimeline('selesai')
-  + '</div>';
+ordersByStatus['selesai'] += buildOrderCard({
+  id: 'GE-2024-003',
+  date: '1 Jun 2024',
+  img: '../images/gundam-unicorn.png',
+  alt: 'Unicorn Gundam',
+  grade: 'REAL GRADE',
+  name: 'RX-0 UNICORN HOPE',
+  qtyPrice: '1x &middot; Rp 450.000',
+  total: 'Rp 499.500',
+  status: 'selesai'
+});
+
+// Order selesai — Zaku II
+ordersByStatus['selesai'] += buildOrderCard({
+  id: 'GE-2024-007',
+  date: '10 Mei 2024',
+  img: '../images/gundam-exia.png',
+  alt: 'Zaku II',
+  grade: 'MASTER GRADE',
+  name: 'MS-06S ZAKU II',
+  qtyPrice: '1x &middot; Rp 280.000',
+  total: 'Rp 316.400',
+  status: 'selesai'
+});
 
 // Order batal — Barbatos
-ordersByStatus['batal'] += '<div class="order-card">'
-  + '<div class="order-card-header">'
-  + '<span class="order-id">ORDER ID <strong>GE-2024-005</strong></span>'
-  + '<span class="order-date text-xs text-gray-500">5 Jun 2024</span>'
-  + '</div>'
-  + '<div class="order-product">'
-  + '<div class="order-product-img">'
-  + '<img src="../images/gundam-barbatos.png" alt="Barbatos"/>'
-  + '</div>'
-  + '<div class="order-product-info">'
-  + '<div class="order-product-grade">RG</div>'
-  + '<div class="order-product-name">ASW-G-08 BARBATOS</div>'
-  + '<div class="order-product-status">1x &middot; Rp 280.000</div>'
-  + '</div></div>'
-  + renderTimeline('batal')
-  + '</div>';
+ordersByStatus['batal'] += buildOrderCard({
+  id: 'GE-2024-005',
+  date: '5 Jun 2024',
+  img: '../images/gundam-barbatos.png',
+  alt: 'Barbatos',
+  grade: 'RG',
+  name: 'ASW-G-08 BARBATOS',
+  qtyPrice: '1x &middot; Rp 280.000',
+  total: 'Rp 310.800',
+  status: 'batal'
+});
 
 function renderTimeline(status) {
   var stepMap = { dikemas: 0, dikirim: 1, transit: 2, selesai: 3, batal: -1 };
@@ -261,6 +275,355 @@ document.getElementById('logoutBtn').addEventListener('click', function(e) {
 });
 
 init();
+</script>
+
+<!-- ═══════════════ DETAIL MODAL ═══════════════ -->
+<div id="orderModalOverlay" class="detail-modal-overlay">
+  <div class="detail-modal-content">
+    <button id="closeModalBtn" class="detail-modal-close" aria-label="Tutup">&times;</button>
+    <div style="overflow-y:auto; max-height: 85vh; padding: 20px 24px;">
+      <h2 style="font-size: 20px; font-weight: 700; margin: 0 0 16px; font-family: 'Oswald', sans-serif;">DETAIL PESANAN</h2>
+      <div style="background: #f9fafb; border-radius: 10px; padding: 16px; margin-bottom: 20px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <div><span style="font-size:12px; color:#6b7280;">Order ID</span><br><strong id="modalOrderId">-</strong></div>
+          <div id="modalOrderStatus" style="text-align:right;"></div>
+        </div>
+        <div style="font-size:13px; color:#6b7280; border-top:1px solid #e5e7eb; padding-top:8px;">
+          <span>📅 Tanggal Order: <strong id="modalOrderDate" style="color:#374151;">-</strong></span>
+        </div>
+      </div>
+
+      <h3 style="font-size:15px; font-weight:700; margin:0 0 12px;">ITEM PESANAN</h3>
+      <div id="modalItemsList" style="margin-bottom: 20px;"></div>
+
+      <h3 style="font-size:15px; font-weight:700; margin:0 0 12px;">STATUS PESANAN</h3>
+      <div id="modalTimeline" style="background:#f9fafb; border-radius:10px; padding:20px 16px; margin-bottom:20px;"></div>
+
+      <div style="background:#f9fafb; border-radius:10px; padding:14px; margin-bottom:20px;">
+        <div style="display:flex; justify-content:space-between; font-size:14px; margin-bottom:6px;"><span style="color:#6b7280;">Subtotal</span><span id="modalSubtotal">Rp -</span></div>
+        <div style="display:flex; justify-content:space-between; font-size:14px; margin-bottom:6px;"><span style="color:#6b7280;">Ongkos Kirim</span><span style="color:#16a34a; font-weight:600;">GRATIS</span></div>
+        <div style="display:flex; justify-content:space-between; font-size:14px; margin-bottom:6px;"><span style="color:#6b7280;">PPN (11%)</span><span id="modalTax">Rp -</span></div>
+        <div style="display:flex; justify-content:space-between; font-size:18px; font-weight:700; border-top:1px solid #e5e7eb; padding-top:8px; margin-top:4px;"><span>Total</span><span style="color:#d32f2f;" id="modalTotal">Rp -</span></div>
+      </div>
+
+      <h3 style="font-size:15px; font-weight:700; margin:0 0 10px;">INFORMASI PEMBELI</h3>
+      <div style="background:#fef3f2; border:1px solid #fecaca; border-radius:10px; padding:14px; margin-bottom:20px;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+          <div id="modalBuyerAvatar" style="width:40px; height:40px; border-radius:50%; background:#d32f2f; color:white; font-weight:700; display:flex; align-items:center; justify-content:center; font-family:'Oswald',sans-serif;">U</div>
+          <div>
+            <div style="font-size:14px; font-weight:700;" id="modalBuyerName">-</div>
+            <div style="font-size:12px; color:#6b7280;" id="modalBuyerEmail">-</div>
+          </div>
+        </div>
+        <div style="font-size:13px; padding-top:8px; border-top:1px dashed #fecaca;">
+          <div style="margin-bottom:4px;"><strong>📞</strong> <span id="modalBuyerPhone">-</span></div>
+          <div><strong>📍</strong> <span id="modalBuyerAddress">-</span></div>
+        </div>
+      </div>
+
+      <h3 style="font-size:15px; font-weight:700; margin:0 0 10px;">INFORMASI PENGIRIMAN</h3>
+      <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:14px; margin-bottom:20px;">
+        <div style="font-size:13px; margin-bottom:6px;"><strong>🚚 Metode:</strong> <span id="modalShipping">Reguler (2-3 hari kerja)</span></div>
+        <div style="font-size:13px;"><strong>📦 Estimasi Tiba:</strong> <span id="modalEstDelivery">-</span></div>
+      </div>
+
+      <div style="display:flex; gap:10px; margin-top:16px;">
+        <button id="cancelModalBtn" style="flex:1; border:1px solid #d1d5db; background:white; color:#374151; padding:10px; border-radius:8px; font-weight:600; font-size:14px; cursor:pointer;"><i class="fas fa-times"></i> Tutup</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.detail-modal-overlay {
+  position: fixed; inset: 0; z-index: 99999; background: rgba(0,0,0,0.5);
+  display: none; align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.detail-modal-overlay.show { display: flex; }
+.detail-modal-content {
+  background: white; border-radius: 16px; width: 95%; max-width: 520px; max-height: 85vh;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; position: relative;
+}
+.detail-modal-close {
+  position: absolute; top: 12px; right: 14px; background: #f3f4f6; border: none;
+  font-size: 22px; cursor: pointer; width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; color: #6b7280;
+  transition: background 0.2s; z-index: 1;
+}
+.detail-modal-close:hover { background: #e5e7eb; }
+.detail-item-row { display: flex; gap: 12px; align-items: center; }
+.detail-item-img { width: 60px; height: 60px; object-fit: contain; background: #f9fafb; border-radius: 8px; padding: 4px; }
+.detail-item-info { flex: 1; }
+.detail-item-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+.detail-item-meta { font-size: 12px; color: #6b7280; }
+.detail-item-price { font-size: 14px; color: #d32f2f; font-weight: 700; margin-top: 2px; }
+
+/* Modal timeline */
+.modal-timeline { position: relative; display: flex; justify-content: space-between; align-items: flex-start; padding: 0 8px; }
+.modal-timeline-line { position: absolute; top: 14px; left: 22px; right: 22px; height: 3px; background: #e5e7eb; z-index: 0; }
+.modal-timeline-line-fill { position: absolute; top: 14px; left: 22px; height: 3px; background: #16a34a; z-index: 1; transition: width 0.3s; }
+.modal-timeline-step { position: relative; z-index: 2; flex: 1; text-align: center; }
+.modal-timeline-dot { width: 30px; height: 30px; line-height: 28px; margin: 0 auto 6px; border-radius: 50%; background: #e5e7eb; color: #9ca3af; font-size: 12px; display: flex; align-items: center; justify-content: center; border: 2px solid #e5e7eb; }
+.modal-timeline-step.completed .modal-timeline-dot { background: #16a34a; color: white; border-color: #16a34a; }
+.modal-timeline-step.current .modal-timeline-dot { background: #fff; color: #16a34a; border-color: #16a34a; box-shadow: 0 0 0 4px rgba(22,163,74,.15); }
+.modal-timeline-step.rejected .modal-timeline-dot { background: #ef4444; color: white; border-color: #ef4444; }
+.modal-timeline-label { font-size: 11px; color: #6b7280; font-weight: 600; }
+.modal-timeline-step.completed .modal-timeline-label,
+.modal-timeline-step.current .modal-timeline-label { color: #111827; }
+.modal-timeline-date { font-size: 10px; color: #9ca3af; margin-top: 2px; }
+</style>
+
+<script>
+// ══════════════════════════════════════
+// SEED ORDERS — write to localStorage so other pages (riwayat) see same data
+// ══════════════════════════════════════
+(function seedSharedOrders() {
+  try {
+    var existing = JSON.parse(localStorage.getItem('gunpla_orders') || '[]');
+    if (Array.isArray(existing) && existing.length > 0) return;
+
+    var now = new Date();
+    var daysAgo = function(d) { return new Date(now.getTime() - d * 86400000).toISOString(); };
+
+    localStorage.setItem('gunpla_orders', JSON.stringify([
+      { id: 'GE-2024-001', date: daysAgo(0),  status: 'dikemas', items: [{ name: 'ZGMF-X10A Freedom Gundam', price: 720000, qty: 1, grade: 'Master Grade', scale: '1/100', img: '../images/gundam-freedom.png' }], total: 799200, shipping: 'Reguler (2-3 hari kerja)', estimatedDelivery: '19 - 20 Juni 2024' },
+      { id: 'GE-2024-002', date: daysAgo(3),  status: 'dikirim', items: [{ name: 'RX-78-2 Gundam', price: 150000, qty: 1, grade: 'Real Grade', scale: '1/144', img: '../images/gundam-rx78.png' }], total: 166500, shipping: 'Reguler (2-3 hari kerja)', estimatedDelivery: '15 - 16 Juni 2024' },
+      { id: 'GE-2024-003', date: daysAgo(14), status: 'selesai', items: [{ name: 'RX-0 Unicorn Gundam', price: 450000, qty: 1, grade: 'Real Grade', scale: '1/144', img: '../images/gundam-unicorn.png' }], total: 499500, shipping: 'Reguler (2-3 hari kerja)', estimatedDelivery: '12 Juni 2024' },
+      { id: 'GE-2024-004', date: daysAgo(5),  status: 'dikirim', items: [{ name: 'GN-001 Exia', price: 380000, qty: 1, grade: 'Real Grade', scale: '1/144', img: '../images/gundam-exia.png' }], total: 421800, shipping: 'Reguler (2-3 hari kerja)', estimatedDelivery: '13 - 14 Juni 2024' },
+      { id: 'GE-2024-005', date: daysAgo(9),  status: 'batal',   items: [{ name: 'ASW-G-08 Barbatos', price: 280000, qty: 1, grade: 'RG', scale: '1/144', img: '../images/gundam-barbatos.png' }], total: 310800, shipping: '-', estimatedDelivery: '-' },
+      { id: 'GE-2024-007', date: daysAgo(35), status: 'selesai', items: [{ name: 'MS-06S Zaku II', price: 280000, qty: 1, grade: 'Master Grade', scale: '1/100', img: '../images/gundam-exia.png' }], total: 316400, shipping: 'Reguler (2-3 hari kerja)', estimatedDelivery: '1 Juni 2024' }
+    ]));
+  } catch (e) {}
+})();
+
+// ══════════════════════════════════════
+// DETAIL MODAL — safely added at body end
+// ══════════════════════════════════════
+(function setupDetailModal() {
+  var sampleOrders = [
+    { id: 'GE-2024-001', date: '2024-06-15', status: 'dikemas', customer: { name: 'Budi Santoso', email: 'budi.santoso@email.com', phone: '0812-3456-7891', address: 'Jl. Merdeka No. 45, RT 03/RW 02, Sukmajaya, Depok, Jawa Barat 16412' }, items: [{ name: 'ZGMF-X10A Freedom Gundam', price: 720000, qty: 1, grade: 'Master Grade', scale: '1/100', img: '../images/gundam-freedom.png' }], total: 799200, shipping: 'Reguler (2-3 hari kerja)', estimatedDelivery: '19 - 20 Juni 2024' },
+    { id: 'GE-2024-002', date: '2024-06-12', status: 'dikirim', customer: { name: 'Budi Santoso', email: 'budi.santoso@email.com', phone: '0812-3456-7891', address: 'Jl. Merdeka No. 45, RT 03/RW 02, Sukmajaya, Depok, Jawa Barat 16412' }, items: [{ name: 'RX-78-2 Gundam', price: 150000, qty: 1, grade: 'Real Grade', scale: '1/144', img: '../images/gundam-rx78.png' }], total: 166500, shipping: 'Reguler (2-3 hari kerja)', estimatedDelivery: '15 - 16 Juni 2024' },
+    { id: 'GE-2024-003', date: '2024-06-01', status: 'selesai', customer: { name: 'Budi Santoso', email: 'budi.santoso@email.com', phone: '0812-3456-7891', address: 'Jl. Merdeka No. 45, RT 03/RW 02, Sukmajaya, Depok, Jawa Barat 16412' }, items: [{ name: 'RX-0 Unicorn Gundam', price: 450000, qty: 1, grade: 'Real Grade', scale: '1/144', img: '../images/gundam-unicorn.png' }], total: 499500, shipping: 'Reguler (2-3 hari kerja)', estimatedDelivery: '12 Juni 2024' },
+    { id: 'GE-2024-004', date: '2024-06-10', status: 'dikirim', customer: { name: 'Budi Santoso', email: 'budi.santoso@email.com', phone: '0812-3456-7891', address: 'Jl. Merdeka No. 45, RT 03/RW 02, Sukmajaya, Depok, Jawa Barat 16412' }, items: [{ name: 'GN-001 Exia', price: 380000, qty: 1, grade: 'Real Grade', scale: '1/144', img: '../images/gundam-exia.png' }], total: 421800, shipping: 'Reguler (2-3 hari kerja)', estimatedDelivery: '13 - 14 Juni 2024' },
+    { id: 'GE-2024-005', date: '2024-06-05', status: 'batal', customer: { name: 'Budi Santoso', email: 'budi.santoso@email.com', phone: '0812-3456-7891', address: 'Jl. Merdeka No. 45, RT 03/RW 02, Sukmajaya, Depok, Jawa Barat 16412' }, items: [{ name: 'ASW-G-08 Barbatos', price: 280000, qty: 1, grade: 'RG', scale: '1/144', img: '../images/gundam-barbatos.png' }], total: 310800, shipping: '-', estimatedDelivery: '-' },
+    { id: 'GE-2024-007', date: '2024-05-10', status: 'selesai', customer: { name: 'Budi Santoso', email: 'budi.santoso@email.com', phone: '0812-3456-7891', address: 'Jl. Merdeka No. 45, RT 03/RW 02, Sukmajaya, Depok, Jawa Barat 16412' }, items: [{ name: 'MS-06S Zaku II', price: 280000, qty: 1, grade: 'Master Grade', scale: '1/100', img: '../images/gundam-exia.png' }], total: 316400, shipping: 'Reguler (2-3 hari kerja)', estimatedDelivery: '1 Juni 2024' }
+  ];
+
+  function getCurrentUser() {
+    try {
+      var raw = localStorage.getItem('gunpla_user');
+      if (raw) return JSON.parse(raw);
+    } catch (e) {}
+    return { name: 'Guest User', email: 'guest@email.com', phone: '', address: '' };
+  }
+
+  function findOrder(orderId) {
+    for (var i = 0; i < sampleOrders.length; i++) {
+      if (sampleOrders[i].id === orderId) return sampleOrders[i];
+    }
+    return null;
+  }
+
+  function openOrderDetail(orderId) {
+    var order = findOrder(orderId);
+    if (!order) return;
+
+    var itemsHtml = '';
+    (order.items || []).forEach(function(it, idx) {
+      itemsHtml += '<div class="detail-item-row">'
+        + '<img src="' + (it.img || '../images/gundam-freedom.png') + '" class="detail-item-img" alt="' + (it.name || '') + '">'
+        + '<div class="detail-item-info">'
+        + '  <div class="detail-item-name">' + (it.name || '-') + '</div>'
+        + '  <div class="detail-item-meta">' + (it.grade || '') + ' • ' + (it.scale || '') + ' • Qty: ' + (it.qty || 1) + 'x</div>'
+        + '  <div class="detail-item-price">Rp ' + (it.price || 0).toLocaleString('id-ID') + '</div>'
+        + '</div></div>';
+      if (idx < (order.items || []).length - 1) {
+        itemsHtml += '<hr style="border: 0; border-top: 1px dashed #e5e7eb; margin: 10px 0;">';
+      }
+    });
+
+    var statusLabel = {
+      'dikemas': 'Sedang Dikemas', 'dikirim': 'Sedang Dikirim',
+      'selesai': 'Pesanan Selesai', 'batal': 'Pesanan Dibatalkan'
+    };
+
+    var dateObj = new Date(order.date);
+    var dateStr = isNaN(dateObj.getTime()) ? order.date : dateObj.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+
+    document.getElementById('modalOrderId').innerHTML = '<strong>' + (order.id || '-') + '</strong>';
+    document.getElementById('modalOrderDate').textContent = dateStr;
+    document.getElementById('modalOrderStatus').innerHTML = '<span style="font-size:12px; font-weight:600; padding:4px 10px; border-radius:6px; background:#fef3c7; color:#92400e;">' + (statusLabel[order.status] || order.status) + '</span>';
+    document.getElementById('modalItemsList').innerHTML = itemsHtml;
+
+    // Build adaptive timeline
+    var tlSteps = [
+      { key: 'dikemas', label: 'Dikemas', icon: 'fa-box' },
+      { key: 'dikirim', label: 'Dikirim', icon: 'fa-truck' },
+      { key: 'transit', label: 'Transit', icon: 'fa-shipping-fast' },
+      { key: 'selesai', label: 'Diterima', icon: 'fa-check' }
+    ];
+    var completedIdx = -1;
+    var currentIdx = -1;
+    var rejected = (order.status === 'batal');
+
+    var stepDates = [];
+    try {
+      var orderDate = new Date(order.date);
+      if (!isNaN(orderDate.getTime())) {
+        var fmt = function(d) { return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }); };
+        if (order.status === 'dikemas') {
+          stepDates = [fmt(orderDate)];
+        } else if (order.status === 'dikirim') {
+          var ship = new Date(orderDate.getTime() + 86400000 * 1);
+          stepDates = [fmt(orderDate), fmt(ship)];
+        } else if (order.status === 'selesai') {
+          var received = new Date(orderDate.getTime() + 86400000 * 3);
+          stepDates = [fmt(orderDate), fmt(new Date(orderDate.getTime() + 86400000)), fmt(received), fmt(received)];
+        }
+      }
+    } catch(e) {}
+
+    if (!rejected) {
+      var statusIdx = -1;
+      for (var si = 0; si < tlSteps.length; si++) {
+        if (tlSteps[si].key === order.status) { statusIdx = si; break; }
+      }
+      if (statusIdx >= 0) {
+        completedIdx = statusIdx - 1;
+        currentIdx = statusIdx;
+      }
+    }
+
+    var timelineHtml = '<div class="modal-timeline">';
+    timelineHtml += '<div class="modal-timeline-line"></div>';
+    timelineHtml += '<div class="modal-timeline-line-fill" id="modalTimelineFill"></div>';
+    for (var j = 0; j < tlSteps.length; j++) {
+      var cls = '';
+      if (j <= completedIdx) cls = 'completed';
+      else if (j === currentIdx) cls = 'current';
+      else if (rejected) cls = '';
+
+      var dotIcon = '<i class="fas ' + tlSteps[j].icon + '"></i>';
+      if (cls === 'completed') dotIcon = '<i class="fas fa-check"></i>';
+      if (rejected) dotIcon = '<i class="fas fa-times"></i>';
+
+      timelineHtml += '<div class="modal-timeline-step ' + cls + '">';
+      timelineHtml += '<div class="modal-timeline-dot">' + dotIcon + '</div>';
+      timelineHtml += '<div class="modal-timeline-label">' + tlSteps[j].label + '</div>';
+      if (stepDates[j]) timelineHtml += '<div class="modal-timeline-date">' + stepDates[j] + '</div>';
+      timelineHtml += '</div>';
+    }
+
+    if (rejected) {
+      timelineHtml += '</div>';
+      timelineHtml += '<div style="text-align:center; margin-top: 16px; padding: 10px; background: #fef2f2; border-radius: 8px; color: #dc2626; font-weight: 600; font-size: 13px;">';
+      timelineHtml += '<i class="fas fa-times-circle"></i> Pesanan ini telah dibatalkan.';
+      timelineHtml += '</div></div>';
+    } else if (order.status === 'selesai') {
+      timelineHtml += '</div>';
+      timelineHtml += '<div style="text-align:center; margin-top: 12px; padding: 10px; background: #f0fdf4; border-radius: 8px; color: #16a34a; font-weight: 600; font-size: 13px;">';
+      timelineHtml += '<i class="fas fa-check-circle"></i> Pesanan diterima pada ' + (stepDates[3] || '-');
+      timelineHtml += '</div></div>';
+    } else if (order.status === 'dikemas') {
+      timelineHtml += '</div>';
+      timelineHtml += '<div style="text-align:center; margin-top: 12px; padding: 10px; background: #fffbeb; border-radius: 8px; color: #d97706; font-weight: 600; font-size: 13px;">';
+      timelineHtml += '<i class="fas fa-box"></i> Pesanan Anda sedang dipersiapkan.';
+      timelineHtml += '</div></div>';
+    } else if (order.status === 'dikirim') {
+      timelineHtml += '</div>';
+      timelineHtml += '<div style="text-align:center; margin-top: 12px; padding: 10px; background: #eff6ff; border-radius: 8px; color: #2563eb; font-weight: 600; font-size: 13px;">';
+      timelineHtml += '<i class="fas fa-truck"></i> Pesanan sedang dalam perjalanan!';
+      timelineHtml += '</div></div>';
+    }
+
+    document.getElementById('modalTimeline').innerHTML = timelineHtml;
+
+    // Set fill width after DOM update
+    setTimeout(function() {
+      var fill = document.getElementById('modalTimelineFill');
+      if (fill) {
+        var container = fill.parentElement;
+        if (container) {
+          var containerLeft = container.getBoundingClientRect().left + 22;
+          var currentEl = container.children[completedIdx >= 0 ? completedIdx + 1 : 0];
+          if (currentEl) {
+            var dotCenter = currentEl.getBoundingClientRect().left + currentEl.offsetWidth / 2 - containerLeft;
+            var totalW = container.offsetWidth - 44;
+            if (totalW > 0) fill.style.width = Math.min(dotCenter, totalW) + 'px';
+          }
+        }
+      }
+    }, 50);
+
+    document.getElementById('modalTotal').textContent = 'Rp ' + (order.total || 0).toLocaleString('id-ID');
+
+    document.getElementById('modalShipping').textContent = order.shipping || 'Reguler (2-3 hari kerja)';
+    document.getElementById('modalEstDelivery').textContent = order.estimatedDelivery || '-';
+
+    var sub = 0;
+    (order.items || []).forEach(function(it) { sub += (it.price || 0) * (it.qty || 1); });
+    var tax = Math.round(sub * 0.11);
+    document.getElementById('modalSubtotal').textContent = 'Rp ' + sub.toLocaleString('id-ID');
+    document.getElementById('modalTax').textContent = 'Rp ' + tax.toLocaleString('id-ID');
+
+    // ── Buyer info ──
+    var buyer = order.customer || {};
+    var cName = buyer.name || 'Gunpla Elite';
+    var cEmail = buyer.email || 'gunpla@elite.com';
+    var cPhone = buyer.phone || '-';
+    var cAddr = buyer.address || '-';
+
+    var avatarLetter = cName.charAt(0).toUpperCase();
+    document.getElementById('modalBuyerAvatar').textContent = avatarLetter;
+    document.getElementById('modalBuyerName').textContent = cName;
+    document.getElementById('modalBuyerEmail').textContent = cEmail;
+    document.getElementById('modalBuyerPhone').textContent = cPhone;
+    document.getElementById('modalBuyerAddress').textContent = cAddr;
+
+    document.getElementById('orderModalOverlay').classList.add('show');
+  }
+
+  function closeModal() {
+    var ov = document.getElementById('orderModalOverlay');
+    if (ov) ov.classList.remove('show');
+  }
+
+  // Buttons are now embedded directly in buildOrderCard(), no injection needed.
+  // injectDetailButtons() disabled — was causing double buttons.
+  // function injectDetailButtons() { ... }
+
+  function attachListeners() {
+    var closeBtn = document.getElementById('closeModalBtn');
+    var cancelBtn = document.getElementById('cancelModalBtn');
+    var overlay = document.getElementById('orderModalOverlay');
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+    if (overlay) {
+      overlay.addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+      });
+    }
+
+    document.addEventListener('click', function(e) {
+      var btn = e.target.closest('[data-detail]');
+      if (btn) {
+        e.preventDefault();
+        openOrderDetail(btn.getAttribute('data-detail'));
+      }
+    });
+  }
+
+  // Expose globally early so inline onclick attributes can use it
+  window._openDetail = openOrderDetail;
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', attachListeners);
+  } else {
+    attachListeners();
+  }
+})();
 </script>
 
 </body></html>

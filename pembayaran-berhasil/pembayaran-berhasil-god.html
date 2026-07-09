@@ -20,7 +20,7 @@
 <div id="navbar-container"></div>
 <script src="../components/navbar.js" ></script>
 
-<div class="bg-gray-50 border-b border-gray-200 py-3"><div class="container mx-auto px-4 text-xs text-gray-500"><a class="hover:text-primary-red transition-colors" href="../home.html">HOME</a><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><a class="hover:text-primary-red transition-colors" href="../katalog/katalog.html">KATALOG</a><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><span class="hover:text-primary-red transition-colors">PENGIRIMAN</span><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><span class="hover:text-primary-red transition-colors">PEMBAYARAN</span><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><span class="text-gray-900 font-bold">BERHASIL</span></div></div>
+<div class="bg-gray-50 border-b border-gray-200 py-3"><div class="container mx-auto px-4 text-xs text-gray-500"><a class="hover:text-primary-red transition-colors" href="../index.html">HOME</a><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><a class="hover:text-primary-red transition-colors" href="../katalog/katalog.html">KATALOG</a><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><span class="hover:text-primary-red transition-colors">PENGIRIMAN</span><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><span class="hover:text-primary-red transition-colors">PEMBAYARAN</span><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><span class="text-gray-900 font-bold">BERHASIL</span></div></div>
 
 <section class="py-16"><div class="container mx-auto px-4 max-w-lg">
 
@@ -35,14 +35,14 @@
 
 <div class="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-6 text-left">
 <div class="flex gap-4 mb-6 pb-6 border-b border-gray-200">
-<div class="w-20 h-20 flex-shrink-0 bg-white rounded overflow-hidden"><img alt="God Gundam" class="w-full h-full object-contain" src="../images/god-gundam.png"/></div>
-<div class="flex-1 min-w-0"><h4 class="font-bold text-sm line-clamp-2 mb-1">God Gundam</h4><p class="text-xs text-gray-500 mb-1">Real Grade 1/144</p><p class="text-primary-red font-bold">Rp 680.000</p></div>
+<div class="w-20 h-20 flex-shrink-0 bg-white rounded overflow-hidden"><img alt="God Gundam" class="w-full h-full object-contain" src="../images/god .png"/></div>
+<div class="flex-1 min-w-0"><h4 class="font-bold text-sm line-clamp-2 mb-1">God Gundam</h4><p class="text-xs text-gray-500 mb-1">Real Grade 1/144</p><p class="text-primary-red font-bold">Rp 2.450.000</p></div>
 </div>
 <div class="space-y-2 text-sm">
-<div class="flex justify-between text-gray-600"><span>Subtotal</span><span>Rp 680.000</span></div>
+<div class="flex justify-between text-gray-600"><span>Subtotal</span><span>Rp 2.450.000</span></div>
 <div class="flex justify-between text-gray-600"><span>Pengiriman (Reguler)</span><span>Rp 15.000</span></div>
-<div class="flex justify-between text-gray-600"><span>PPN (11%)</span><span>Rp 74.800</span></div>
-<div class="flex justify-between text-lg font-bold pt-4 border-t border-gray-200"><span>Total</span><span class="text-primary-red">Rp 769.800</span></div>
+<div class="flex justify-between text-gray-600"><span>PPN (11%)</span><span>Rp 269.500</span></div>
+<div class="flex justify-between text-lg font-bold pt-4 border-t border-gray-200"><span>Total</span><span class="text-primary-red">Rp 2.734.500</span></div>
 </div>
 </div>
 
@@ -59,9 +59,9 @@
 </div>
 </div>
 
-<div class="flex gap-4">
-<a href="../home.html" class="bg-primary-red text-white font-bold py-3 px-8 rounded hover:bg-red-700 transition-colors flex-1 text-center flex items-center justify-center gap-2"><i class="fas fa-home mr-1"></i> KEMBALI KE HOME</a>
-<a href="../katalog/katalog.html" class="border border-gray-300 text-gray-700 font-bold py-3 px-6 rounded hover:bg-gray-50 transition-colors flex-1 text-center"><i class="fas fa-shopping-bag mr-1"></i> BELI LAGI</a>
+<div class="flex flex-col items-center gap-3">
+<a href="../index.html" class="w-full max-w-sm bg-primary-red text-white font-bold py-3 px-8 rounded hover:bg-red-700 transition-colors text-center flex items-center justify-center gap-2"><i class="fas fa-home"></i> KEMBALI KE HOME</a>
+<div class="flex gap-3 mt-2"><a href="../pesanan/pesanan.html" class="flex-1 border border-gray-300 text-gray-700 font-bold py-3 px-6 rounded hover:bg-gray-50 transition-colors text-center flex items-center justify-center gap-1"><i class="fas fa-receipt"></i> LIHAT PESANAN</a><a href="../katalog/katalog.html" class="flex-1 border border-gray-300 text-gray-700 font-bold py-3 px-6 rounded hover:bg-gray-50 transition-colors text-center flex items-center justify-center gap-1"><i class="fas fa-shopping-bag"></i> BELI LAGI</a></div>
 </div>
 
 </div>
@@ -72,6 +72,32 @@
 <div id="footer"></div>
 <script src="../components/footer.js"></script>
 <!-- END: MainFooter -->
+
+<script>
+window.addEventListener('DOMContentLoaded', function() {
+  var orderData = {
+    id: 'GE-20240616-GD001',
+    date: new Date().toISOString(),
+    status: 'dibayar',
+    items: [{
+      name: 'God Gundam',
+      price: 2450000,
+      qty: 1,
+      grade: 'Real Grade',
+      scale: '1/144',
+      img: '../images/god .png'
+    }],
+    total: 2734500,
+    shipping: 'Reguler (2-3 hari kerja)',
+    estimatedDelivery: '19 - 20 Juni 2024'
+  };
+  try {
+    var orders = JSON.parse(localStorage.getItem('gunpla_orders') || '[]');
+    orders.unshift(orderData);
+    localStorage.setItem('gunpla_orders', JSON.stringify(orders));
+  } catch(e) {}
+});
+</script>
 
 </body>
 </html>

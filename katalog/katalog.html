@@ -34,6 +34,8 @@
 <button class="bg-white text-gray-600 border border-gray-300 px-5 py-2 rounded-full text-sm font-bold w-20 text-center hover:border-primary-red hover:text-primary-red transition-colors" data-grade-filter="RG">RG</button>
 <button class="bg-white text-gray-600 border border-gray-300 px-5 py-2 rounded-full text-sm font-bold w-20 text-center hover:border-primary-red hover:text-primary-red transition-colors" data-grade-filter="MG">MG</button>
 <button class="bg-white text-gray-600 border border-gray-300 px-5 py-2 rounded-full text-sm font-bold w-20 text-center hover:border-primary-red hover:text-primary-red transition-colors" data-grade-filter="PG">PG</button>
+<button class="bg-white text-gray-600 border border-gray-300 px-5 py-2 rounded-full text-sm font-bold w-20 text-center hover:border-primary-red hover:text-primary-red transition-colors" data-grade-filter="SD">SD</button>
+<button class="bg-white text-gray-600 border border-gray-300 px-5 py-2 rounded-full text-sm font-bold w-20 text-center hover:border-primary-red hover:text-primary-red transition-colors" data-grade-filter="MB">MB</button>
 <div class="ml-auto flex items-center gap-2">
 <div class="relative">
 <input class="border border-gray-300 rounded-full pl-4 pr-10 py-2 text-sm focus:outline-none focus:border-primary-red w-64" id="searchInput" placeholder="Cari kit..." type="text"/>
@@ -275,7 +277,28 @@
     let currentGrade = 'SEMUA';
     let currentQuery = '';
 
+    function activateButton(value) {
+      filterButtons.forEach(b => {
+        if (b.getAttribute('data-grade-filter') === value) {
+          b.classList.remove('bg-white', 'text-gray-600', 'border', 'border-gray-300');
+          b.classList.add('bg-primary-red', 'text-white');
+        } else {
+          b.classList.remove('bg-primary-red', 'text-white');
+          b.classList.add('bg-white', 'text-gray-600', 'border', 'border-gray-300');
+        }
+      });
+    }
+
+    // Auto-apply grade from URL query param ?type=XXX
+    const params = new URLSearchParams(window.location.search);
+    const gradeFromUrl = params.get('type');
+    if (gradeFromUrl) {
+      currentGrade = gradeFromUrl;
+      activateButton(gradeFromUrl);
+    }
+
     function applyFilters() {
+      let visibleCount = 0;
       allCards.forEach(card => {
         const cardGrade = card.getAttribute('data-grade');
         const cardName = (card.querySelector('h3') ? card.querySelector('h3').textContent : '').toLowerCase();
@@ -284,11 +307,28 @@
         if (matchesGrade && matchesQuery) {
           card.style.display = '';
           card.style.visibility = 'visible';
+          visibleCount++;
         } else {
           card.style.display = 'none';
           card.style.visibility = 'hidden';
         }
       });
+      toggleEmptyState(visibleCount === 0);
+    }
+
+    function toggleEmptyState(show) {
+      let emptyEl = document.getElementById('katalogEmptyState');
+      if (!emptyEl) {
+        emptyEl = document.createElement('div');
+        emptyEl.id = 'katalogEmptyState';
+        emptyEl.style.cssText = 'grid-column: 1 / -1; text-align:center; padding: 60px 20px; color: #9ca3af;';
+        emptyEl.innerHTML = '<i class="fas fa-inbox" style="font-size:48px;margin-bottom:12px;display:block;color:#d1d5db;"></i>'
+          + '<p style="font-weight:600;color:#6b7280;margin-bottom:4px;">Belum ada produk untuk grade ini</p>'
+          + '<p style="font-size:13px;">Coba filter lain atau kembali ke SEMUA.</p>';
+        const grid = document.querySelector('.grid');
+        if (grid) grid.appendChild(emptyEl);
+      }
+      emptyEl.style.display = show ? '' : 'none';
     }
 
     filterButtons.forEach(btn => {
@@ -315,6 +355,9 @@
         applyFilters();
       });
     }
+
+    // Initial filter pass so empty state shows when applicable
+    applyFilters();
   });
 </script>
 

@@ -13,7 +13,7 @@
 <div id="navbar-container"></div>
 <script src="../components/navbar.js"></script>
 
-<div class="bg-gray-50 border-b border-gray-200 py-3"><div class="container mx-auto px-4 text-xs text-gray-500"><a class="hover:text-primary-red transition-colors" href="../home.html">HOME</a><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><a class="hover:text-primary-red transition-colors" href="../katalog/katalog.html">KATALOG</a><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><a class="hover:text-primary-red transition-colors" href="../katalog/katalog-freedom.html">Freedom Gundam</a><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><span class="text-gray-900 font-bold">PENGIRIMAN</span></div></div>
+<div class="bg-gray-50 border-b border-gray-200 py-3"><div class="container mx-auto px-4 text-xs text-gray-500"><a class="hover:text-primary-red transition-colors" href="../index.html">HOME</a><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><a class="hover:text-primary-red transition-colors" href="../katalog/katalog.html">KATALOG</a><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><a class="hover:text-primary-red transition-colors" href="../katalog/katalog-freedom.html">Freedom Gundam</a><span class="mx-2"><i class="fas fa-chevron-right text-[8px]"></i></span><span class="text-gray-900 font-bold">PENGIRIMAN</span></div></div>
 
 <section class="py-12"><div class="container mx-auto px-4"><div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
@@ -21,11 +21,22 @@
 <h1 class="text-3xl font-oswald font-bold uppercase mb-8">Pengiriman</h1>
 <div class="mb-10">
 <h2 class="text-lg font-bold uppercase mb-4 flex items-center gap-2 font-oswald"><span class="w-8 h-8 bg-primary-red text-white rounded-full flex items-center justify-center text-sm">1</span>Nama Penerima</h2>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="block text-base font-bold text-gray-500 uppercase mb-1">Nama Lengkap</label><input class="w-full border border-gray-300 rounded px-4 py-4 text-base focus:border-primary-red focus:outline-none" placeholder="Masukkan nama lengkap"/></div><div><label class="block text-base font-bold text-gray-500 uppercase mb-1">Nomor Telepon</label><input class="w-full border border-gray-300 rounded px-4 py-4 text-base focus:border-primary-red focus:outline-none" placeholder="08xxxxxxxxxx"/></div><div><label class="block text-base font-bold text-gray-500 uppercase mb-1">Email</label><input class="w-full border border-gray-300 rounded px-4 py-4 text-base focus:border-primary-red focus:outline-none" value="budi.santoso@email.com" type="email"/></div></div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div><label class="block text-base font-bold text-gray-500 uppercase mb-1">Nama Lengkap</label><input class="w-full border border-gray-300 rounded px-4 py-4 text-base focus:border-primary-red focus:outline-none" value="Budi Santoso"/></div>
+<div><label class="block text-base font-bold text-gray-500 uppercase mb-1">Nomor Telepon</label><input class="w-full border border-gray-300 rounded px-4 py-4 text-base focus:border-primary-red focus:outline-none" value="081234567890"/></div>
+<div><label class="block text-base font-bold text-gray-500 uppercase mb-1">Email</label><input class="w-full border border-gray-300 rounded px-4 py-4 text-base focus:border-primary-red focus:outline-none" value="budi.santoso@email.com" type="email"/></div>
+</div>
 </div>
 <div class="mb-10">
 <h2 class="text-lg font-bold uppercase mb-4 flex items-center gap-2 font-oswald"><span class="w-8 h-8 bg-primary-red text-white rounded-full flex items-center justify-center text-sm">2</span>Alamat Pengiriman</h2>
-<div class="space-y-4"><div><label class="block text-base font-bold text-gray-500 uppercase mb-1">Kota / Kabupaten</label><select class="w-full border border-gray-300 rounded px-4 py-4 text-base focus:border-primary-red focus:outline-none"><option>Pilih Kota</option><option>Surabaya</option><option>Sidoarjo</option><option>Gresik</option><option>Malang</option><option>Kediri</option><option>Jember</option></select></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="block text-base font-bold text-gray-500 uppercase mb-1">Kecamatan</label><input class="w-full border border-gray-300 rounded px-4 py-4 text-base focus:border-primary-red focus:outline-none" placeholder="Nama kecamatan"/></div><div><label class="block text-base font-bold text-gray-500 uppercase mb-1">Kode Pos</label><input class="w-full border border-gray-300 rounded px-4 py-4 text-base focus:border-primary-red focus:outline-none" placeholder="XXXXX"/></div></div><div><label class="block text-base font-bold text-gray-500 uppercase mb-1">Alamat Lengkap</label><textarea class="w-full border border-gray-300 rounded px-4 py-4 text-base focus:border-primary-red focus:outline-none" placeholder="Jalan, nomor rumah, RT/RW, kelurahan..." rows="3"></textarea></div></div>
+<div class="space-y-4">
+<div><label class="block text-base font-bold text-gray-500 uppercase mb-1">Kota / Kabupaten</label><select class="w-full border border-gray-300 rounded px-4 py-4 text-base focus:border-primary-red focus:outline-none"><option>Surabaya</option><option>Sidoarjo</option><option>Gresik</option><option>Malang</option><option>Kediri</option><option>Jember</option></select></div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div><label class="block text-base font-bold text-gray-500 uppercase mb-1">Kecamatan</label><input class="w-full border border-gray-300 rounded px-4 py-4 text-base focus:border-primary-red focus:outline-none" value="Rungkut"/></div>
+<div><label class="block text-base font-bold text-gray-500 uppercase mb-1">Kode Pos</label><input class="w-full border border-gray-300 rounded px-4 py-4 text-base focus:border-primary-red focus:outline-none" value="60293"/></div>
+</div>
+<div><label class="block text-base font-bold text-gray-500 uppercase mb-1">Alamat Lengkap</label><textarea class="w-full border border-gray-300 rounded px-4 py-4 text-base focus:border-primary-red focus:outline-none" rows="6">Jl. Rungkut Asri Timur No. 25, RT 03/RW 05, Kelurahan Rungkut Kidul</textarea></div>
+</div>
 </div>
 <div class="mb-10">
 <h2 class="text-lg font-bold uppercase mb-4 flex items-center gap-2 font-oswald"><span class="w-8 h-8 bg-primary-red text-white rounded-full flex items-center justify-center text-sm">3</span>Metode Pengiriman</h2>

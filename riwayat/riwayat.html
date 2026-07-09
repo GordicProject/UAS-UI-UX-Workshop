@@ -140,7 +140,7 @@ function formatDateFull(iso) {
 
 // ── Sample Data (disesuaikan dengan pesanan.html) ──
 var sampleOrders = [
-  // Order selesai — Unicorn (satunya yang selesai di pesanan.html)
+  // Order selesai
   {
     id: 'GE-2024-003',
     date: '2024-06-01T10:00:00',
@@ -150,7 +150,8 @@ var sampleOrders = [
     ],
     total: 450000
   },
-  // Order batal — Barbatos
+
+  // Order batal
   {
     id: 'GE-2024-005',
     date: '2024-06-05T10:00:00',
@@ -162,15 +163,18 @@ var sampleOrders = [
   }
 ];
 
-// Use sample orders directly
+// Use stored orders first, fallback to sample
 var allOrders = sampleOrders;
-console.log('Riwayat - allOrders:', allOrders);
+console.log('Riwayat - allOrders (initial):', allOrders);
 
 // Filter only selesai & batal
 var currentFilter = 'selesai';
 
 function renderHistory(filter) {
   currentFilter = filter;
+  // Refresh from localStorage each render
+  var stored = getOrders();
+  if (stored.length > 0) { allOrders = stored; }
   var list = allOrders.filter(function(o) {
     return o.status === filter;
   });
@@ -230,18 +234,18 @@ function renderHistory(filter) {
         var reviewedKey = 'reviewed_' + o.id;
         var isReviewed = localStorage.getItem(reviewedKey) === 'true';
         html += ''
-          + '    <button class="tx-action-btn"><i class="fas fa-file-invoice mr-1"></i> Lihat Invoice</button>'
           + '    <button class="tx-action-btn primary" data-reorder="' + o.id + '"><i class="fas fa-shopping-cart mr-1"></i> Beli Lagi</button>'
           + '    <button class="tx-action-btn' + (isReviewed ? ' primary" style="background:#e5e7eb;border-color:#d1d5db;color:#6b7280;" disabled' : ' primary"') + ' data-review="' + o.id + '">'
           + '      <i class="fas fa-star mr-1"></i> ' + (isReviewed ? 'Sudah Diulas' : 'Beri Ulasan')
           + '    </button>';
       } else {
         html += ''
-          + '    <button class="tx-action-btn"><i class="fas fa-file-invoice mr-1"></i> Lihat Invoice</button>'
           + '    <button class="tx-action-btn primary" disabled style="opacity:0.5;"><i class="fas fa-shopping-cart mr-1"></i> Beli Lagi</button>';
       }
 
-      html += '  </div></div>';
+      html += ''
+        + '    <button class="tx-action-btn" data-detail="' + o.id + '" style="background:#d32f2f;color:white;border-color:#d32f2f;"><i class="fas fa-eye mr-1"></i> Detail Pesanan</button>'
+        + '  </div></div>';
     });
   });
 
@@ -278,8 +282,21 @@ document.querySelectorAll('.rx-tab').forEach(function(tab) {
   });
 });
 
+function seedHistory() {
+  try {
+    var existing = JSON.parse(localStorage.getItem('gunpla_orders') || '[]');
+    if (!Array.isArray(existing) || existing.length === 0) {
+      localStorage.setItem('gunpla_orders', JSON.stringify([
+        { id: 'GE-2024-003', date: '2024-06-01T10:00:00', status: 'selesai', items: [{ name: 'RX-0 Unicorn Gundam Destroy', price: 450000, qty: 1, grade: 'Real Grade', img: '../images/gundam-unicorn.png' }], total: 514500 },
+        { id: 'GE-2024-005', date: '2024-06-05T10:00:00', status: 'batal', items: [{ name: 'ASW-G-08 Barbatos Lupus', price: 650000, qty: 1, grade: 'RG', img: '../images/gundam-barbatos.png' }], total: 736500 },
+      ]));
+    }
+  } catch(e) {}
+}
+
 // ── Init ──
 function init() {
+  seedHistory();
   var u = getUser();
   var displayName = document.getElementById('displayName');
   var displayEmail = document.getElementById('displayEmail');
@@ -295,13 +312,114 @@ document.getElementById('logoutBtn').addEventListener('click', function(e) {
   e.preventDefault();
   if (confirm('Yakin ingin keluar?')) {
     try { localStorage.removeItem('gunpla_user'); } catch (err) {}
-    window.location.href = '../home.html';
+    window.location.href = '../index.html';
   }
 });
 
 window.addEventListener('DOMContentLoaded', function() {
   setTimeout(init, 100);
 });
+
+// ═══════════════ DETAIL MODAL (reused same logic) ═══════════════
+function getOrderById(id) {
+  var stored = getOrders();
+  if (stored.length > 0) { allOrders = stored; }
+  return allOrders.find(function(o) { return o.id === id; });
+}
+
+document.getElementById('historyList').addEventListener('click', function(e) {
+  var btn = e.target.closest('[data-detail]');
+  if (!btn) return;
+  var orderId = btn.getAttribute('data-detail');
+  var order = getOrderById(orderId);
+  if (!order) return;
+
+  var itemsHtml = '';
+  (order.items || []).forEach(function(it, idx) {
+    itemsHtml += '<div class="tx-detail-row" style="display:flex;gap:12px;align-items:center;margin-bottom:10px;">'
+      + '<img src="' + (it.img || '../images/gundam-unicorn.png') + '" style="width:50px;height:50px;object-fit:contain;background:#f9fafb;border-radius:8px;padding:4px;">'
+      + '<div style="flex:1;">'
+      + '  <div style="font-weight:600;font-size:13px;">' + (it.name || '-') + '</div>'
+      + '  <div style="font-size:12px;color:#6b7280;">' + (it.grade || '') + ' • Qty: ' + (it.qty || 1) + '</div>'
+      + '</div>'
+      + '<div style="font-weight:700;font-size:13px;color:#d32f2f;">Rp ' + (it.price || 0).toLocaleString('id-ID') + '</div>'
+      + '</div>';
+    if (idx < (order.items||[]).length - 1) itemsHtml += '<hr style="border:0;border-top:1px dashed #e5e7eb;">';
+  });
+
+  var statusLabel = { 'selesai': 'Pesanan Selesai', 'batal': 'Pesanan Dibatalkan', 'dikemas': 'Sedang Dikemas', 'dikirim': 'Sedang Dikirim' };
+  var statusColor = { 'selesai': '#16a34a', 'batal': '#dc2626', 'dikemas': '#eab308', 'dikirim': '#2563eb' };
+
+  var sub = 0;
+  (order.items || []).forEach(function(it) { sub += (it.price || 0) * (it.qty || 1); });
+  var tax = Math.round(sub * 0.11);
+
+  var overlay = document.createElement('div');
+  overlay.className = 'detail-modal-overlay';
+  overlay.innerHTML = '<div class="detail-modal-content">'
+    + '<button class="detail-modal-close" onclick="this.closest(\'.detail-modal-overlay\').remove()" style="position:absolute;top:12px;right:14px;background:#f3f4f6;border:none;font-size:22px;cursor:pointer;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;">&times;</button>'
+    + '<div style="padding:20px 24px;overflow-y:auto;max-height:85vh;">'
+    + '<h2 style="font-size:20px;font-weight:700;margin:0 0 16px;">DETAIL PESANAN</h2>'
+    + '<div style="background:#f9fafb;border-radius:10px;padding:16px;margin-bottom:20px;">'
+    + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">'
+    + '<div><span style="font-size:12px;color:#6b7280;">Order ID</span><br><strong>' + order.id + '</strong></div>'
+    + '<div><span style="font-size:12px;color:#6b7280;">Status</span><br><strong style="color:' + (statusColor[order.status]||'#6b7280') + ';">' + (statusLabel[order.status]||order.status) + '</strong></div>'
+    + '</div>'
+    + '<div style="font-size:13px;color:#6b7280;border-top:1px solid #e5e7eb;padding-top:8px;">Selesai pada ' + formatDateFull(order.date) + '</div>'
+    + '</div>'
+    + '<h3 style="font-size:15px;font-weight:700;margin:0 0 10px;">ITEM PESANAN</h3>'
+    + itemsHtml + '<br>'
+    + '<h3 style="font-size:15px;font-weight:700;margin:0 0 10px;">INFORMASI PEMBELI</h3>'
+    + '<div style="background:#fef3f2;border:1px solid #fecaca;border-radius:10px;padding:14px;margin-bottom:20px;">'
+    + '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">'
+    + '<div id="modalRxBuyerAvatar" style="width:40px;height:40px;border-radius:50%;background:#d32f2f;color:white;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:\'Oswald\',sans-serif;">-</div>'
+    + '<div><div style="font-size:14px;font-weight:700;" id="modalRxBuyerName">-</div>'
+    + '<div style="font-size:12px;color:#6b7280;" id="modalRxBuyerEmail">-</div></div>'
+    + '</div>'
+    + '<div style="font-size:13px;padding-top:8px;border-top:1px dashed #fecaca;">'
+    + '<div style="margin-bottom:4px;"><strong>📞</strong> <span id="modalRxBuyerPhone">-</span></div>'
+    + '<div><strong>📍</strong> <span id="modalRxBuyerAddr">-</span></div>'
+    + '</div></div>'
+    + '<div style="background:#f9fafb;border-radius:10px;padding:14px;">'
+    + '<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:6px;"><span style="color:#6b7280;">Subtotal</span><span>Rp ' + sub.toLocaleString('id-ID') + '</span></div>'
+    + '<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:6px;"><span style="color:#6b7280;">PPN (11%)</span><span>Rp ' + tax.toLocaleString('id-ID') + '</span></div>'
+    + '<div style="display:flex;justify-content:space-between;font-size:18px;font-weight:700;border-top:1px solid #e5e7eb;padding-top:8px;margin-top:4px;"><span>Total</span><span style="color:#d32f2f;">Rp ' + (order.total||0).toLocaleString('id-ID') + '</span></div>'
+    + '</div>'
+    + '<div style="margin-top:16px;display:flex;gap:10px;">'
+    + '<button onclick="this.closest(\'.detail-modal-overlay\').remove()" style="flex:1;border:1px solid #d1d5db;background:white;padding:10px;border-radius:8px;font-weight:600;cursor:pointer;">Tutup</button>'
+    + '</div>'
+    + '</div></div></div>';
+  document.body.appendChild(overlay);
+
+  // Populate buyer info from gunpla_shipping or gunpla_user
+  try {
+    var ship = JSON.parse(localStorage.getItem('gunpla_shipping') || '{}');
+    var user = JSON.parse(localStorage.getItem('gunpla_user') || '{}');
+    var name = ship.name || user.name || user.display_name || 'Gunpla Elite';
+    var email = user.email || 'gunpla@elite.com';
+    var phone = ship.phone || '-';
+    var addr = '';
+    if (ship.address) addr = ship.address;
+    if (ship.district) addr += (addr ? ', ' : '') + ship.district;
+    if (ship.city) addr += (addr ? ', ' : '') + ship.city;
+    if (ship.postalCode) addr += (addr ? ' ' : '') + ship.postalCode;
+    if (!addr) addr = '-';
+    document.getElementById('modalRxBuyerAvatar').textContent = name.charAt(0).toUpperCase();
+    document.getElementById('modalRxBuyerName').textContent = name;
+    document.getElementById('modalRxBuyerEmail').textContent = email;
+    document.getElementById('modalRxBuyerPhone').textContent = phone;
+    document.getElementById('modalRxBuyerAddr').textContent = addr;
+  } catch (e) {}
+
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) this.remove();
+  });
+});
 </script>
 
-</body></html>
+<style>
+.detail-modal-overlay { position: fixed; inset: 0; z-index: 99999; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+.detail-modal-content { background: white; border-radius: 16px; width: 95%; max-width: 520px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; position: relative; max-height: 85vh; }
+.detail-modal-close { position: absolute; top: 12px; right: 14px; background: #f3f4f6; border: none; font-size: 22px; cursor: pointer; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #6b7280; }
+.detail-modal-close:hover { background: #e5e7eb; }
+</style>
