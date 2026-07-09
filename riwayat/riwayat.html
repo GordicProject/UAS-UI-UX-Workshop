@@ -144,54 +144,22 @@ function formatDateFull(iso) {
   } catch (e) { return iso; }
 }
 
-// ── Sample Data (disesuaikan dengan pesanan.html) ──
-var sampleOrders = [
-  // Order selesai
-  {
-    id: 'GE-2024-003',
-    date: '2024-06-01T10:00:00',
-    status: 'selesai',
-    items: [
-      { name: 'RX-0 UNICORN HOPE', qty: 1, price: 450000, grade: 'Real Grade', scale: '1/144', series: 'Mobile Suit Gundam UC', img: '../images/gundam-unicorn.png' }
-    ],
-    total: 450000
-  },
-
-  // Order batal
-  {
-    id: 'GE-2024-005',
-    date: '2024-06-05T10:00:00',
-    status: 'batal',
-    items: [
-      { name: 'ASW-G-08 BARBATOS', qty: 1, price: 280000, grade: 'Real Grade', scale: '1/144', series: 'Mobile Suit Gundam IRON-BLOODED ORPHANS', img: '../images/gundam-barbatos.png' }
-    ],
-    total: 280000
-  }
-];
-
-// Use stored orders first, fallback to sample
-var allOrders = sampleOrders;
-console.log('Riwayat - allOrders (initial):', allOrders);
+// Use localStorage only — sample orders removed
+var allOrders = [];
 
 // Filter only selesai & batal
 var currentFilter = 'selesai';
 
 function renderHistory(filter) {
   currentFilter = filter;
-  // Refresh from localStorage each render
+  // Always read from localStorage — don't merge with sample
   var stored = getOrders();
-  if (stored.length > 0) { allOrders = stored; }
-  var list = allOrders.filter(function(o) {
+  var list = stored.filter(function(o) {
     return o.status === filter;
   });
   list.sort(function(a, b) {
     return new Date(b.date || 0) - new Date(a.date || 0);
   });
-
-  console.log('[Riwayat] allOrders count:', allOrders.length);
-  console.log('[Riwayat] Filter:', filter, '| Matched:', list.length);
-  console.log('[Riwayat] container exists:', !!document.getElementById('historyList'));
-  console.log('[Riwayat] allOrders:', JSON.parse(JSON.stringify(allOrders)));
 
   var container = document.getElementById('historyList');
 
@@ -308,15 +276,8 @@ document.querySelectorAll('.rx-tab').forEach(function(tab) {
 });
 
 function seedHistory() {
-  try {
-    var existing = JSON.parse(localStorage.getItem('gunpla_orders') || '[]');
-    if (!Array.isArray(existing) || existing.length === 0) {
-      localStorage.setItem('gunpla_orders', JSON.stringify([
-        { id: 'GE-2024-003', date: '2024-06-01T10:00:00', status: 'selesai', items: [{ name: 'RX-0 Unicorn Gundam Destroy', price: 450000, qty: 1, grade: 'Real Grade', img: '../images/gundam-unicorn.png' }], total: 514500 },
-        { id: 'GE-2024-005', date: '2024-06-05T10:00:00', status: 'batal', items: [{ name: 'ASW-G-08 Barbatos Lupus', price: 650000, qty: 1, grade: 'RG', img: '../images/gundam-barbatos.png' }], total: 736500 },
-      ]));
-    }
-  } catch(e) {}
+  // No-op: history now comes from pesanan.html (status completed/cancelled)
+  // We're not auto-seeding sample data anymore — would conflict with real orders
 }
 
 // ── Init ──
@@ -506,8 +467,7 @@ function showReviewSummary(order, data) {
 }
 function getOrderById(id) {
   var stored = getOrders();
-  if (stored.length > 0) { allOrders = stored; }
-  return allOrders.find(function(o) { return o.id === id; });
+  return stored.find(function(o) { return o.id === id; });
 }
 
 document.getElementById('historyList').addEventListener('click', function(e) {
